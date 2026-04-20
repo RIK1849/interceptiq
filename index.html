@@ -12,12 +12,11 @@
 <style>
 /* ═══════════════════════════════════════════════
    INTERCEPTIQ — INFINITE CYBER-NEXUS EDITION
-   - Dropdown explicitly locked to dark mode
-   - Infinite 3D Tunnel background on all pages
-   - Extreme Glassmorphism
+   - Fixed Infinite 3D Tunnel background
+   - Glassmorphism adjusted to show 3D cleanly
 ═══════════════════════════════════════════════ */
 
-/* FIX: Forces entire document UI (scrollbars, dropdowns) into dark mode */
+/* Forces entire document UI into dark mode */
 html, body {
   color-scheme: dark;
 }
@@ -70,14 +69,14 @@ nav::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; h
 .nav-cta { font-size: 14px; font-weight: 600; color: var(--white); background: linear-gradient(135deg, var(--red), var(--purple)); border: none; border-radius: 9px; padding: 9px 22px; text-decoration: none; transition: all .2s; letter-spacing: -.1px; box-shadow: 0 4px 20px rgba(124,58,237,.3); }
 .nav-cta:hover { box-shadow: 0 4px 30px rgba(220,38,38,.5), 0 4px 30px rgba(124,58,237,.3); transform: translateY(-1px); }
 
-/* ═══ MAIN & EXTREME GLASS BACKGROUNDS ═══ */
+/* ═══ MAIN & ADJUSTED GLASS BACKGROUNDS ═══ */
 main { position: relative; z-index: 3; }
 
-/* The true frosted glass effect for all sections */
+/* Reduced blur from 16px to 6px so the 3D grid shows through cleanly */
 .bg-black, .bg-dark, .bg-dark2 { 
-    background: rgba(5, 4, 12, 0.15) !important; 
-    backdrop-filter: blur(16px) !important; 
-    -webkit-backdrop-filter: blur(16px) !important; 
+    background: rgba(8, 5, 16, 0.4) !important; 
+    backdrop-filter: blur(6px) !important; 
+    -webkit-backdrop-filter: blur(6px) !important; 
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -107,10 +106,10 @@ main { position: relative; z-index: 3; }
 .btn-glass { font-size: 15px; font-weight: 500; color: var(--t1); background: rgba(255,255,255,.05); border: 1px solid var(--b2); border-radius: 10px; padding: 14px 28px; text-decoration: none; transition: all .22s; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); }
 .btn-glass:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.1); color: var(--white); }
 
-/* STAT CARDS (Glassified) */
+/* STAT CARDS */
 .hero-sphere-wrap { position: relative; width: 100%; max-width: 340px; margin: 0 auto 2.5rem; aspect-ratio: 1; pointer-events: none; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 350px; }
-.stat-card { background: rgba(15, 12, 25, 0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.1rem 1.25rem; position: relative; overflow: hidden; transition: all .3s; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.stat-card { background: rgba(15, 12, 25, 0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.1rem 1.25rem; position: relative; overflow: hidden; transition: all .3s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); opacity: 0; transition: opacity .3s; }
 .stat-card:hover { border-color: rgba(220,38,38,.3); background: rgba(25, 20, 35, 0.6); }
 .stat-card:hover::before { opacity: 1; }
@@ -121,7 +120,7 @@ main { position: relative; z-index: 3; }
 .stat-lbl { font-family: var(--mono); font-size: 8px; color: var(--t3); letter-spacing: .12em; text-transform: uppercase; }
 
 /* Trust strip */
-.trust-wrap { background: rgba(5,4,10,0.5); backdrop-filter: blur(16px); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 3rem; display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; position: relative; z-index: 3; }
+.trust-wrap { background: rgba(5,4,10,0.4); backdrop-filter: blur(6px); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 3rem; display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; position: relative; z-index: 3; }
 .trust-lbl { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; }
 .trust-logos { display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center; }
 .trust-logo { font-size: 14px; font-weight: 700; color: var(--t4); letter-spacing: -.2px; transition: color .2s; }
@@ -158,7 +157,7 @@ main { position: relative; z-index: 3; }
 .tl-role { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 3px; line-height: 1.3; }
 .tl-period { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: .06em; }
 
-/* ═══ CARDS & GRIDS (All Deep Glass) ═══ */
+/* ═══ CARDS & GRIDS ═══ */
 .svc-grid, .cases-grid, .testi-grid, .creds-grid { display: grid; gap: 1.5rem; }
 .svc-grid { grid-template-columns: repeat(3,1fr); }
 .cases-grid { grid-template-columns: repeat(2,1fr); }
@@ -166,8 +165,7 @@ main { position: relative; z-index: 3; }
 .creds-grid { grid-template-columns: repeat(5,1fr); gap: 1rem; }
 
 .svc-card, .case-card, .testi-card, .cred-card {
-  background: rgba(15, 12, 25, 0.4);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 12, 25, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 2rem; position: relative; overflow: hidden;
   transition: all .35s cubic-bezier(.23,1,.32,1); transform-style: preserve-3d; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
@@ -210,7 +208,7 @@ main { position: relative; z-index: 3; }
 .cred-s { font-family: var(--mono); font-size: 8px; color: var(--t3); letter-spacing: .04em; }
 
 .awards-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2rem; }
-.aw-pill { display: flex; align-items: center; gap: 10px; background: rgba(220,38,38,.15); border: 1px solid rgba(220,38,38,.3); border-radius: 100px; padding: 8px 18px; transition: all .2s; backdrop-filter: blur(12px); }
+.aw-pill { display: flex; align-items: center; gap: 10px; background: rgba(220,38,38,.15); border: 1px solid rgba(220,38,38,.3); border-radius: 100px; padding: 8px 18px; transition: all .2s; backdrop-filter: blur(8px); }
 .aw-pill:hover { border-color: rgba(220,38,38,.5); background: rgba(220,38,38,.25); }
 .aw-ico { font-size: 16px; }
 .aw-text { font-size: 13px; font-weight: 600; color: var(--t1); }
@@ -220,15 +218,15 @@ main { position: relative; z-index: 3; }
 .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
 .contact-intro p { font-size: 16px; color: var(--t2); line-height: 1.85; margin-bottom: 2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 .c-methods { display: flex; flex-direction: column; gap: 10px; }
-.c-method { display: flex; align-items: center; gap: 14px; background: rgba(15, 12, 25, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.25rem; text-decoration: none; transition: all .25s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.c-method { display: flex; align-items: center; gap: 14px; background: rgba(15, 12, 25, 0.4); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.25rem; text-decoration: none; transition: all .25s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .c-method:hover { border-color: var(--bred); transform: translateX(4px); background: rgba(25, 20, 35, 0.6); }
 .c-ico { font-size: 18px; flex-shrink: 0; }
 .c-lbl { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .12em; text-transform: uppercase; display: block; margin-bottom: 2px; }
 .c-val { font-size: 14px; font-weight: 500; color: var(--t1); }
 .c-method:hover .c-val { color: var(--red3); }
 
-/* FORM (Glassified) */
-.cform { background: rgba(15, 12, 25, 0.45); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2.5rem; position: relative; overflow: hidden; box-shadow: 0 10px 50px rgba(0,0,0,0.6); }
+/* FORM */
+.cform { background: rgba(15, 12, 25, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2.5rem; position: relative; overflow: hidden; box-shadow: 0 10px 50px rgba(0,0,0,0.6); }
 .cform::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), var(--purple), transparent); opacity: .8; }
 .cform-title { font-size: 22px; font-weight: 700; color: var(--t1); letter-spacing: -.5px; margin-bottom: 1.75rem; }
 .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
@@ -245,7 +243,7 @@ main { position: relative; z-index: 3; }
 .fsub:hover { opacity: .9; box-shadow: 0 8px 32px rgba(220,38,38,.6), 0 8px 32px rgba(124,58,237,.5); }
 
 /* ═══ FOOTER ═══ */
-.footer-bg { background: rgba(5,4,10,0.7); backdrop-filter: blur(24px); border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 3; }
+.footer-bg { background: rgba(5,4,10,0.7); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 3; }
 footer { max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 2.5rem; }
 .foot-top { display: grid; grid-template-columns: 2.5fr 1fr 1fr; gap: 5rem; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .foot-logo { font-size: 20px; font-weight: 800; color: var(--white); letter-spacing: -.4px; margin-bottom: .75rem; }
@@ -651,7 +649,7 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
 })();
 
 /* ═════════════════════════════════════════════════════════════
-   THE INFINITE TREADMILL 3D ENGINE
+   THE FIXED INFINITE TREADMILL 3D ENGINE
 ═════════════════════════════════════════════════════════════ */
 (function(){
   const cv = document.getElementById('fullscreen-3d-bg');
@@ -664,7 +662,8 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
   scene.fog = new THREE.FogExp2(0x05040a, 0.015); // Deep space fog
 
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 10); // Static Camera Position
+  // FIX: Camera locked at Y=0 so it never dips below the floor grid!
+  camera.position.set(0, 0, 10); 
 
   function resize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -678,18 +677,18 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
   const gridGroup = new THREE.Group();
   scene.add(gridGroup);
 
-  // Floor grid (Made massive to never run out of bounds)
+  // FIX: Lowered floor grid and made it larger so it never runs out of bounds
   const gridFloor = new THREE.GridHelper(300, 150, 0xdc2626, 0x8b5cf6);
-  gridFloor.position.y = -4;
-  gridFloor.material.opacity = 0.15;
+  gridFloor.position.y = -5;
+  gridFloor.material.opacity = 0.25;
   gridFloor.material.transparent = true;
   gridFloor.material.blending = THREE.AdditiveBlending;
   gridGroup.add(gridFloor);
 
   // Ceiling grid
   const gridCeil = new THREE.GridHelper(300, 150, 0xdc2626, 0x8b5cf6);
-  gridCeil.position.y = 6;
-  gridCeil.material.opacity = 0.08;
+  gridCeil.position.y = 5;
+  gridCeil.material.opacity = 0.15;
   gridCeil.material.transparent = true;
   gridCeil.material.blending = THREE.AdditiveBlending;
   gridGroup.add(gridCeil);
@@ -769,13 +768,14 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     pPos[i*3+1] = (Math.random() - 0.5) * 15;
     pPos[i*3+2] = 15 - Math.random() * 100; // Flow from deep Z
     
-    pCol[i*3] = 0.7 + Math.random()*0.3; // Red
-    pCol[i*3+1] = 0.1; // Green
-    pCol[i*3+2] = 0.4 + Math.random()*0.6; // Purple
+    // FIX: Making particles slightly brighter
+    pCol[i*3] = 0.8 + Math.random()*0.2; // Red
+    pCol[i*3+1] = 0.2; // Green
+    pCol[i*3+2] = 0.5 + Math.random()*0.5; // Purple
   }
   pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
   pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
-  const dataStream = new THREE.Points(pGeo, new THREE.PointsMaterial({size: 0.06, vertexColors: true, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending}));
+  const dataStream = new THREE.Points(pGeo, new THREE.PointsMaterial({size: 0.08, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending}));
   scene.add(dataStream);
 
   /* --- 4. LIGHTS --- */
@@ -784,19 +784,17 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
   scene.add(new THREE.PointLight(0x7c3aed, 2, 10));
 
   /* --- INTERACTIONS (Scroll & Mouse) --- */
-  let targetCamY = 0;
   let scrollPercent = 0;
 
   window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollPercent = scrollY / maxScroll; 
-
-      // Camera stays in place but pans down slightly to create parallax
-      targetCamY = -(scrollPercent * 4); 
+      // Prevent division by zero
+      scrollPercent = scrollY / (maxScroll || 1); 
       
+      // FIX: Camera no longer moves down! 
       // Globe scrolls UP and out of the way as you scroll down the page!
-      sphereGroup.position.y = baseSphereY + (scrollPercent * 20); 
+      sphereGroup.position.y = baseSphereY + (scrollPercent * 25); 
   });
 
   let mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
@@ -812,12 +810,11 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     requestAnimationFrame(animate);
     t3 += 0.01;
 
-    // Smooth Camera Movement (Parallax + Mouse tracking)
-    camera.position.y += (targetCamY + (mouseY * 0.5) - camera.position.y) * 0.05;
-    camera.position.x += ((mouseX * 1) - camera.position.x) * 0.05;
+    // Smooth Camera Movement (Only slight Parallax based on mouse)
+    camera.position.x += ((mouseX * 1.5) - camera.position.x) * 0.05;
+    camera.position.y += ((mouseY * 1.5) - camera.position.y) * 0.05;
     
     // 1. INFINITE GRID TREADMILL
-    // Moves the grid towards the camera continuously, then resets it instantly to create an infinite loop
     gridFloor.position.z += 0.04;
     gridCeil.position.z += 0.04;
     if(gridFloor.position.z > 2) gridFloor.position.z = 0;
@@ -827,7 +824,6 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     const dPos = dataStream.geometry.attributes.position.array;
     for(let i=0; i<pCount; i++) {
         dPos[i*3+2] += 0.15; // Move particles forward
-        // If they pass the camera, send them back to deep space
         if(dPos[i*3+2] > 15) {
             dPos[i*3+2] -= 100;
         }
