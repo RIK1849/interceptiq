@@ -662,13 +662,13 @@ main { position: relative; z-index: 3; }
 .fg { margin-bottom: 1.1rem; }
 .flbl { display: block; font-size: 12px; font-weight: 500; color: var(--t3); margin-bottom: 6px; }
 
-/* FIX: Ensure dropdown options and form elements use the system dark scheme */
+/* FIX: Forces native dark mode on inputs/dropdowns */
 .fin, .fsel, .fta {
   width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--b1);
   border-radius: 10px; padding: .75rem 1rem; color: var(--t1);
   font-family: var(--sans); font-size: 14px; outline: none;
   transition: all .2s; -webkit-appearance: none;
-  color-scheme: dark; /* Forces native elements like dropdown lists to be dark */
+  color-scheme: dark; /* This tells the browser to use dark-themed dropdowns */
 }
 .fin::placeholder, .fta::placeholder { color: var(--t5); }
 .fin:focus, .fsel:focus, .fta:focus {
@@ -688,6 +688,7 @@ main { position: relative; z-index: 3; }
   font-family: var(--sans); font-size: 15px; font-weight: 700;
   transition: all .2s; letter-spacing: -.2px;
   box-shadow: 0 4px 20px rgba(220,38,38,.3), 0 4px 20px rgba(124,58,237,.2);
+  cursor: pointer;
 }
 .fsub:hover { opacity: .9; box-shadow: 0 8px 32px rgba(220,38,38,.4), 0 8px 32px rgba(124,58,237,.3); }
 
@@ -1163,7 +1164,7 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
   draw();
 })();
 
-/* ═══ THREE.JS INTERACTIVE SPHERE ═══ */
+/* ═══ THREE.JS INTERACTIVE SPHERE WITH CYBER SHIELDS ═══ */
 (function(){
   const cv = document.getElementById('cv-sphere');
   if(!cv) return;
@@ -1183,6 +1184,12 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
   }
   addEventListener('resize',resize); resize();
 
+  /* NEW: Dark Solid Core to block back-particles and give the sphere mass */
+  const coreGeo = new THREE.SphereGeometry(0.98, 32, 32);
+  const coreMat = new THREE.MeshBasicMaterial({color: 0x05040a, transparent: true, opacity: 0.85});
+  const globeCore = new THREE.Mesh(coreGeo, coreMat);
+  scene.add(globeCore);
+
   /* Point cloud — 3000 particles breathing on sphere surface */
   const N=3000;
   const positions = new Float32Array(N*3);
@@ -1197,12 +1204,12 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
     basePos[i*3]  =r*Math.sin(th)*Math.cos(ph);
     basePos[i*3+1]=r*Math.cos(th);
     basePos[i*3+2]=r*Math.sin(th)*Math.sin(ph);
-    /* Gradient: red to purple based on latitude */
-    const lat=Math.cos(th); // -1 to 1
+    
+    const lat=Math.cos(th); 
     const t2=(lat+1)/2;
-    colors[i*3]  =.55+t2*.45;  // R: more red toward top
-    colors[i*3+1]=(1-t2)*.15;  // G: near zero
-    colors[i*3+2]=.25+t2*.45;  // B: more purple toward bottom
+    colors[i*3]  =.55+t2*.45;  
+    colors[i*3+1]=(1-t2)*.15;  
+    colors[i*3+2]=.25+t2*.45;  
   }
 
   const geo = new THREE.BufferGeometry();
@@ -1212,6 +1219,25 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
   const mat = new THREE.PointsMaterial({size:.014,vertexColors:true,transparent:true,opacity:.9,sizeAttenuation:true});
   const cloud = new THREE.Points(geo,mat);
   scene.add(cloud);
+
+  /* NEW: Cyber Shield Forcefields */
+  const shieldGeo = new THREE.IcosahedronGeometry(1.28, 1);
+  const shieldMat = new THREE.MeshBasicMaterial({color: 0xdc2626, wireframe: true, transparent: true, opacity: 0.05, blending: THREE.AdditiveBlending});
+  const shield = new THREE.Mesh(shieldGeo, shieldMat);
+  scene.add(shield);
+
+  const shield2Geo = new THREE.IcosahedronGeometry(1.22, 2);
+  const shield2Mat = new THREE.MeshBasicMaterial({color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending});
+  const shield2 = new THREE.Mesh(shield2Geo, shield2Mat);
+  scene.add(shield2);
+
+  /* NEW: Cyber Grid Tactical Floor */
+  const gridHelper = new THREE.GridHelper(6, 30, 0xdc2626, 0x8b5cf6);
+  gridHelper.position.y = -1.6;
+  gridHelper.material.opacity = 0.15;
+  gridHelper.material.transparent = true;
+  gridHelper.material.blending = THREE.AdditiveBlending;
+  scene.add(gridHelper);
 
   /* City dots */
   const cities=[[23,72,true],[51.5,-.1,false],[40.7,-74,false],[35.7,139.7,false],[-33.9,151.2,false],[55.7,37.6,false],[1.3,103.8,false],[48.8,2.3,false],[28.6,77.2,false],[37.8,-122,false],[39.9,116.4,false],[19.1,72.9,false]];
@@ -1226,13 +1252,12 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
     const dot=new THREE.Mesh(new THREE.SphereGeometry(home?.02:.012,8,8),new THREE.MeshBasicMaterial({color:home?0xdc2626:0xc4b5fd}));
     dot.position.copy(pos); scene.add(dot);
     if(home){
-      /* Pulsing ring around Ahmedabad */
       const pr=new THREE.Mesh(new THREE.TorusGeometry(.048,.004,8,24),new THREE.MeshBasicMaterial({color:0xdc2626,transparent:true,opacity:.8}));
       pr.position.copy(pos); pr.lookAt(0,0,0); scene.add(pr);
     }
   });
 
-  /* Orbit rings — gradient red+purple feel */
+  /* Orbit rings */
   [[1.18,.003,0,0,0xdc2626,.5],[1.12,.002,.5,.3,0x8b5cf6,.35],[1.24,.002,1.1,.8,0xef4444,.2]].forEach(([r,t2,rx2,rz,col,op])=>{
     const ring=new THREE.Mesh(new THREE.TorusGeometry(r,t2,8,100),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op}));
     ring.rotation.x=rx2; ring.rotation.z=rz; scene.add(ring);
@@ -1279,7 +1304,20 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEa
   function animate(){
     requestAnimationFrame(animate); t3+=.008;
     if(!isDrag){ rotY+=.002; velX*=.96; velY*=.96; rotX+=velX; rotY+=velY; }
+    
+    // Rotate elements
     cloud.rotation.y=rotY; cloud.rotation.x=rotX;
+    globeCore.rotation.y=rotY; globeCore.rotation.x=rotX;
+    
+    // Animate Shields
+    shield.rotation.y -= 0.001;
+    shield.rotation.x += 0.0005;
+    shield2.rotation.y += 0.0015;
+    shield2.rotation.z -= 0.0008;
+
+    // Animate Grid Floor (forward moving effect)
+    gridHelper.position.z += 0.003;
+    if(gridHelper.position.z > 0.2) gridHelper.position.z = 0;
 
     /* Breathe — particles pulse in and out */
     const pos=geo.attributes.position.array;
@@ -1353,7 +1391,7 @@ document.querySelectorAll('.svc-card, .case-card, .testi-card').forEach(card=>{
   card.addEventListener('mouseleave',()=>card.style.transform='');
 });
 
-/* ═══ FIX: WEB3FORMS HANDLER ═══ */
+/* ═══ WEB3FORMS HANDLER ═══ */
 const form = document.getElementById('contact-form');
 const result = document.getElementById('result');
 const btn = document.getElementById('submit-btn');
