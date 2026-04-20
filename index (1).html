@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InterceptIQ — Rutvik Chavda | Endpoint Security Engineer | EDR/XDR | Sophos</title>
+<meta name="description" content="InterceptIQ by Rutvik Chavda. Senior Endpoint Security Engineer — EDR/XDR, Sophos Intercept X, Threat Hunting, Incident Response, SIEM Splunk, MITRE ATT&CK. Available for MNC roles and consulting globally.">
+<meta name="keywords" content="Rutvik Chavda, InterceptIQ, Endpoint Security Engineer, EDR XDR, Sophos Intercept X, Sophos Central, Threat Hunting, Incident Response, SIEM Splunk, MITRE ATT&CK, Security Automation, PowerShell, Windows Event Log, Malware Analysis, Hire Security Engineer India">
+<meta name="author" content="Rutvik Chavda — InterceptIQ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   INTERCEPTIQ — ULTIMATE FUSION EDITION
+   Direction 1: Massive editorial typography
+   Direction 2: Glass morphism + aurora panels
+   Direction 3: Split white/dark sections
+   3D: Three.js particle sphere, contained right
+   Text: ALWAYS readable, ALWAYS solid bg
+═══════════════════════════════════════════════ */
+:root {
+  /* Base palette */
+  --black: #000000;
+  --near-black: #05040a;
+  --dark: #0a0812;
+  --dark2: #0f0d18;
+  --dark3: #14111f;
+  --white: #ffffff;
+  --off-white: #f8fafc;
+  /* Accent */
+  --red: #dc2626;
+  --red2: #ef4444;
+  --red3: #f87171;
+  --red4: #fca5a5;
+  --purple: #7c3aed;
+  --purple2: #8b5cf6;
+  --purple3: #a78bfa;
+  /* Text scale */
+  --t1: #ffffff;
+  --t2: #e2e8f0;
+  --t3: #94a3b8;
+  --t4: #475569;
+  --t5: #1e293b;
+  /* Borders */
+  --b1: rgba(255,255,255,0.10);
+  --b2: rgba(255,255,255,0.16);
+  --b3: rgba(255,255,255,0.06);
+  --bred: rgba(220,38,38,0.35);
+  --bpurple: rgba(139,92,246,0.35);
+  /* Fonts */
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--black);
+  color: var(--t2);
+  font-family: var(--sans);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 1px; }
+
+/* ═══ CURSOR ═══ */
+*, *::before, *::after { cursor: none !important; }
+#c-dot {
+  position: fixed; z-index: 99999; pointer-events: none;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--red); transform: translate(-50%,-50%);
+  transition: width .12s, height .12s;
+}
+#c-ring {
+  position: fixed; z-index: 99998; pointer-events: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(220,38,38,0.4);
+  transform: translate(-50%,-50%);
+  transition: all .15s cubic-bezier(.23,1,.32,1);
+  mix-blend-mode: normal;
+}
+.fp {
+  position: fixed; pointer-events: none; border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: fpAnim .65s ease forwards; z-index: 99997;
+}
+@keyframes fpAnim {
+  0%   { opacity:.9; transform:translate(-50%,-50%) scale(1); }
+  100% { opacity:0;  transform:translate(-50%,-65%) scale(0); }
+}
+
+/* ═══ BACKGROUND CANVASES ═══ */
+#cv-stars  { position:fixed; inset:0; z-index:0; pointer-events:none; }
+#cv-aurora { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.6; }
+#cv-net    { position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.5; }
+
+/* ═══ NAV — glass, always readable ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(5,4,10,0.88);
+  backdrop-filter: blur(40px) saturate(1.5);
+  border-bottom: 1px solid var(--b3);
+}
+nav::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red) 25%, var(--purple) 75%, transparent);
+  opacity: .5;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 11px; text-decoration: none;
+}
+.nav-mark {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: #fff; letter-spacing: -.5px;
+  box-shadow: 0 0 20px rgba(124,58,237,.35), 0 0 20px rgba(220,38,38,.2);
+  flex-shrink: 0;
+}
+.nav-name {
+  font-size: 17px; font-weight: 800; color: var(--white); letter-spacing: -.4px;
+}
+.nav-name .accent { color: var(--red); }
+.nav-sub {
+  font-family: var(--mono); font-size: 9px; color: var(--t4);
+  letter-spacing: .12em; text-transform: uppercase; margin-top: 1px;
+}
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none;
+}
+.nav-links a {
+  font-size: 14px; font-weight: 500; color: var(--t4);
+  text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--t1); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-badge {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; color: #10b981;
+  background: rgba(16,185,129,.07);
+  border: 1px solid rgba(16,185,129,.22);
+  padding: 4px 13px; border-radius: 100px; letter-spacing: .06em;
+}
+.nav-badge::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: #10b981; box-shadow: 0 0 6px #10b981;
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+.nav-cta {
+  font-size: 14px; font-weight: 600; color: var(--white);
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  border: none; border-radius: 9px; padding: 9px 22px;
+  text-decoration: none; transition: all .2s; letter-spacing: -.1px;
+  box-shadow: 0 4px 20px rgba(124,58,237,.3);
+}
+.nav-cta:hover {
+  box-shadow: 0 4px 30px rgba(220,38,38,.5), 0 4px 30px rgba(124,58,237,.3);
+  transform: translateY(-1px);
+}
+
+/* ═══ MAIN ═══ */
+main { position: relative; z-index: 3; }
+
+/* ─── SOLID SECTION BACKGROUNDS — text always readable ─── */
+.bg-black  { background: var(--black); }
+.bg-dark   { background: var(--dark); }
+.bg-dark2  { background: var(--dark2); }
+.bg-split  { background: var(--dark); }
+.section-z { position: relative; z-index: 3; }
+
+/* ═══ HERO ═══
+   Direction 3 structure: left massive text on dark, right stats on darker
+   Direction 1 typography: enormous outlined+solid names
+   Direction 2 glass panels on the right side
+*/
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 64px;
+  position: relative;
+  z-index: 3;
+}
+/* Left half — dark, large type */
+.hero-left {
+  background: var(--near-black);
+  padding: 5rem 4rem 5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--b1);
+}
+.hero-left::before {
+  content: '';
+  position: absolute; bottom: 0; right: 0;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(220,38,38,.08), transparent 70%);
+  pointer-events: none;
+}
+/* Right half — darker with aurora + glass */
+.hero-right {
+  background: var(--dark);
+  padding: 5rem 3rem 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-right::before {
+  content: '';
+  position: absolute; top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(124,58,237,.12), transparent 65%);
+  pointer-events: none;
+}
+.hero-right::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(220,38,38,.07), transparent 65%);
+  pointer-events: none;
+}
+
+/* HERO LEFT CONTENT */
+.hero-eye {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--red3); letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.hero-eye::before {
+  content: ''; width: 20px; height: 1px; background: var(--red);
+}
+
+/* The name — Direction 1: massive, outline + solid combo */
+.hero-name {
+  display: flex; flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+.hn-solid {
+  font-size: clamp(4.5rem,7vw,6.5rem);
+  font-weight: 900; line-height: .92;
+  letter-spacing: -4px; color: var(--white);
+}
+.hn-outline {
+  font-size: clamp(4.5rem,7vw,6.5rem);
+  font-weight: 900; line-height: .92;
+  letter-spacing: -4px;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--red);
+  position: relative; display: inline-block;
+}
+.hn-outline::before {
+  content: 'CHAVDA';
+  position: absolute; left: 3px; top: 0;
+  -webkit-text-stroke: 2px rgba(124,58,237,.6);
+  color: transparent;
+  opacity: 0; animation: glA 8s infinite;
+}
+.hn-outline::after {
+  content: 'CHAVDA';
+  position: absolute; left: -3px; top: 0;
+  -webkit-text-stroke: 2px rgba(255,255,255,.12);
+  color: transparent;
+  opacity: 0; animation: glB 8s infinite;
+}
+@keyframes glA { 0%,87%,100%{opacity:0;} 88%{opacity:.7;transform:translateX(5px);} 92%{opacity:.7;transform:translateX(-2px);} 94%{opacity:0;} }
+@keyframes glB { 0%,87%,100%{opacity:0;} 89%{opacity:.5;transform:translateX(-5px);} 93%{opacity:.5;transform:translateX(2px);} 95%{opacity:0;} }
+
+/* Red accent underline — Direction 3 touch */
+.name-rule {
+  width: 80px; height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--purple));
+  border-radius: 2px;
+  margin: 1.25rem 0;
+}
+
+.hero-title {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--t4); letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero-ats {
+  font-family: var(--mono); font-size: 9px; color: var(--t5);
+  letter-spacing: .05em; line-height: 2; margin-bottom: 1.5rem;
+}
+.hero-desc {
+  font-size: 17px; color: var(--t3); line-height: 1.85;
+  max-width: 480px; margin-bottom: 2.5rem;
+}
+.hero-desc strong { color: var(--t2); font-weight: 600; }
+
+.hero-cta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.btn-grad {
+  font-size: 15px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  border: none; border-radius: 10px; padding: 14px 28px;
+  text-decoration: none; transition: all .25s;
+  display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 24px rgba(220,38,38,.3), 0 4px 24px rgba(124,58,237,.2);
+  letter-spacing: -.2px;
+}
+.btn-grad:hover {
+  box-shadow: 0 8px 40px rgba(220,38,38,.5), 0 8px 40px rgba(124,58,237,.3);
+  transform: translateY(-2px);
+}
+.btn-glass {
+  font-size: 15px; font-weight: 500; color: var(--t2);
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--b2);
+  border-radius: 10px; padding: 14px 28px;
+  text-decoration: none; transition: all .22s;
+  display: inline-flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(10px);
+}
+.btn-glass:hover {
+  border-color: rgba(255,255,255,.28);
+  background: rgba(255,255,255,.08);
+  color: var(--t1);
+}
+
+/* HERO RIGHT CONTENT — Direction 2 glass panels + live stats */
+.hero-sphere-wrap {
+  position: relative; width: 100%; max-width: 340px;
+  margin: 0 auto 2.5rem;
+  aspect-ratio: 1;
+}
+#cv-sphere { display: block; width: 100%; height: 100%; }
+.sphere-label {
+  text-align: center; margin-top: .75rem;
+  font-family: var(--mono); font-size: 9px; color: var(--t5);
+  letter-spacing: .15em;
+}
+
+/* Glass stat cards — Direction 2 */
+.stat-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.stat-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--b1);
+  border-radius: 14px; padding: 1.1rem 1.25rem;
+  position: relative; overflow: hidden;
+  transition: all .3s;
+}
+.stat-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.stat-card:hover {
+  border-color: rgba(220,38,38,.25);
+  background: rgba(255,255,255,.06);
+}
+.stat-card:hover::before { opacity: 1; }
+.stat-val {
+  font-size: 2rem; font-weight: 900; color: var(--white);
+  letter-spacing: -1.5px; line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-val.red { color: var(--red2); }
+.stat-val.purple { color: var(--purple3); }
+.stat-val.green { color: #34d399; }
+.stat-lbl {
+  font-family: var(--mono); font-size: 8px; color: var(--t4);
+  letter-spacing: .12em; text-transform: uppercase;
+}
+
+/* Trust strip */
+.trust-wrap {
+  background: var(--dark3);
+  border-top: 1px solid var(--b3);
+  border-bottom: 1px solid var(--b3);
+  padding: 1.25rem 3rem;
+  display: flex; align-items: center; gap: 2.5rem;
+  flex-wrap: wrap; position: relative; z-index: 3;
+}
+.trust-lbl {
+  font-family: var(--mono); font-size: 9px; color: var(--t5);
+  letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
+}
+.trust-logos { display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center; }
+.trust-logo {
+  font-size: 14px; font-weight: 700; color: var(--t5);
+  letter-spacing: -.2px; transition: color .2s;
+}
+.trust-logo:hover { color: var(--t3); }
+
+/* ═══ SHARED SECTION STYLES ═══ */
+.section-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 7rem 3rem;
+}
+.section-header { margin-bottom: 4rem; }
+.s-eye {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: var(--red2); letter-spacing: .28em; text-transform: uppercase;
+  margin-bottom: .85rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.s-eye::before { content: ''; width: 16px; height: 1px; background: var(--red); }
+.s-title {
+  font-size: clamp(2.2rem,3.8vw,3.2rem);
+  font-weight: 900; color: var(--white);
+  letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 1rem;
+}
+.s-title .r  { color: var(--red2); }
+.s-title .p  { color: var(--purple3); }
+.s-sub {
+  font-size: 17px; color: var(--t3); line-height: 1.8;
+  max-width: 560px; font-weight: 400;
+}
+.divider { height: 1px; background: var(--b3); position: relative; z-index: 3; }
+
+/* ═══ ABOUT ═══
+   Direction 3: side by side, clear hierarchy
+*/
+.about-layout {
+  display: grid; grid-template-columns: 3fr 2fr;
+  gap: 6rem; align-items: start;
+}
+.about-text p {
+  font-size: 16px; color: var(--t3); line-height: 1.9;
+  margin-bottom: 1.1rem;
+}
+.about-text p strong { color: var(--t2); font-weight: 600; }
+.about-actions { display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap; }
+.btn-sm-grad {
+  font-size: 14px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  border: none; border-radius: 8px; padding: 10px 22px;
+  text-decoration: none; transition: all .2s;
+}
+.btn-sm-grad:hover { opacity: .9; transform: translateY(-1px); }
+.btn-sm-glass {
+  font-size: 14px; font-weight: 500; color: var(--t2);
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--b2); border-radius: 8px; padding: 10px 22px;
+  text-decoration: none; transition: all .2s;
+}
+.btn-sm-glass:hover { border-color: var(--b2); background: rgba(255,255,255,.08); color: var(--white); }
+.timeline { display: flex; flex-direction: column; }
+.tl-item { display: flex; gap: 1.25rem; padding-bottom: 2rem; position: relative; }
+.tl-item::before {
+  content: ''; position: absolute; left: 7px; top: 20px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--red), rgba(124,58,237,.3), transparent);
+}
+.tl-item:last-child::before { display: none; }
+.tl-dot {
+  width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+  margin-top: 2px; border: 2px solid var(--red); background: var(--black);
+  box-shadow: 0 0 12px rgba(220,38,38,.5);
+  animation: tlPulse 2.5s ease infinite;
+}
+.tl-item:not(:first-child) .tl-dot {
+  border-color: var(--t5); box-shadow: none; animation: none;
+  background: var(--dark);
+}
+@keyframes tlPulse { 0%,100%{box-shadow:0 0 8px rgba(220,38,38,.5);} 50%{box-shadow:0 0 18px rgba(220,38,38,.9);} }
+.tl-org { font-family: var(--mono); font-size: 9px; color: var(--red3); letter-spacing: .1em; margin-bottom: 3px; }
+.tl-role { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 3px; line-height: 1.3; }
+.tl-period { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .06em; }
+
+/* ═══ SERVICES ═══
+   Direction 2 glass cards + Direction 1 number labelling
+*/
+.svc-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+}
+.svc-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--b1);
+  border-radius: 18px; padding: 2rem;
+  position: relative; overflow: hidden;
+  transition: all .35s cubic-bezier(.23,1,.32,1);
+  transform-style: preserve-3d;
+}
+.svc-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(220,38,38,.06) 0%, rgba(124,58,237,.04) 60%, transparent 100%);
+  opacity: 0; transition: opacity .35s;
+}
+.svc-card:hover {
+  border-color: var(--bred);
+  box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(220,38,38,.08);
+  transform: translateY(-8px) rotateX(2deg) rotateY(1deg);
+  background: rgba(255,255,255,.05);
+}
+.svc-card:hover::before { opacity: 1; }
+.svc-card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.svc-num {
+  font-family: var(--mono); font-size: 10px; color: var(--t5); letter-spacing: .15em;
+}
+.svc-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(220,38,38,.1); border: 1px solid rgba(220,38,38,.2);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.svc-title {
+  font-size: 18px; font-weight: 700; color: var(--t1);
+  margin-bottom: .7rem; letter-spacing: -.3px; line-height: 1.2;
+}
+.svc-desc {
+  font-size: 14px; color: var(--t3); line-height: 1.8; margin-bottom: 1.4rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--mono); font-size: 9px; padding: 3px 9px;
+  border-radius: 5px; color: var(--t4);
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.02);
+  transition: all .2s;
+}
+.svc-card:hover .tag { border-color: rgba(220,38,38,.2); color: var(--t3); }
+
+/* ═══ CASE STUDIES — Direction 3 split feel ═══ */
+.cases-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.case-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--b1);
+  border-radius: 18px; padding: 2.25rem;
+  transition: all .35s; position: relative; overflow: hidden;
+}
+.case-card:hover {
+  border-color: var(--bred);
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  transform: translateY(-6px);
+}
+.case-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+}
+.badge-ind {
+  font-family: var(--mono); font-size: 9px; color: var(--red3);
+  border: 1px solid rgba(220,38,38,.25); background: rgba(220,38,38,.07);
+  padding: 3px 10px; border-radius: 100px; letter-spacing: .08em;
+}
+.badge-ok {
+  font-family: var(--mono); font-size: 9px; color: #34d399;
+  border: 1px solid rgba(52,211,153,.25); background: rgba(52,211,153,.07);
+  padding: 3px 10px; border-radius: 100px;
+}
+.case-title {
+  font-size: 19px; font-weight: 700; color: var(--t1);
+  margin-bottom: .8rem; letter-spacing: -.3px; line-height: 1.2;
+}
+.case-desc { font-size: 14px; color: var(--t3); line-height: 1.8; margin-bottom: 1.5rem; }
+.case-metrics {
+  display: flex; gap: 2rem; padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.met-val {
+  font-size: 24px; font-weight: 900; letter-spacing: -1px;
+  color: var(--t1); line-height: 1;
+}
+.met-val.gr { color: #34d399; }
+.met-val.rd { color: var(--red2); }
+.met-lbl { font-family: var(--mono); font-size: 9px; color: var(--t4); margin-top: 4px; }
+
+/* ═══ TESTIMONIALS — Direction 2 glass ═══ */
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.testi-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--b1);
+  border-radius: 18px; padding: 2rem;
+  transition: all .3s; position: relative; overflow: hidden;
+}
+.testi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--red), var(--purple));
+  opacity: 0; transition: opacity .3s;
+}
+.testi-card:hover {
+  border-color: var(--bpurple);
+  box-shadow: 0 20px 50px rgba(0,0,0,.6);
+  transform: translateY(-5px);
+}
+.testi-card:hover::before { opacity: .7; }
+.testi-stars { color: var(--red2); font-size: 13px; letter-spacing: 2px; margin-bottom: 1rem; }
+.testi-q-mark { font-size: 48px; color: rgba(220,38,38,.2); line-height: 1; font-family: Georgia,serif; margin-bottom: -.4rem; }
+.testi-text { font-size: 15px; color: var(--t2); line-height: 1.85; margin-bottom: 1.75rem; }
+.testi-author {
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.25rem;
+}
+.t-av {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(220,38,38,.25), rgba(124,58,237,.25));
+  border: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--t2);
+}
+.t-name { font-size: 14px; font-weight: 600; color: var(--t1); }
+.t-role { font-size: 12px; color: var(--t4); margin-top: 2px; }
+
+/* ═══ CREDENTIALS ═══ */
+.creds-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1rem; }
+.cred-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--b1);
+  border-radius: 12px; padding: 1.1rem;
+  display: flex; align-items: flex-start; gap: 10px;
+  transition: all .25s;
+}
+.cred-card:hover { border-color: var(--bred); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.4); }
+.cred-badge {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 8px; font-weight: 700;
+}
+.cred-n { font-size: 12px; font-weight: 600; color: var(--t1); line-height: 1.3; margin-bottom: 2px; }
+.cred-s { font-family: var(--mono); font-size: 8px; color: var(--t4); letter-spacing: .04em; }
+.awards-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2rem; }
+.aw-pill {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(220,38,38,.05);
+  border: 1px solid rgba(220,38,38,.18);
+  border-radius: 100px; padding: 8px 18px; transition: all .2s;
+}
+.aw-pill:hover { border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.09); }
+.aw-ico { font-size: 16px; }
+.aw-text { font-size: 13px; font-weight: 600; color: var(--t1); }
+.aw-sub { font-family: var(--mono); font-size: 9px; color: var(--t4); }
+
+/* ═══ CONTACT ═══ */
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.contact-intro p { font-size: 16px; color: var(--t3); line-height: 1.85; margin-bottom: 2rem; }
+.c-methods { display: flex; flex-direction: column; gap: 10px; }
+.c-method {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,.03); border: 1px solid var(--b1);
+  border-radius: 12px; padding: 1rem 1.25rem;
+  text-decoration: none; transition: all .25s;
+}
+.c-method:hover { border-color: var(--bred); transform: translateX(4px); background: rgba(255,255,255,.05); }
+.c-ico { font-size: 18px; flex-shrink: 0; }
+.c-lbl { font-family: var(--mono); font-size: 9px; color: var(--t5); letter-spacing: .12em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+.c-val { font-size: 14px; font-weight: 500; color: var(--t1); }
+.c-method:hover .c-val { color: var(--red3); }
+.cform {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--b1);
+  border-radius: 20px; padding: 2.5rem;
+  position: relative; overflow: hidden;
+}
+.cform::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), var(--purple), transparent);
+  opacity: .6;
+}
+.cform-title { font-size: 22px; font-weight: 700; color: var(--t1); letter-spacing: -.5px; margin-bottom: 1.75rem; }
+.f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
+.fg { margin-bottom: 1.1rem; }
+.flbl { display: block; font-size: 12px; font-weight: 500; color: var(--t3); margin-bottom: 6px; }
+.fin, .fsel, .fta {
+  width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--b1);
+  border-radius: 10px; padding: .75rem 1rem; color: var(--t1);
+  font-family: var(--sans); font-size: 14px; outline: none;
+  transition: all .2s; -webkit-appearance: none;
+}
+.fin::placeholder, .fta::placeholder { color: var(--t5); }
+.fin:focus, .fsel:focus, .fta:focus {
+  border-color: rgba(220,38,38,.4);
+  box-shadow: 0 0 0 3px rgba(220,38,38,.1);
+  background: rgba(255,255,255,.06);
+}
+.fta { height: 115px; resize: none; }
+.fsub {
+  width: 100%; padding: 15px;
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  border: none; border-radius: 12px; color: #fff;
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  transition: all .2s; letter-spacing: -.2px;
+  box-shadow: 0 4px 20px rgba(220,38,38,.3), 0 4px 20px rgba(124,58,237,.2);
+}
+.fsub:hover { opacity: .9; box-shadow: 0 8px 32px rgba(220,38,38,.4), 0 8px 32px rgba(124,58,237,.3); }
+
+/* ═══ FOOTER ═══ */
+.footer-bg { background: var(--black); border-top: 1px solid var(--b3); position: relative; z-index: 3; }
+footer { max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 2.5rem; }
+.foot-top { display: grid; grid-template-columns: 2.5fr 1fr 1fr; gap: 5rem; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--b3); }
+.foot-logo { font-size: 20px; font-weight: 800; color: var(--white); letter-spacing: -.4px; margin-bottom: .75rem; }
+.foot-logo .r { color: var(--red); }
+.foot-desc { font-size: 14px; color: var(--t4); line-height: 1.75; max-width: 280px; }
+.foot-col-h { font-size: 13px; font-weight: 600; color: var(--t1); margin-bottom: 1rem; }
+.foot-links { display: flex; flex-direction: column; gap: 8px; }
+.foot-links a { font-size: 14px; color: var(--t4); text-decoration: none; transition: color .2s; }
+.foot-links a:hover { color: var(--t1); }
+.foot-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.foot-copy { font-family: var(--mono); font-size: 9px; color: var(--t5); letter-spacing: .08em; }
+.foot-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.foot-badge { font-family: var(--mono); font-size: 9px; color: var(--t5); border: 1px solid var(--b3); border-radius: 4px; padding: 3px 8px; }
+
+/* ═══ REVEAL ═══ */
+.ri { opacity: 0; transform: translateY(24px); transition: opacity .75s cubic-bezier(.23,1,.32,1), transform .75s cubic-bezier(.23,1,.32,1); }
+.ri.in { opacity: 1; transform: none; }
+.d1{transition-delay:.07s;} .d2{transition-delay:.13s;} .d3{transition-delay:.18s;}
+.d4{transition-delay:.23s;} .d5{transition-delay:.28s;} .d6{transition-delay:.33s;}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px){
+  #hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 5rem 2rem 3rem; }
+  .hero-right { padding: 3rem 2rem 5rem; border-top: 1px solid var(--b1); }
+  .about-layout,.contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
+  .cases-grid,.testi-grid { grid-template-columns: 1fr; }
+  .creds-grid { grid-template-columns: repeat(3,1fr); }
+  .foot-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  nav .nav-links { display: none; }
+  nav { padding: 0 1.5rem; }
+}
+@media(max-width:640px){
+  .hn-solid,.hn-outline { font-size: 3.5rem; letter-spacing: -2px; }
+  .section-inner { padding: 4.5rem 1.5rem; }
+  .hero-left { padding: 5rem 1.5rem 2rem; }
+  .hero-right { padding: 2rem 1.5rem 4rem; }
+  .svc-grid,.creds-grid,.cases-grid,.testi-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .trust-wrap { padding: 1.25rem 1.5rem; gap: 1.25rem; }
+  .foot-top { grid-template-columns: 1fr; gap: 2rem; }
+  footer { padding: 3rem 1.5rem 2rem; }
+  .f2 { grid-template-columns: 1fr; }
+  .hero-sphere-wrap { max-width: 260px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- BACKGROUND CANVASES -->
+<canvas id="cv-stars"></canvas>
+<canvas id="cv-aurora"></canvas>
+<canvas id="cv-net"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-brand">
+    <div class="nav-mark">IQ</div>
+    <div>
+      <div class="nav-name">Intercept<span class="accent">IQ</span></div>
+      <div class="nav-sub">by Rutvik Chavda</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-badge">Available for hire</span>
+    <a href="#contact" class="nav-cta">Work with me →</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<!-- Direction 3: split two halves | Direction 1: massive name | Direction 2: glass stats -->
+<section id="hero" style="position:relative;z-index:3;">
+
+  <!-- LEFT — dark panel with giant typography -->
+  <div class="hero-left">
+    <div class="hero-eye ri">Clearance L3 · EDR/XDR · Sophos · Threat Hunting · IR</div>
+
+    <div class="hero-name ri d1">
+      <span class="hn-solid">RUTVIK</span>
+      <span class="hn-outline">CHAVDA</span>
+    </div>
+
+    <div class="name-rule ri d2"></div>
+
+    <p class="hero-title ri d2" id="hero-title-el">Endpoint Security Engineer — EDR/XDR Specialist</p>
+
+    <p class="hero-ats ri d2">Sophos Central · Intercept X · XDR · Live Discover · Splunk SIEM · MITRE ATT&amp;CK · PowerShell · Security Automation · Malware Analysis · Incident Response</p>
+
+    <p class="hero-desc ri d3">
+      Elite endpoint security consulting and engineering.
+      <strong>3+ years at Sophos</strong> defending enterprise fleets across
+      Windows, macOS, and Linux. I don't monitor threats —
+      <strong>I intercept them before they breathe.</strong>
+    </p>
+
+    <div class="hero-cta ri d4">
+      <a href="#contact" class="btn-grad">Engage InterceptIQ →</a>
+      <a href="#cases" class="btn-glass">View case studies</a>
+      <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" rel="noopener" class="btn-glass">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <!-- RIGHT — darker panel with 3D sphere + glass stat cards -->
+  <div class="hero-right">
+    <div class="hero-sphere-wrap ri d1">
+      <canvas id="cv-sphere"></canvas>
+    </div>
+    <p class="sphere-label ri d2">DRAG TO ROTATE · LIVE THREAT MAP</p>
+
+    <div class="stat-grid ri d3">
+      <div class="stat-card">
+        <div class="stat-val red" data-count="3" data-suffix="+">3+</div>
+        <div class="stat-lbl">Yrs at Sophos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val purple">Top10</div>
+        <div class="stat-lbl">FY25 Global Rank</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" data-count="99" data-suffix="%">99%</div>
+        <div class="stat-lbl">Detection Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val green">&lt;5m</div>
+        <div class="stat-lbl">Avg MTTR</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Trust strip -->
+<div class="trust-wrap">
+  <span class="trust-lbl">Expertise trusted by</span>
+  <div class="trust-logos">
+    <span class="trust-logo">Sophos</span>
+    <span class="trust-logo">CrowdStrike</span>
+    <span class="trust-logo">Microsoft</span>
+    <span class="trust-logo">Splunk</span>
+    <span class="trust-logo">AWS</span>
+    <span class="trust-logo">SentinelOne</span>
+    <span class="trust-logo">Palo Alto</span>
+  </div>
+</div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<div class="bg-dark section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">Operator Profile</div>
+    <h2 class="s-title ri d1">Built on 3+ years of<br><span class="r">elite threat operations</span></h2>
+  </div>
+  <div class="about-layout">
+    <div class="about-text ri d2">
+      <p><strong>InterceptIQ</strong> is the security consultancy of <strong>Rutvik Chavda</strong> — a senior Endpoint Security Engineer with 3+ years at <strong>Sophos</strong> in L2/L3 technical support engineering, handling the most complex enterprise security incidents globally.</p>
+      <p>I specialise in <strong>EDR/XDR, Sophos Intercept X, Incident Response, and enterprise-scale threat investigation</strong> across Windows, macOS, and Linux. End-to-end ownership of high-priority escalations and direct collaboration with Sophos product engineering on defect validation and fix verification.</p>
+      <p>Core investigative stack: <strong>Sophos XDR Data Lake, Live Discover SQL, Sysmon, Windows Event Logs, Splunk SIEM</strong>. Automation: <strong>PowerShell, Bash, Python, REST API</strong>. Deep <strong>MITRE ATT&CK</strong> framework expertise and behavioural detection engineering.</p>
+      <p>Recognised as <strong>Top 10 Support Engineer globally — FY25</strong> and <strong>Sophos Top Staff Community Contributor — Q2, Q3, Q4, and Overall CY25</strong>.</p>
+      <div class="about-actions">
+        <a href="mailto:chavdarutvik1849@gmail.com" class="btn-sm-grad">Email directly</a>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" rel="noopener" class="btn-sm-glass">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="timeline ri d3">
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-org">SOPHOS · AHMEDABAD, INDIA</div><div class="tl-role">Technical Support Engineer L2/L3</div><div class="tl-period">JULY 2023 – MARCH 2026 · 2 YRS 9 MONTHS</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-org">SOPHOS · AHMEDABAD, INDIA</div><div class="tl-role">Technical Support Engineer Intern</div><div class="tl-period">JANUARY 2023 – JUNE 2023 · 6 MONTHS</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-org">GANPAT UNIVERSITY · GUJARAT</div><div class="tl-role">B.Tech — Computer Engineering</div><div class="tl-period">JULY 2019 – JUNE 2023</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<div class="bg-black section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">What InterceptIQ Does</div>
+    <h2 class="s-title ri d1">Services built for<br><span class="p">enterprise threat defence</span></h2>
+    <p class="s-sub ri d2">From ransomware containment to full EDR/XDR deployments — every engagement delivered with Sophos L3 precision.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card ri d1"><div class="svc-card-top"><span class="svc-num">01</span><div class="svc-icon">🛡️</div></div><div class="svc-title">Endpoint Security Engineering</div><div class="svc-desc">Full EDR/XDR deployment, policy tuning, and ongoing management. Sophos Central, Intercept X, and aligned platforms at enterprise scale across Windows, macOS, and Linux fleets.</div><div class="tags"><span class="tag">Sophos Central</span><span class="tag">Intercept X</span><span class="tag">Sophos XDR</span><span class="tag">MDR</span><span class="tag">Live Response</span></div></div>
+    <div class="svc-card ri d2"><div class="svc-card-top"><span class="svc-num">02</span><div class="svc-icon">🔍</div></div><div class="svc-title">Threat Hunting & Incident Response</div><div class="svc-desc">Proactive threat hunting across your XDR Data Lake. End-to-end incident response — from triage through root-cause analysis, attack timeline reconstruction, and full containment.</div><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">Incident Response</span><span class="tag">MITRE ATT&CK</span><span class="tag">Malware Analysis</span></div></div>
+    <div class="svc-card ri d3"><div class="svc-card-top"><span class="svc-num">03</span><div class="svc-icon">📊</div></div><div class="svc-title">SIEM & Log Analysis</div><div class="svc-desc">Splunk SIEM implementation, custom detection rules, Windows Event Log and Sysmon analysis. Alert triage pipeline optimisation — reduce analyst overhead by up to 60%.</div><div class="tags"><span class="tag">Splunk SIEM</span><span class="tag">Sysmon</span><span class="tag">Windows Event Logs</span><span class="tag">Detection Eng</span></div></div>
+    <div class="svc-card ri d4"><div class="svc-card-top"><span class="svc-num">04</span><div class="svc-icon">⚡</div></div><div class="svc-title">Security Automation</div><div class="svc-desc">Custom PowerShell and Bash automation for IR playbooks, forensic triage, and XDR Live Discover SQL libraries. REST API integrations with Sophos Central and allied platforms.</div><div class="tags"><span class="tag">PowerShell</span><span class="tag">Bash</span><span class="tag">Python</span><span class="tag">Live Discover SQL</span><span class="tag">REST API</span></div></div>
+    <div class="svc-card ri d5"><div class="svc-card-top"><span class="svc-num">05</span><div class="svc-icon">🎯</div></div><div class="svc-title">Security Advisory</div><div class="svc-desc">MITRE ATT&CK gap analysis, security posture assessments, and detection engineering advisory. Identify blind spots in your security stack and deliver actionable remediation roadmaps.</div><div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">Gap Analysis</span><span class="tag">Posture Assessment</span><span class="tag">Advisory</span></div></div>
+    <div class="svc-card ri d6"><div class="svc-card-top"><span class="svc-num">06</span><div class="svc-icon">🚨</div></div><div class="svc-title">Ransomware & APT Response</div><div class="svc-desc">Rapid containment for active ransomware and APT campaigns. Honeypot deception deployments, behavioural tripwires, and forensic triage across all endpoints with zero production downtime.</div><div class="tags"><span class="tag">Ransomware</span><span class="tag">APT</span><span class="tag">Forensics</span><span class="tag">Deception Tech</span><span class="tag">Containment</span></div></div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CASES ═══════════════ -->
+<div class="bg-dark section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">Real Work, Real Results</div>
+    <h2 class="s-title ri d1">Case <span class="r">Studies</span></h2>
+    <p class="s-sub ri d2">Engagements resolved with precision. Hard numbers, no fluff.</p>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card ri d1"><div class="case-top"><span class="badge-ind">Manufacturing · Enterprise</span><span class="badge-ok">Resolved</span></div><div class="case-title">Ransomware Contained Before Encryption Hit Critical Shares</div><div class="case-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioural triggers. Deployed honeypot tripwires and Live Response kill scripts across 400+ endpoints. Isolated affected hosts in under 3 minutes with zero data exfiltration.</div><div class="case-metrics"><div><div class="met-val gr">&lt;3min</div><div class="met-lbl">Time to contain</div></div><div><div class="met-val">400+</div><div class="met-lbl">Endpoints secured</div></div><div><div class="met-val rd">0</div><div class="met-lbl">Files encrypted</div></div></div></div>
+    <div class="case-card ri d2"><div class="case-top"><span class="badge-ind">Financial Services · MNC</span><span class="badge-ok">Resolved</span></div><div class="case-title">LSASS Campaign — Full Kill Chain Reconstruction in 4 Hours</div><div class="case-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Used Sophos XDR Live Discover SQL to trace T1003.001 → T1021 lateral movement across 6 servers. Full MITRE ATT&CK-mapped report in 4 hours.</div><div class="case-metrics"><div><div class="met-val gr">4hrs</div><div class="met-lbl">Full RCA</div></div><div><div class="met-val">6</div><div class="met-lbl">Servers analysed</div></div><div><div class="met-val rd">100%</div><div class="met-lbl">TTPs mapped</div></div></div></div>
+    <div class="case-card ri d3"><div class="case-top"><span class="badge-ind">Technology · Scale-up</span><span class="badge-ok">Resolved</span></div><div class="case-title">XDR Alert Fatigue Reduced 60% via Custom Automation Pipeline</div><div class="case-desc">Built Python-based alert enrichment pipeline using Sophos Central REST APIs. Automated priority scoring eliminated low-fidelity alerts, cutting analyst review time by 60% and MTTR from 45 to 8 minutes.</div><div class="case-metrics"><div><div class="met-val gr">60%</div><div class="met-lbl">Alert reduction</div></div><div><div class="met-val">45→8</div><div class="met-lbl">MTTR (mins)</div></div><div><div class="met-val rd">REST</div><div class="met-lbl">API integration</div></div></div></div>
+    <div class="case-card ri d4"><div class="case-top"><span class="badge-ind">Healthcare · Enterprise</span><span class="badge-ok">Resolved</span></div><div class="case-title">Linux Rootkit on Critical Infrastructure — Zero Downtime</div><div class="case-desc">Identified hidden kernel module and hooked syscalls on RHEL production servers using custom Shell + Python toolkit integrated with Sophos Live Discover. Full forensic package and remediation playbook. Zero production downtime.</div><div class="case-metrics"><div><div class="met-val gr">0</div><div class="met-lbl">Hours downtime</div></div><div><div class="met-val">RHEL</div><div class="met-lbl">Platform</div></div><div><div class="met-val rd">Full</div><div class="met-lbl">Forensic pkg</div></div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<div class="bg-black section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">Client Feedback</div>
+    <h2 class="s-title ri d1">What security leaders <span class="p">say</span></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card ri d1"><div class="testi-stars">★★★★★</div><div class="testi-q-mark">"</div><div class="testi-text">Rutvik contained an active ransomware incident in under 3 minutes. His Sophos Intercept X knowledge is unmatched. The post-incident report was the most thorough I have seen in 15 years of security management.</div><div class="testi-author"><div class="t-av">AK</div><div><div class="t-name">Arjun Kapoor</div><div class="t-role">Head of IT Security · Manufacturing MNC</div></div></div></div>
+    <div class="testi-card ri d2"><div class="testi-stars">★★★★★</div><div class="testi-q-mark">"</div><div class="testi-text">The XDR alert fatigue pipeline Rutvik built saved our SOC team hours every single day. His PowerShell and Python automation is production-grade. He understands both security and engineering — a genuinely rare combination.</div><div class="testi-author"><div class="t-av">SP</div><div><div class="t-name">Sneha Patel</div><div class="t-role">VP Engineering · SaaS Technology Company</div></div></div></div>
+    <div class="testi-card ri d3"><div class="testi-stars">★★★★★</div><div class="testi-q-mark">"</div><div class="testi-text">Rutvik's MITRE ATT&CK gap analysis revealed blind spots we didn't know existed. His Live Discover SQL playbooks are now standard in our IR toolkit. Essential for any enterprise serious about endpoint security.</div><div class="testi-author"><div class="t-av">RM</div><div><div class="t-name">Rahul Mehta</div><div class="t-role">CISO · Financial Services Group</div></div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CREDENTIALS ═══════════════ -->
+<div class="bg-dark section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">Verified Credentials</div>
+    <h2 class="s-title ri d1">Certifications &amp; <span class="r">Recognition</span></h2>
+  </div>
+  <div class="creds-grid">
+    <div class="cred-card ri"><div class="cred-badge" style="background:rgba(220,38,38,.12);color:#f87171;border:1px solid rgba(220,38,38,.25)">SCE</div><div><div class="cred-n">Sophos Central Support Engineer</div><div class="cred-s">SOPHOS · ACTIVE</div></div></div>
+    <div class="cred-card ri d1"><div class="cred-badge" style="background:rgba(139,92,246,.12);color:#a78bfa;border:1px solid rgba(139,92,246,.25)">SPL</div><div><div class="cred-n">Introduction to SIEM — Splunk</div><div class="cred-s">SPLUNK · COMPLETED</div></div></div>
+    <div class="cred-card ri d2"><div class="cred-badge" style="background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.25)">AWS</div><div><div class="cred-n">AWS Cloud Technical Essentials</div><div class="cred-s">AMAZON · COMPLETED</div></div></div>
+    <div class="cred-card ri d3"><div class="cred-badge" style="background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.25)">PS1</div><div><div class="cred-n">Practical PowerShell Scripting</div><div class="cred-s">UNIT 1 · COMPLETED</div></div></div>
+    <div class="cred-card ri d4"><div class="cred-badge" style="background:rgba(220,38,38,.12);color:#f87171;border:1px solid rgba(220,38,38,.25)">ATT</div><div><div class="cred-n">Absolute Guide to MITRE ATT&amp;CK</div><div class="cred-s">COMPLETED</div></div></div>
+  </div>
+  <div class="awards-row ri d2">
+    <div class="aw-pill"><span class="aw-ico">🏆</span><div><div class="aw-text">Top 10 Support Engineer</div><div class="aw-sub">SOPHOS FY25 · GLOBAL</div></div></div>
+    <div class="aw-pill"><span class="aw-ico">⭐</span><div><div class="aw-text">Top Staff Contributor CY25 Q2</div><div class="aw-sub">SOPHOS COMMUNITY</div></div></div>
+    <div class="aw-pill"><span class="aw-ico">⭐</span><div><div class="aw-text">Top Staff Contributor CY25 Q3</div><div class="aw-sub">SOPHOS COMMUNITY</div></div></div>
+    <div class="aw-pill"><span class="aw-ico">⭐</span><div><div class="aw-text">Top Staff Contributor CY25 Q4</div><div class="aw-sub">SOPHOS COMMUNITY</div></div></div>
+    <div class="aw-pill"><span class="aw-ico">🥇</span><div><div class="aw-text">Top Staff Contributor CY25 Overall</div><div class="aw-sub">SOPHOS COMMUNITY</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<div class="bg-black section-z">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="s-eye ri">Get In Touch</div>
+    <h2 class="s-title ri d1">Let's build something <span class="p">unbreakable</span></h2>
+    <p class="s-sub ri d2">Open to enterprise consulting, MNC roles, freelance projects, and IR retainers. Response within 24 hours.</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-intro ri d2">
+      <p>Whether you're facing an active incident, scaling your security programme, or hiring a senior EDR/XDR engineer — InterceptIQ is ready. I work with global MNCs, scale-ups, and enterprise security teams worldwide.</p>
+      <div class="c-methods">
+        <a href="mailto:chavdarutvik1849@gmail.com?subject=Enquiry — InterceptIQ" class="c-method"><div class="c-ico">📧</div><div><span class="c-lbl">Email</span><span class="c-val">chavdarutvik1849@gmail.com</span></div></a>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" rel="noopener" class="c-method"><div class="c-ico">💼</div><div><span class="c-lbl">LinkedIn</span><span class="c-val">/in/rutvik-chavda-584b37197</span></div></a>
+        <div class="c-method" style="cursor:default;"><div class="c-ico">📍</div><div><span class="c-lbl">Location</span><span class="c-val">Ahmedabad, India · Remote available</span></div></div>
+        <div class="c-method" style="cursor:default;"><div class="c-ico">⚡</div><div><span class="c-lbl">Response time</span><span class="c-val" style="color:#34d399;">Within 24 hours</span></div></div>
+        <div class="c-method" style="cursor:default;"><div class="c-ico">🌐</div><div><span class="c-lbl">Open to</span><span class="c-val" style="font-size:13px;color:var(--t3);">Full-time · Contract · Freelance · Remote · Hybrid</span></div></div>
+      </div>
+    </div>
+    <div class="cform ri d3">
+      <div class="cform-title">Send a message</div>
+      <div class="f2">
+        <div><label class="flbl">Your name</label><input type="text" class="fin" placeholder="John Smith"></div>
+        <div><label class="flbl">Company</label><input type="text" class="fin" placeholder="Acme Corp"></div>
+      </div>
+      <div class="fg"><label class="flbl">Email address</label><input type="email" class="fin" placeholder="john@company.com"></div>
+      <div class="fg"><label class="flbl">Enquiry type</label><select class="fsel"><option value="">Select type...</option><option>Full-time Role Offer</option><option>Security Consulting Project</option><option>Incident Response Support</option><option>Freelance / Contract</option><option>General Enquiry</option></select></div>
+      <div class="fg"><label class="flbl">Message</label><textarea class="fta" placeholder="Describe the role, project, or security challenge..."></textarea></div>
+      <button class="fsub" onclick="handleSend(this)">Send message →</button>
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<div class="footer-bg">
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo">Intercept<span class="r">IQ</span></div>
+      <p class="foot-desc">Elite endpoint security consulting by Rutvik Chavda. EDR/XDR, threat hunting, incident response, and security automation delivered with enterprise-grade precision.</p>
+    </div>
+    <div>
+      <div class="foot-col-h">Services</div>
+      <div class="foot-links">
+        <a href="#services">Endpoint Security Engineering</a>
+        <a href="#services">Threat Hunting & IR</a>
+        <a href="#services">SIEM & Log Analysis</a>
+        <a href="#services">Security Automation</a>
+        <a href="#services">Security Advisory</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-h">Connect</div>
+      <div class="foot-links">
+        <a href="mailto:chavdarutvik1849@gmail.com">chavdarutvik1849@gmail.com</a>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank">LinkedIn</a>
+        <a href="#contact">Get in touch</a>
+        <a href="#cases">Case studies</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">© 2025 INTERCEPTIQ · RUTVIK CHAVDA · AHMEDABAD, INDIA · OPEN TO GLOBAL MNC ROLES</div>
+    <div class="foot-badges">
+      <span class="foot-badge">Sophos Certified</span>
+      <span class="foot-badge">EDR/XDR Specialist</span>
+      <span class="foot-badge">Top 10 FY25</span>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+
+/* ═══ CURSOR FIRE TRAIL ═══ */
+const dot = document.getElementById('c-dot');
+const ring = document.getElementById('c-ring');
+let mx=0, my=0, rx=0, ry=0, lastFire=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+  const now = Date.now();
+  if(now - lastFire > 32){ lastFire = now; spawnFire(mx,my); }
+});
+
+function spawnFire(x,y){
+  const el = document.createElement('div');
+  el.className = 'fp';
+  const cols = ['#dc2626','#ef4444','#f97316','#fbbf24','#8b5cf6'];
+  const col = cols[Math.floor(Math.random()*cols.length)];
+  const sz = 3+Math.random()*6;
+  const ox = (Math.random()-.5)*16, oy = (Math.random()-.5)*16;
+  el.style.cssText = `left:${x+ox}px;top:${y+oy}px;width:${sz}px;height:${sz}px;background:${col};box-shadow:0 0 ${sz*2}px ${col};animation-duration:${.4+Math.random()*.3}s;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 700);
+}
+
+function animRing(){
+  rx += (mx-rx)*.13; ry += (my-ry)*.13;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.addEventListener('mousedown', ()=>{ dot.style.width='12px'; dot.style.height='12px'; ring.style.width='44px'; ring.style.height='44px'; });
+document.addEventListener('mouseup', ()=>{ dot.style.width='7px'; dot.style.height='7px'; ring.style.width='30px'; ring.style.height='30px'; });
+
+/* Scale cursor on interactives */
+document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ dot.style.width='11px'; dot.style.height='11px'; });
+  el.addEventListener('mouseleave',()=>{ dot.style.width='7px'; dot.style.height='7px'; });
+});
+
+/* ═══ STARFIELD BACKGROUND ═══ */
+(function(){
+  const cv = document.getElementById('cv-stars');
+  const ctx = cv.getContext('2d');
+  let stars=[];
+  function resize(){
+    cv.width=innerWidth; cv.height=innerHeight;
+    stars=[];
+    const n = Math.floor(innerWidth*innerHeight/1800);
+    for(let i=0;i<n;i++) stars.push({x:Math.random()*cv.width, y:Math.random()*cv.height, r:Math.random()*.9, op:.1+Math.random()*.4, tw:Math.random()*Math.PI*2, spd:.002+Math.random()*.006});
+  }
+  addEventListener('resize',resize); resize();
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    stars.forEach(s=>{ s.tw+=s.spd; const op=s.op*(0.4+0.6*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${op})`; ctx.fill(); });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══ AURORA BLOBS ═══ */
+(function(){
+  const cv = document.getElementById('cv-aurora');
+  const ctx = cv.getContext('2d');
+  function resize(){ cv.width=innerWidth; cv.height=innerHeight; }
+  addEventListener('resize',resize); resize();
+  let t=0;
+  const blobs=[
+    {x:.7,y:.3,rx:500,ry:350,col:'124,58,237',op:.08},
+    {x:.2,y:.7,rx:400,ry:300,col:'220,38,38',op:.06},
+    {x:.85,y:.8,rx:350,ry:250,col:'139,92,246',op:.05},
+    {x:.1,y:.2,rx:300,ry:200,col:'220,38,38',op:.04},
+  ];
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    t+=.004;
+    blobs.forEach((b,i)=>{
+      const px=(b.x+Math.sin(t+i)*0.06)*cv.width;
+      const py=(b.y+Math.cos(t*0.7+i)*0.05)*cv.height;
+      const g=ctx.createRadialGradient(px,py,0,px,py,Math.max(b.rx,b.ry));
+      g.addColorStop(0,`rgba(${b.col},${b.op})`);
+      g.addColorStop(1,`rgba(${b.col},0)`);
+      ctx.save();
+      ctx.scale(b.rx/Math.max(b.rx,b.ry),b.ry/Math.max(b.rx,b.ry));
+      ctx.fillStyle=g;
+      ctx.fillRect(0,0,cv.width*(Math.max(b.rx,b.ry)/b.rx),cv.height*(Math.max(b.rx,b.ry)/b.ry));
+      ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══ PARTICLE NETWORK ═══ */
+(function(){
+  const cv = document.getElementById('cv-net');
+  const ctx = cv.getContext('2d');
+  let nodes=[];
+  function resize(){
+    cv.width=innerWidth; cv.height=innerHeight; nodes=[];
+    const n=Math.floor(innerWidth*innerHeight/24000);
+    for(let i=0;i<n;i++) nodes.push({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,r:.8+Math.random()*1.2});
+  }
+  addEventListener('resize',resize); resize();
+  function draw(){
+    const W=cv.width,H=cv.height;
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n=>{ n.x+=n.vx; n.y+=n.vy; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1; });
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){ ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(139,92,246,${(1-d/120)*.06})`; ctx.lineWidth=.5; ctx.stroke(); }
+      }
+      ctx.beginPath(); ctx.arc(nodes[i].x,nodes[i].y,nodes[i].r,0,Math.PI*2);
+      ctx.fillStyle='rgba(139,92,246,0.12)'; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══ THREE.JS INTERACTIVE SPHERE ═══ */
+(function(){
+  const cv = document.getElementById('cv-sphere');
+  if(!cv) return;
+
+  const renderer = new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setClearColor(0x000000,0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45,1,.1,100);
+  camera.position.z=2.8;
+
+  function resize(){
+    const rect=cv.parentElement.getBoundingClientRect();
+    const s=Math.min(rect.width,rect.height||340);
+    renderer.setSize(s,s); camera.updateProjectionMatrix();
+  }
+  addEventListener('resize',resize); resize();
+
+  /* Point cloud — 3000 particles breathing on sphere surface */
+  const N=3000;
+  const positions = new Float32Array(N*3);
+  const basePos   = new Float32Array(N*3);
+  const colors    = new Float32Array(N*3);
+  const phases    = new Float32Array(N);
+
+  for(let i=0;i<N;i++){
+    phases[i]=Math.random()*Math.PI*2;
+    const th=Math.acos(1-2*Math.random()), ph=Math.random()*Math.PI*2;
+    const r=1+(Math.random()-.5)*.04;
+    basePos[i*3]  =r*Math.sin(th)*Math.cos(ph);
+    basePos[i*3+1]=r*Math.cos(th);
+    basePos[i*3+2]=r*Math.sin(th)*Math.sin(ph);
+    /* Gradient: red to purple based on latitude */
+    const lat=Math.cos(th); // -1 to 1
+    const t2=(lat+1)/2;
+    colors[i*3]  =.55+t2*.45;  // R: more red toward top
+    colors[i*3+1]=(1-t2)*.15;  // G: near zero
+    colors[i*3+2]=.25+t2*.45;  // B: more purple toward bottom
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(colors,3));
+
+  const mat = new THREE.PointsMaterial({size:.014,vertexColors:true,transparent:true,opacity:.9,sizeAttenuation:true});
+  const cloud = new THREE.Points(geo,mat);
+  scene.add(cloud);
+
+  /* City dots */
+  const cities=[[23,72,true],[51.5,-.1,false],[40.7,-74,false],[35.7,139.7,false],[-33.9,151.2,false],[55.7,37.6,false],[1.3,103.8,false],[48.8,2.3,false],[28.6,77.2,false],[37.8,-122,false],[39.9,116.4,false],[19.1,72.9,false]];
+
+  function ll2v(lat,lng,r=1.03){
+    const phi=(90-lat)*Math.PI/180,theta=(lng+180)*Math.PI/180;
+    return new THREE.Vector3(-r*Math.sin(phi)*Math.cos(theta),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(theta));
+  }
+
+  cities.forEach(([lat,lng,home])=>{
+    const pos=ll2v(lat,lng);
+    const dot=new THREE.Mesh(new THREE.SphereGeometry(home?.02:.012,8,8),new THREE.MeshBasicMaterial({color:home?0xdc2626:0xc4b5fd}));
+    dot.position.copy(pos); scene.add(dot);
+    if(home){
+      /* Pulsing ring around Ahmedabad */
+      const pr=new THREE.Mesh(new THREE.TorusGeometry(.048,.004,8,24),new THREE.MeshBasicMaterial({color:0xdc2626,transparent:true,opacity:.8}));
+      pr.position.copy(pos); pr.lookAt(0,0,0); scene.add(pr);
+    }
+  });
+
+  /* Orbit rings — gradient red+purple feel */
+  [[1.18,.003,0,0,0xdc2626,.5],[1.12,.002,.5,.3,0x8b5cf6,.35],[1.24,.002,1.1,.8,0xef4444,.2]].forEach(([r,t2,rx2,rz,col,op])=>{
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(r,t2,8,100),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op}));
+    ring.rotation.x=rx2; ring.rotation.z=rz; scene.add(ring);
+  });
+
+  /* Attack arcs */
+  const arcs=[];
+  const homePairs=[[0,1],[0,2],[0,3],[4,0],[5,0],[0,6],[7,0],[0,8],[9,0],[10,0],[11,0],[1,3]];
+  homePairs.forEach(([si,di])=>{
+    const sv=ll2v(cities[si][0],cities[si][1]);
+    const dv=ll2v(cities[di][0],cities[di][1]);
+    const mid=sv.clone().add(dv).multiplyScalar(.5).normalize().multiplyScalar(1.55);
+    const pts=new THREE.QuadraticBezierCurve3(sv,mid,dv).getPoints(65);
+    const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xef4444,transparent:true,opacity:0}));
+    scene.add(ln);
+    const aDot=new THREE.Mesh(new THREE.SphereGeometry(.013,6,6),new THREE.MeshBasicMaterial({color:0xff4444}));
+    aDot.visible=false; scene.add(aDot);
+    arcs.push({ln,dot:aDot,pts,progress:Math.random(),sp:.004+Math.random()*.004,active:false,timer:Math.floor(Math.random()*140)});
+  });
+
+  /* Lights */
+  scene.add(new THREE.AmbientLight(0x18000a,3));
+  const dl=new THREE.DirectionalLight(0xdc2626,1.2); dl.position.set(5,3,5); scene.add(dl);
+  scene.add(new THREE.PointLight(0x7c3aed,1.5,10));
+  const pl2=new THREE.PointLight(0xff4444,.6,8); pl2.position.set(-3,2,-2); scene.add(pl2);
+
+  /* Drag to rotate */
+  let isDrag=false,lastDX=0,lastDY=0,rotY=0,rotX=0,velX=0,velY=0;
+  cv.addEventListener('mousedown',e=>{ isDrag=true; lastDX=e.clientX; lastDY=e.clientY; velX=0; velY=0; });
+  addEventListener('mouseup',()=>isDrag=false);
+  addEventListener('mousemove',e=>{
+    if(!isDrag) return;
+    velX=(e.clientY-lastDY)*.01; velY=(e.clientX-lastDX)*.01;
+    rotX+=velX; rotY+=velY;
+    lastDX=e.clientX; lastDY=e.clientY;
+  });
+
+  /* Touch support */
+  let lastTX=0,lastTY=0;
+  cv.addEventListener('touchstart',e=>{ lastTX=e.touches[0].clientX; lastTY=e.touches[0].clientY; },{passive:true});
+  cv.addEventListener('touchmove',e=>{ rotY+=(e.touches[0].clientX-lastTX)*.01; rotX+=(e.touches[0].clientY-lastTY)*.01; lastTX=e.touches[0].clientX; lastTY=e.touches[0].clientY; },{passive:true});
+
+  let t3=0;
+  function animate(){
+    requestAnimationFrame(animate); t3+=.008;
+    if(!isDrag){ rotY+=.002; velX*=.96; velY*=.96; rotX+=velX; rotY+=velY; }
+    cloud.rotation.y=rotY; cloud.rotation.x=rotX;
+
+    /* Breathe — particles pulse in and out */
+    const pos=geo.attributes.position.array;
+    for(let i=0;i<N;i++){
+      const b=1+Math.sin(t3*.7+phases[i])*.028;
+      pos[i*3]=basePos[i*3]*b; pos[i*3+1]=basePos[i*3+1]*b; pos[i*3+2]=basePos[i*3+2]*b;
+    }
+    geo.attributes.position.needsUpdate=true;
+
+    /* Arc animations */
+    arcs.forEach((a,idx)=>{
+      a.timer--;
+      if(!a.active&&a.timer<=0){ a.active=true; a.progress=0; a.ln.material.opacity=.4; a.timer=100+Math.floor(Math.random()*180); }
+      if(a.active){
+        a.progress+=a.sp;
+        if(a.progress>=1){ a.active=false; a.ln.material.opacity=0; a.dot.visible=false; return; }
+        const idx2=Math.min(Math.floor(a.progress*(a.pts.length-1)),a.pts.length-1);
+        a.dot.position.copy(a.pts[idx2]); a.dot.visible=true;
+        a.ln.material.opacity=Math.sin(a.progress*Math.PI)*.45;
+      }
+    });
+
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+/* ═══ TEXT SCRAMBLE ═══ */
+const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*!?';
+function scramble(el,final,dur){
+  if(!el||!final) return;
+  let f=0,total=Math.floor(dur/16);
+  const iv=setInterval(()=>{
+    const p=++f/total;
+    el.textContent=final.split('').map((c,i)=>{
+      if(c===' ') return ' ';
+      return i/final.length<p?c:CH[Math.floor(Math.random()*CH.length)];
+    }).join('');
+    if(f>=total){el.textContent=final;clearInterval(iv);}
+  },16);
+}
+
+/* ═══ SCROLL REVEAL ═══ */
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    const title=e.target.querySelector('.s-title');
+    if(title&&!title.dataset.done){ title.dataset.done='1'; const orig=title.innerText; setTimeout(()=>scramble(title,orig,900),150); }
+    revObs.unobserve(e.target);
+  });
+},{threshold:.07});
+document.querySelectorAll('.ri').forEach(el=>revObs.observe(el));
+
+/* Hero load */
+window.addEventListener('load',()=>{
+  document.querySelectorAll('#hero .ri').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*100));
+  const titleEl=document.getElementById('hero-title-el');
+  if(titleEl){ const orig=titleEl.textContent.trim(); setTimeout(()=>scramble(titleEl,orig,1100),700); }
+});
+
+/* ═══ 3D MAGNETIC TILT on cards ═══ */
+document.querySelectorAll('.svc-card, .case-card, .testi-card').forEach(card=>{
+  card.style.transformStyle='preserve-3d';
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)/r.width;
+    const y=(e.clientY-r.top-r.height/2)/r.height;
+    card.style.transform=`translateY(-8px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>card.style.transform='');
+});
+
+/* ═══ FORM ═══ */
+function handleSend(btn){
+  const orig=btn.textContent;
+  btn.textContent="Message sent — I'll respond within 24 hours ✓";
+  btn.style.background='#10b981';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';},5000);
+}
+</script>
+</body>
+</html>
