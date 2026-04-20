@@ -11,9 +11,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
-   INTERCEPTIQ — ULTIMATE CYBER-NEXUS EDITION
-   Full-page 3D Tunnel + Heavy Glassmorphism
+   INTERCEPTIQ — INFINITE CYBER-NEXUS EDITION
+   - Dropdown explicitly locked to dark mode
+   - Infinite 3D Tunnel background on all pages
+   - Extreme Glassmorphism
 ═══════════════════════════════════════════════ */
+
+/* FIX: Forces entire document UI (scrollbars, dropdowns) into dark mode */
+html, body {
+  color-scheme: dark;
+}
+
 :root {
   --black: #000000; --near-black: #05040a; --dark: #0a0812; --dark2: #0f0d18; --dark3: #14111f; --white: #ffffff;
   --off-white: #f8fafc; --red: #dc2626; --red2: #ef4444; --red3: #f87171; --red4: #fca5a5; --purple: #7c3aed;
@@ -45,7 +53,7 @@ body {
 #cv-aurora { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.35; } 
 
 /* ═══ NAV ═══ */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(5,4,10,0.5); backdrop-filter: blur(24px) saturate(1.5); -webkit-backdrop-filter: blur(24px) saturate(1.5); border-bottom: 1px solid rgba(255,255,255,0.05); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(5,4,10,0.4); backdrop-filter: blur(24px) saturate(1.5); -webkit-backdrop-filter: blur(24px) saturate(1.5); border-bottom: 1px solid rgba(255,255,255,0.05); }
 nav::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red) 25%, var(--purple) 75%, transparent); opacity: .5; }
 .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
 .nav-mark { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; color: #fff; letter-spacing: -.5px; box-shadow: 0 0 20px rgba(124,58,237,.35), 0 0 20px rgba(220,38,38,.2); flex-shrink: 0; }
@@ -65,13 +73,13 @@ nav::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; h
 /* ═══ MAIN & EXTREME GLASS BACKGROUNDS ═══ */
 main { position: relative; z-index: 3; }
 
-/* Strip out solid colors and replace with heavy blur to reveal the 3D tunnel everywhere */
+/* The true frosted glass effect for all sections */
 .bg-black, .bg-dark, .bg-dark2 { 
-    background: rgba(5, 4, 12, 0.25) !important; 
-    backdrop-filter: blur(12px) !important; 
-    -webkit-backdrop-filter: blur(12px) !important; 
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(5, 4, 12, 0.15) !important; 
+    backdrop-filter: blur(16px) !important; 
+    -webkit-backdrop-filter: blur(16px) !important; 
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 .section-z { position: relative; z-index: 3; }
 
@@ -100,6 +108,7 @@ main { position: relative; z-index: 3; }
 .btn-glass:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.1); color: var(--white); }
 
 /* STAT CARDS (Glassified) */
+.hero-sphere-wrap { position: relative; width: 100%; max-width: 340px; margin: 0 auto 2.5rem; aspect-ratio: 1; pointer-events: none; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 350px; }
 .stat-card { background: rgba(15, 12, 25, 0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.1rem 1.25rem; position: relative; overflow: hidden; transition: all .3s; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); opacity: 0; transition: opacity .3s; }
@@ -123,15 +132,15 @@ main { position: relative; z-index: 3; }
 .section-header { margin-bottom: 4rem; }
 .s-eye { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--red2); letter-spacing: .28em; text-transform: uppercase; margin-bottom: .85rem; display: flex; align-items: center; gap: 10px; }
 .s-eye::before { content: ''; width: 16px; height: 1px; background: var(--red); }
-.s-title { font-size: clamp(2.2rem,3.8vw,3.2rem); font-weight: 900; color: var(--white); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+.s-title { font-size: clamp(2.2rem,3.8vw,3.2rem); font-weight: 900; color: var(--white); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
 .s-title .r  { color: var(--red2); }
 .s-title .p  { color: var(--purple3); }
-.s-sub { font-size: 17px; color: var(--t2); line-height: 1.8; max-width: 560px; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.s-sub { font-size: 17px; color: var(--t2); line-height: 1.8; max-width: 560px; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 .divider { height: 1px; background: rgba(255,255,255,0.03); position: relative; z-index: 3; }
 
 /* ═══ ABOUT ═══ */
 .about-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 6rem; align-items: start; }
-.about-text p { font-size: 16px; color: var(--t2); line-height: 1.9; margin-bottom: 1.1rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.about-text p { font-size: 16px; color: var(--t2); line-height: 1.9; margin-bottom: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
 .about-text p strong { color: var(--white); font-weight: 600; }
 .about-actions { display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap; }
 .btn-sm-grad { font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, var(--red), var(--purple)); border: none; border-radius: 8px; padding: 10px 22px; text-decoration: none; transition: all .2s; }
@@ -211,10 +220,10 @@ main { position: relative; z-index: 3; }
 .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
 .contact-intro p { font-size: 16px; color: var(--t2); line-height: 1.85; margin-bottom: 2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 .c-methods { display: flex; flex-direction: column; gap: 10px; }
-.c-method { display: flex; align-items: center; gap: 14px; background: rgba(15, 12, 25, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.25rem; text-decoration: none; transition: all .25s; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.c-method { display: flex; align-items: center; gap: 14px; background: rgba(15, 12, 25, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.25rem; text-decoration: none; transition: all .25s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .c-method:hover { border-color: var(--bred); transform: translateX(4px); background: rgba(25, 20, 35, 0.6); }
 .c-ico { font-size: 18px; flex-shrink: 0; }
-.c-lbl { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: .12em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+.c-lbl { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .12em; text-transform: uppercase; display: block; margin-bottom: 2px; }
 .c-val { font-size: 14px; font-weight: 500; color: var(--t1); }
 .c-method:hover .c-val { color: var(--red3); }
 
@@ -340,7 +349,6 @@ footer { max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 2.5rem; }
   </div>
   <div class="hero-right">
     <div class="hero-sphere-wrap ri d1"></div>
-    
     <div class="stat-grid ri d3">
       <div class="stat-card">
         <div class="stat-val red" data-count="3" data-suffix="+">3+</div>
@@ -643,7 +651,7 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
 })();
 
 /* ═════════════════════════════════════════════════════════════
-   THE ULTIMATE CYBER-NEXUS THREE.JS SCENE
+   THE INFINITE TREADMILL 3D ENGINE
 ═════════════════════════════════════════════════════════════ */
 (function(){
   const cv = document.getElementById('fullscreen-3d-bg');
@@ -656,7 +664,7 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
   scene.fog = new THREE.FogExp2(0x05040a, 0.015); // Deep space fog
 
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 10); // Start position
+  camera.position.set(0, 0, 10); // Static Camera Position
 
   function resize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -666,32 +674,37 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
   window.addEventListener('resize', resize);
   resize();
 
-  /* --- 1. THE INFINITE CYBER TUNNEL --- */
-  const tunnelGroup = new THREE.Group();
-  scene.add(tunnelGroup);
+  /* --- 1. THE INFINITE TREADMILL GRID --- */
+  const gridGroup = new THREE.Group();
+  scene.add(gridGroup);
 
-  // Outer Purple Tunnel
-  const tGeo1 = new THREE.CylinderGeometry( 20, 20, 200, 32, 32, true );
-  const tMat1 = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending });
-  const tunnel1 = new THREE.Mesh(tGeo1, tMat1);
-  tunnel1.rotation.x = Math.PI / 2;
-  tunnelGroup.add(tunnel1);
+  // Floor grid (Made massive to never run out of bounds)
+  const gridFloor = new THREE.GridHelper(300, 150, 0xdc2626, 0x8b5cf6);
+  gridFloor.position.y = -4;
+  gridFloor.material.opacity = 0.15;
+  gridFloor.material.transparent = true;
+  gridFloor.material.blending = THREE.AdditiveBlending;
+  gridGroup.add(gridFloor);
 
-  // Inner Red Tunnel
-  const tGeo2 = new THREE.CylinderGeometry( 16, 16, 200, 24, 24, true );
-  const tMat2 = new THREE.MeshBasicMaterial({ color: 0xdc2626, wireframe: true, transparent: true, opacity: 0.05, blending: THREE.AdditiveBlending });
-  const tunnel2 = new THREE.Mesh(tGeo2, tMat2);
-  tunnel2.rotation.x = Math.PI / 2;
-  tunnelGroup.add(tunnel2);
+  // Ceiling grid
+  const gridCeil = new THREE.GridHelper(300, 150, 0xdc2626, 0x8b5cf6);
+  gridCeil.position.y = 6;
+  gridCeil.material.opacity = 0.08;
+  gridCeil.material.transparent = true;
+  gridCeil.material.blending = THREE.AdditiveBlending;
+  gridGroup.add(gridCeil);
 
   /* --- 2. THE THREAT GLOBE (Hero Section) --- */
   const sphereGroup = new THREE.Group();
+  let baseSphereY = 0;
   
   function updateSpherePosition() {
       if(window.innerWidth > 1024) {
-          sphereGroup.position.set(3.5, 0, 2); // Right side, slightly forward
+          baseSphereY = 0;
+          sphereGroup.position.set(3.5, baseSphereY, 2); 
       } else {
-          sphereGroup.position.set(0, -1, 0); // Center mobile
+          baseSphereY = -1;
+          sphereGroup.position.set(0, baseSphereY, -2); 
       }
   }
   updateSpherePosition();
@@ -745,45 +758,45 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     arcs.push({ln,dot:aDot,pts,progress:Math.random(),sp:.005+Math.random()*.005,active:false,timer:Math.floor(Math.random()*100)});
   });
 
-  /* --- 3. FLOATING DATA PACKETS (Inside Tunnel) --- */
-  const packets = new THREE.Group();
-  scene.add(packets);
+  /* --- 3. INFINITE DATA PARTICLES --- */
+  const pCount = 3000;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(pCount * 3);
+  const pCol = new Float32Array(pCount * 3);
   
-  const packetGeo = new THREE.OctahedronGeometry(0.2, 0);
-  const pMat1 = new THREE.MeshBasicMaterial({color: 0xdc2626, wireframe: true, transparent: true, opacity: 0.4});
-  const pMat2 = new THREE.MeshBasicMaterial({color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.4});
-  
-  const packetData = [];
-  for(let i=0; i<150; i++) {
-      const mesh = new THREE.Mesh(packetGeo, Math.random() > 0.5 ? pMat1 : pMat2);
-      // Spread them throughout the long tunnel
-      mesh.position.x = (Math.random() - 0.5) * 25;
-      mesh.position.y = (Math.random() - 0.5) * 25;
-      mesh.position.z = 10 - Math.random() * 180; 
-      
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
-      
-      packets.add(mesh);
-      packetData.push({
-          mesh: mesh,
-          rotSpeed: (Math.random() - 0.5) * 0.05,
-          zSpeed: 0.05 + Math.random() * 0.1
-      });
+  for(let i=0; i<pCount; i++) {
+    pPos[i*3] = (Math.random() - 0.5) * 40;
+    pPos[i*3+1] = (Math.random() - 0.5) * 15;
+    pPos[i*3+2] = 15 - Math.random() * 100; // Flow from deep Z
+    
+    pCol[i*3] = 0.7 + Math.random()*0.3; // Red
+    pCol[i*3+1] = 0.1; // Green
+    pCol[i*3+2] = 0.4 + Math.random()*0.6; // Purple
   }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+  const dataStream = new THREE.Points(pGeo, new THREE.PointsMaterial({size: 0.06, vertexColors: true, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending}));
+  scene.add(dataStream);
+
+  /* --- 4. LIGHTS --- */
+  scene.add(new THREE.AmbientLight(0x18000a, 3));
+  const dl=new THREE.DirectionalLight(0xdc2626, 1.5); dl.position.set(5,3,5); scene.add(dl);
+  scene.add(new THREE.PointLight(0x7c3aed, 2, 10));
 
   /* --- INTERACTIONS (Scroll & Mouse) --- */
-  let targetCamZ = 10;
+  let targetCamY = 0;
   let scrollPercent = 0;
 
   window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollPercent = scrollY / maxScroll; // 0 to 1
+      scrollPercent = scrollY / maxScroll; 
 
-      // As user scrolls, camera flies deep into the tunnel (-Z direction)
-      // Range: 10 down to -100
-      targetCamZ = 10 - (scrollPercent * 110); 
+      // Camera stays in place but pans down slightly to create parallax
+      targetCamY = -(scrollPercent * 4); 
+      
+      // Globe scrolls UP and out of the way as you scroll down the page!
+      sphereGroup.position.y = baseSphereY + (scrollPercent * 20); 
   });
 
   let mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
@@ -799,30 +812,29 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     requestAnimationFrame(animate);
     t3 += 0.01;
 
-    // 1. Camera Fly-Through Interpolation
-    camera.position.z += (targetCamZ - camera.position.z) * 0.05;
+    // Smooth Camera Movement (Parallax + Mouse tracking)
+    camera.position.y += (targetCamY + (mouseY * 0.5) - camera.position.y) * 0.05;
+    camera.position.x += ((mouseX * 1) - camera.position.x) * 0.05;
     
-    // Parallax mouse look
-    camera.position.x += ((mouseX * 2) - camera.position.x) * 0.05;
-    camera.position.y += ((mouseY * 2) - camera.position.y) * 0.05;
+    // 1. INFINITE GRID TREADMILL
+    // Moves the grid towards the camera continuously, then resets it instantly to create an infinite loop
+    gridFloor.position.z += 0.04;
+    gridCeil.position.z += 0.04;
+    if(gridFloor.position.z > 2) gridFloor.position.z = 0;
+    if(gridCeil.position.z > 2) gridCeil.position.z = 0;
 
-    // 2. Tunnel Rotation
-    tunnel1.rotation.y += 0.0005;
-    tunnel2.rotation.y -= 0.001;
-
-    // 3. Animate Data Packets
-    packetData.forEach(p => {
-        p.mesh.rotation.x += p.rotSpeed;
-        p.mesh.rotation.y += p.rotSpeed;
-        p.mesh.position.z += p.zSpeed;
-        
-        // Loop packets back to the front of the tunnel when they pass the camera
-        if(p.mesh.position.z > camera.position.z + 5) {
-            p.mesh.position.z = camera.position.z - 150;
+    // 2. INFINITE DATA STREAM
+    const dPos = dataStream.geometry.attributes.position.array;
+    for(let i=0; i<pCount; i++) {
+        dPos[i*3+2] += 0.15; // Move particles forward
+        // If they pass the camera, send them back to deep space
+        if(dPos[i*3+2] > 15) {
+            dPos[i*3+2] -= 100;
         }
-    });
+    }
+    dataStream.geometry.attributes.position.needsUpdate = true;
 
-    // 4. Hero Sphere Animation
+    // 3. GLOBE ANIMATIONS
     sphereGroup.rotation.y += (targetRotY - sphereGroup.rotation.y) * 0.05;
     sphereGroup.rotation.x += (targetRotX - sphereGroup.rotation.x) * 0.05;
     sphereGroup.rotation.y += 0.002; // Auto spin
@@ -834,7 +846,7 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .testi-card, .c-met
     }
     sGeo.attributes.position.needsUpdate = true;
 
-    // Arc Animation
+    // Globe Arcs
     arcs.forEach((a)=>{
       a.timer--;
       if(!a.active&&a.timer<=0){ a.active=true; a.progress=0; a.ln.material.opacity=.6; a.timer=150+Math.floor(Math.random()*100); }
