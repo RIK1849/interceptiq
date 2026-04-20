@@ -178,11 +178,7 @@ main { position: relative; z-index: 3; }
 .bg-split  { background: var(--dark); }
 .section-z { position: relative; z-index: 3; }
 
-/* ═══ HERO ═══
-   Direction 3 structure: left massive text on dark, right stats on darker
-   Direction 1 typography: enormous outlined+solid names
-   Direction 2 glass panels on the right side
-*/
+/* ═══ HERO ═══ */
 #hero {
   min-height: 100vh;
   display: grid;
@@ -245,7 +241,6 @@ main { position: relative; z-index: 3; }
   content: ''; width: 20px; height: 1px; background: var(--red);
 }
 
-/* The name — Direction 1: massive, outline + solid combo */
 .hero-name {
   display: flex; flex-direction: column;
   margin-bottom: 1.5rem;
@@ -280,7 +275,6 @@ main { position: relative; z-index: 3; }
 @keyframes glA { 0%,87%,100%{opacity:0;} 88%{opacity:.7;transform:translateX(5px);} 92%{opacity:.7;transform:translateX(-2px);} 94%{opacity:0;} }
 @keyframes glB { 0%,87%,100%{opacity:0;} 89%{opacity:.5;transform:translateX(-5px);} 93%{opacity:.5;transform:translateX(2px);} 95%{opacity:0;} }
 
-/* Red accent underline — Direction 3 touch */
 .name-rule {
   width: 80px; height: 3px;
   background: linear-gradient(90deg, var(--red), var(--purple));
@@ -334,7 +328,7 @@ main { position: relative; z-index: 3; }
   color: var(--t1);
 }
 
-/* HERO RIGHT CONTENT — Direction 2 glass panels + live stats */
+/* HERO RIGHT CONTENT */
 .hero-sphere-wrap {
   position: relative; width: 100%; max-width: 340px;
   margin: 0 auto 2.5rem;
@@ -347,7 +341,6 @@ main { position: relative; z-index: 3; }
   letter-spacing: .15em;
 }
 
-/* Glass stat cards — Direction 2 */
 .stat-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -429,9 +422,7 @@ main { position: relative; z-index: 3; }
 }
 .divider { height: 1px; background: var(--b3); position: relative; z-index: 3; }
 
-/* ═══ ABOUT ═══
-   Direction 3: side by side, clear hierarchy
-*/
+/* ═══ ABOUT ═══ */
 .about-layout {
   display: grid; grid-template-columns: 3fr 2fr;
   gap: 6rem; align-items: start;
@@ -479,9 +470,7 @@ main { position: relative; z-index: 3; }
 .tl-role { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 3px; line-height: 1.3; }
 .tl-period { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .06em; }
 
-/* ═══ SERVICES ═══
-   Direction 2 glass cards + Direction 1 number labelling
-*/
+/* ═══ SERVICES ═══ */
 .svc-grid {
   display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
 }
@@ -534,7 +523,7 @@ main { position: relative; z-index: 3; }
 }
 .svc-card:hover .tag { border-color: rgba(220,38,38,.2); color: var(--t3); }
 
-/* ═══ CASE STUDIES — Direction 3 split feel ═══ */
+/* ═══ CASE STUDIES ═══ */
 .cases-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
 .case-card {
   background: rgba(255,255,255,.03);
@@ -577,7 +566,7 @@ main { position: relative; z-index: 3; }
 .met-val.rd { color: var(--red2); }
 .met-lbl { font-family: var(--mono); font-size: 9px; color: var(--t4); margin-top: 4px; }
 
-/* ═══ TESTIMONIALS — Direction 2 glass ═══ */
+/* ═══ TESTIMONIALS ═══ */
 .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
 .testi-card {
   background: rgba(255,255,255,.03);
@@ -672,6 +661,8 @@ main { position: relative; z-index: 3; }
 .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
 .fg { margin-bottom: 1.1rem; }
 .flbl { display: block; font-size: 12px; font-weight: 500; color: var(--t3); margin-bottom: 6px; }
+
+/* FIX: Ensure dropdown options are readable in dark mode */
 .fin, .fsel, .fta {
   width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--b1);
   border-radius: 10px; padding: .75rem 1rem; color: var(--t1);
@@ -683,6 +674,10 @@ main { position: relative; z-index: 3; }
   border-color: rgba(220,38,38,.4);
   box-shadow: 0 0 0 3px rgba(220,38,38,.1);
   background: rgba(255,255,255,.06);
+}
+.fsel option {
+  background-color: var(--dark); /* Forces dark background on options */
+  color: var(--white); /* Forces white text on options */
 }
 .fta { height: 115px; resize: none; }
 .fsub {
