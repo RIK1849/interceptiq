@@ -9,38 +9,60 @@
 <meta name="author" content="Rutvik Chavda — InterceptIQ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <style>
 /* ═══════════════════════════════════════════════
-   INTERCEPTIQ — ZERO-TRUST VORTEX EDITION
-   Premium Tech Agency UI / Extreme Glassmorphism
+   INTERCEPTIQ — GLOBAL THREAT MATRIX EDITION
+   Ultimate 3D UI / Pure Glassmorphism
 ═══════════════════════════════════════════════ */
 
 /* Lock UI to dark mode to fix native dropdown styles */
 html, body { color-scheme: dark; }
 
 :root {
-  --black: #000000; --near-black: #030206; --dark: #07050f; --white: #ffffff;
-  --red: #dc2626; --red2: #ef4444; --red3: #f87171;
-  --purple: #7c3aed; --purple2: #8b5cf6; --purple3: #a78bfa; 
-  --t1: #ffffff; --t2: #e2e8f0; --t3: #94a3b8; --t4: #475569; --t5: #1e293b; 
-  --sans: 'Inter', system-ui, -apple-system, sans-serif; --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --red: #dc2626; --red-glow: rgba(220,38,38,0.4);
+  --purple: #7c3aed; --purple-glow: rgba(124,58,237,0.4);
+  --white: #ffffff; --t2: #e2e8f0; --t3: #94a3b8; --t4: #475569;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif; 
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
   
-  /* Advanced Glass variables */
-  --glass-bg: rgba(10, 7, 18, 0.35);
+  /* Ultimate Glass Variables */
+  --glass-bg: rgba(10, 8, 20, 0.25);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-highlight: rgba(255, 255, 255, 0.15);
-  --glass-blur: blur(20px);
+  --glass-blur: blur(16px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
+
+/* FIX: Body must be transparent so the 3D Canvas shows through everywhere */
 body {
-  background: var(--near-black); color: var(--t2); font-family: var(--sans); line-height: 1.65;
-  overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  background: transparent; 
+  color: var(--t2); 
+  font-family: var(--sans); 
+  line-height: 1.65;
+  overflow-x: hidden; 
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale;
 }
+
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--near-black); }
+::-webkit-scrollbar-track { background: #020106; }
 ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+/* ═══ TRUE 3D CANVAS LAYER ═══ */
+#cyber-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Absolute back layer */
+  pointer-events: none; /* Let clicks pass through to the site */
+  background: #030208; /* Deep space fallback color */
+}
 
 /* ═══ CURSOR ═══ */
 *, *::before, *::after { cursor: none !important; }
@@ -49,57 +71,57 @@ body {
 .fp { position: fixed; pointer-events: none; border-radius: 50%; transform: translate(-50%,-50%); animation: fpAnim .6s ease forwards; z-index: 99997; }
 @keyframes fpAnim { 0% { opacity:1; transform:translate(-50%,-50%) scale(1); } 100% { opacity:0; transform:translate(-50%,-100%) scale(0); } }
 
-/* ═══ FULL PAGE 3D VORTEX BACKGROUND ═══ */
-#fullscreen-3d-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-#cv-aurora { position:fixed; inset:0; z-index:1; pointer-events:none; opacity: 0.4; mix-blend-mode: screen; } 
-
 /* ═══ NAV ═══ */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(3, 2, 6, 0.4); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
 .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-mark { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 800; color: #fff; letter-spacing: -.5px; box-shadow: 0 0 20px rgba(220,38,38,.4); flex-shrink: 0; position: relative; overflow: hidden; }
-.nav-mark::after { content:''; position:absolute; top:0; left:-100%; width:50%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent); transform:skewX(-20deg); animation: shine 4s infinite; }
-@keyframes shine { 0%, 80% {left: -100%;} 100% {left: 200%;} }
+.nav-mark { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 800; color: #fff; letter-spacing: -.5px; box-shadow: 0 0 20px var(--red-glow); flex-shrink: 0; position: relative; overflow: hidden; }
 .nav-name { font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: -.5px; }
 .nav-name .accent { color: var(--red); }
 .nav-sub { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .15em; text-transform: uppercase; margin-top: 2px; }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-.nav-links a { font-size: 14px; font-weight: 500; color: var(--t3); text-decoration: none; transition: all .2s; position: relative; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--t3); text-decoration: none; transition: all .2s; }
 .nav-links a:hover { color: var(--white); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 .nav-right { display: flex; align-items: center; gap: 16px; }
 .nav-badge { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; color: #6ee7b7; background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.3); padding: 6px 14px; border-radius: 100px; letter-spacing: .08em; text-transform: uppercase; }
 .nav-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; animation: blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
-.nav-cta { font-size: 14px; font-weight: 600; color: var(--white); background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 10px 24px; text-decoration: none; transition: all .3s; box-shadow: 0 4px 20px rgba(220,38,38,.3); }
-.nav-cta:hover { box-shadow: 0 8px 30px rgba(220,38,38,.6); transform: translateY(-2px); border-color: rgba(255,255,255,0.4); }
+.nav-cta { font-size: 14px; font-weight: 600; color: var(--white); background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 10px 24px; text-decoration: none; transition: all .3s; box-shadow: 0 4px 20px var(--red-glow); }
+.nav-cta:hover { box-shadow: 0 8px 30px var(--red-glow); transform: translateY(-2px); border-color: rgba(255,255,255,0.4); }
 
-/* ═══ MAIN & ULTIMATE GLASS BACKGROUNDS ═══ */
-main { position: relative; z-index: 3; }
-.bg-black, .bg-dark, .bg-dark2 { 
-    background: transparent !important; /* Let the 3D shine through the whole site */
-    padding: 2rem 0; /* Add padding instead of hard background cuts */
-}
-.section-z { position: relative; z-index: 3; }
-.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 2rem 0; position: relative; z-index: 3; }
+/* ═══ MAIN LAYOUT ═══ */
+main { position: relative; z-index: 10; width: 100%; }
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; position: relative; }
 
 /* ═══ HERO ═══ */
-#hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding-top: 64px; position: relative; z-index: 3; }
-.hero-content { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-left: 1px solid var(--glass-highlight); border-radius: 24px; padding: 5rem; text-align: center; max-width: 900px; width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform-style: preserve-3d; }
-.hero-eye { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--mono); font-size: 11px; color: var(--red3); letter-spacing: .25em; text-transform: uppercase; margin-bottom: 2rem; background: rgba(220,38,38,0.1); padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(220,38,38,0.3); }
+#hero { min-height: 100vh; display: flex; align-items: center; padding-top: 64px; }
+.hero-content { 
+    background: var(--glass-bg); 
+    backdrop-filter: var(--glass-blur); 
+    -webkit-backdrop-filter: var(--glass-blur); 
+    border: 1px solid var(--glass-border); 
+    border-top: 1px solid var(--glass-highlight); 
+    border-left: 1px solid var(--glass-highlight); 
+    border-radius: 24px; 
+    padding: 4rem; 
+    max-width: 700px; 
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+}
+.hero-eye { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; color: var(--red3); letter-spacing: .25em; text-transform: uppercase; margin-bottom: 2rem; background: rgba(220,38,38,0.1); padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(220,38,38,0.3); }
 .hn-solid { font-size: clamp(3.5rem,6vw,5.5rem); font-weight: 900; line-height: 1; letter-spacing: -3px; color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.8); display: block; }
 .hn-outline { font-size: clamp(3.5rem,6vw,5.5rem); font-weight: 900; line-height: 1; letter-spacing: -3px; color: transparent; -webkit-text-stroke: 2px var(--red); display: block; margin-top: -10px; filter: drop-shadow(0 0 15px rgba(220,38,38,0.4)); }
 .hero-title { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--t2); letter-spacing: .25em; text-transform: uppercase; margin: 2rem 0 1rem; }
-.hero-ats { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: .1em; line-height: 2; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
-.hero-desc { font-size: 18px; color: var(--t2); line-height: 1.8; max-width: 600px; margin: 0 auto 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.hero-ats { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: .1em; line-height: 2; margin-bottom: 2rem; }
+.hero-desc { font-size: 18px; color: var(--t2); line-height: 1.8; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 .hero-desc strong { color: var(--white); font-weight: 600; }
-.hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
 .btn-grad { font-size: 16px; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 16px 36px; text-decoration: none; transition: all .3s; box-shadow: 0 10px 30px rgba(220,38,38,.4); }
 .btn-grad:hover { box-shadow: 0 15px 40px rgba(220,38,38,.6); transform: translateY(-3px); border-color: rgba(255,255,255,0.5); }
 .btn-glass { font-size: 16px; font-weight: 500; color: var(--t1); background: rgba(255,255,255,.05); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 12px; padding: 16px 36px; text-decoration: none; transition: all .3s; backdrop-filter: blur(10px); }
 .btn-glass:hover { border-color: var(--white); background: rgba(255,255,255,.1); color: var(--white); transform: translateY(-3px); }
 
-/* STAT CARDS (Premium Floating Glass) */
-.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: -50px auto 4rem; position: relative; z-index: 10; padding: 0 2rem; }
-.stat-card { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-left: 1px solid var(--glass-highlight); border-radius: 16px; padding: 1.5rem; text-align: center; transition: all .4s; box-shadow: 0 15px 35px rgba(0,0,0,0.6); transform: translateY(0); }
+/* ═══ FLOATING STATS ═══ */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: -50px; position: relative; z-index: 10; padding: 0 2rem; }
+.stat-card { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 16px; padding: 1.5rem; text-align: center; transition: all .4s; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
 .stat-card:hover { border-color: rgba(220,38,38,.5); background: rgba(20, 15, 25, 0.6); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 20px rgba(220,38,38,.2); }
 .stat-val { font-size: 2.5rem; font-weight: 900; color: var(--white); letter-spacing: -2px; line-height: 1; margin-bottom: 8px; text-shadow: 0 2px 15px rgba(0,0,0,0.8); }
 .stat-val.red { color: var(--red2); }
@@ -107,8 +129,7 @@ main { position: relative; z-index: 3; }
 .stat-val.green { color: #34d399; }
 .stat-lbl { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: .15em; text-transform: uppercase; }
 
-/* ═══ SHARED SECTION STYLES ═══ */
-.section-inner { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem; }
+/* ═══ SECTION HEADERS ═══ */
 .section-header { margin-bottom: 4rem; text-align: center; }
 .s-eye { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--red2); letter-spacing: .3em; text-transform: uppercase; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 12px; }
 .s-eye::before, .s-eye::after { content: ''; width: 30px; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
@@ -116,29 +137,45 @@ main { position: relative; z-index: 3; }
 .s-title .r  { color: var(--red2); }
 .s-title .p  { color: var(--purple3); }
 .s-sub { font-size: 18px; color: var(--t2); line-height: 1.8; max-width: 600px; margin: 0 auto; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 2rem 0; position: relative; z-index: 3; }
 
-/* ═══ CARDS & GRIDS (Ultimate Glass) ═══ */
+/* ═══ GLASS CARDS & GRIDS ═══ */
 .svc-grid, .cases-grid, .testi-grid, .creds-grid { display: grid; gap: 2rem; }
 .svc-grid { grid-template-columns: repeat(3,1fr); }
 .cases-grid { grid-template-columns: repeat(2,1fr); }
 .testi-grid { grid-template-columns: repeat(3,1fr); }
 .creds-grid { grid-template-columns: repeat(5,1fr); gap: 1rem; }
 
-.svc-card, .case-card, .testi-card, .cred-card, .about-content {
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-left: 1px solid var(--glass-highlight);
-  border-radius: 20px; padding: 2.5rem; position: relative; overflow: hidden;
-  transition: all .4s cubic-bezier(.23,1,.32,1); box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+/* Universal Glass Class for all boxes */
+.glass-panel {
+  background: var(--glass-bg); 
+  backdrop-filter: var(--glass-blur); 
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); 
+  border-top: 1px solid var(--glass-highlight); 
+  border-left: 1px solid var(--glass-highlight);
+  border-radius: 20px; 
+  padding: 2.5rem; 
+  position: relative; 
+  overflow: hidden;
+  transition: all .4s cubic-bezier(.23,1,.32,1); 
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
-.about-content { padding: 4rem; }
-.cred-card { padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 15px; }
 
-.svc-card:hover, .case-card:hover, .testi-card:hover, .cred-card:hover {
-  border-color: rgba(220,38,38,.4); border-top-color: rgba(220,38,38,.6);
+.glass-panel:hover {
+  border-color: rgba(220,38,38,.4); 
+  border-top-color: rgba(220,38,38,.6);
   box-shadow: 0 25px 60px rgba(0,0,0,.9), 0 0 30px rgba(220,38,38,.15);
-  transform: translateY(-8px); background: rgba(20, 15, 25, 0.5);
+  transform: translateY(-8px); 
+  background: rgba(20, 15, 25, 0.5);
 }
 
+/* Specific overrides */
+.cred-card { padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 15px; }
+.about-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }
+.about-content { padding: 3rem; }
+
+/* Typgraphy inside cards */
 .svc-card-top, .case-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
 .svc-num { font-family: var(--mono); font-size: 12px; color: var(--t4); letter-spacing: .2em; font-weight: 700; }
 .svc-icon { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg, rgba(220,38,38,.2), rgba(124,58,237,.2)); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: inset 0 0 10px rgba(255,255,255,0.05); }
@@ -147,7 +184,7 @@ main { position: relative; z-index: 3; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag { font-family: var(--mono); font-size: 10px; padding: 4px 12px; border-radius: 6px; color: var(--t2); border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.05); transition: all .2s; letter-spacing: .05em; }
-.svc-card:hover .tag { border-color: rgba(220,38,38,.5); color: var(--white); background: rgba(220,38,38,.1); }
+.glass-panel:hover .tag { border-color: rgba(220,38,38,.5); color: var(--white); background: rgba(220,38,38,.1); }
 
 .badge-ind { font-family: var(--mono); font-size: 10px; color: #fca5a5; border: 1px solid rgba(220,38,38,.5); background: rgba(220,38,38,.15); padding: 4px 12px; border-radius: 100px; letter-spacing: .1em; text-transform: uppercase; }
 .badge-ok { font-family: var(--mono); font-size: 10px; color: #6ee7b7; border: 1px solid rgba(52,211,153,.5); background: rgba(52,211,153,.15); padding: 4px 12px; border-radius: 100px; letter-spacing: .1em; text-transform: uppercase; }
@@ -165,13 +202,24 @@ main { position: relative; z-index: 3; }
 .t-name { font-size: 15px; font-weight: 700; color: var(--t1); }
 .t-role { font-size: 13px; color: var(--t3); margin-top: 2px; }
 
+/* Creds & About */
 .cred-badge { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; font-weight: 800; box-shadow: inset 0 0 10px rgba(255,255,255,0.1); }
 .cred-n { font-size: 14px; font-weight: 700; color: var(--t1); line-height: 1.3; margin-bottom: 4px; }
 .cred-s { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; }
 
-/* ═══ ABOUT CONTENT ═══ */
 .about-text p { font-size: 17px; color: var(--t2); line-height: 1.9; margin-bottom: 1.5rem; }
 .about-text p strong { color: var(--white); font-weight: 700; }
+.timeline { display: flex; flex-direction: column; padding-top: 1rem; }
+.tl-item { display: flex; gap: 1.5rem; padding-bottom: 2.5rem; position: relative; }
+.tl-item::before { content: ''; position: absolute; left: 7px; top: 20px; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--red), rgba(124,58,237,.3), transparent); }
+.tl-item:last-child::before { display: none; }
+.tl-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; border: 2px solid var(--red); background: var(--near-black); box-shadow: 0 0 15px var(--red); animation: tlPulse 2.5s ease infinite; }
+.tl-item:not(:first-child) .tl-dot { border-color: var(--t4); box-shadow: none; animation: none; background: rgba(0,0,0,0.5); }
+@keyframes tlPulse { 0%,100%{box-shadow:0 0 8px rgba(220,38,38,.5);} 50%{box-shadow:0 0 20px rgba(220,38,38,.9);} }
+.tl-org { font-family: var(--mono); font-size: 10px; color: var(--red3); letter-spacing: .15em; margin-bottom: 4px; }
+.tl-role { font-size: 16px; font-weight: 700; color: var(--t1); margin-bottom: 4px; line-height: 1.3; }
+.tl-period { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: .08em; }
+
 .awards-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 3rem; }
 .aw-pill { display: flex; align-items: center; gap: 12px; background: rgba(220,38,38,.1); border: 1px solid rgba(220,38,38,.3); border-top: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 10px 24px; transition: all .3s; backdrop-filter: blur(12px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 .aw-pill:hover { border-color: rgba(220,38,38,.6); background: rgba(220,38,38,.2); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(220,38,38,.3); }
@@ -179,34 +227,31 @@ main { position: relative; z-index: 3; }
 .aw-text { font-size: 14px; font-weight: 700; color: var(--t1); }
 .aw-sub { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 2px; }
 
-/* ═══ CONTACT ═══ */
-.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+/* ═══ CONTACT FORM (Perfected Dark Mode) ═══ */
+.contact-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
 .c-methods { display: flex; flex-direction: column; gap: 15px; margin-top: 2rem; }
-.c-method { display: flex; align-items: center; gap: 18px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 16px; padding: 1.25rem 1.5rem; text-decoration: none; transition: all .3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.c-method:hover { border-color: rgba(220,38,38,.4); transform: translateX(8px); background: rgba(20, 15, 30, 0.6); }
-.c-ico { font-size: 22px; flex-shrink: 0; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); }
+.c-method { display: flex; align-items: center; gap: 18px; text-decoration: none; }
+.c-ico { font-size: 22px; flex-shrink: 0; width: 44px; height: 44px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); }
 .c-lbl { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: .15em; text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: 600; }
-.c-val { font-size: 15px; font-weight: 600; color: var(--t1); }
-.c-method:hover .c-val { color: var(--red3); }
+.c-val { font-size: 15px; font-weight: 600; color: var(--t1); transition: color .2s;}
+.glass-panel.c-method:hover .c-val { color: var(--red3); }
 
-/* FORM */
-.cform { background: rgba(10, 7, 18, 0.6); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.15); border-top: 1px solid rgba(255,255,255,0.3); border-left: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 3rem; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.8); }
-.cform-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -1px; margin-bottom: 2rem; }
+.cform-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -1px; margin-bottom: 2rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
 .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
 .fg { margin-bottom: 1.5rem; }
-.flbl { display: block; font-size: 13px; font-weight: 600; color: var(--t2); margin-bottom: 8px; }
+.flbl { display: block; font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
 
-/* System dark scheme for form inputs */
-.fin, .fsel, .fta { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 1rem 1.25rem; color: var(--t1); font-family: var(--sans); font-size: 15px; outline: none; transition: all .3s; -webkit-appearance: none; color-scheme: dark; box-shadow: inset 0 4px 15px rgba(0,0,0,0.5); }
+/* FIX: Solid Dark Form Inputs so they never turn white */
+.fin, .fsel, .fta { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 1rem 1.25rem; color: var(--t1); font-family: var(--sans); font-size: 15px; outline: none; transition: all .3s; -webkit-appearance: none; color-scheme: dark; box-shadow: inset 0 4px 15px rgba(0,0,0,0.5); }
 .fin::placeholder, .fta::placeholder { color: var(--t4); }
 .fin:focus, .fsel:focus, .fta:focus { border-color: rgba(220,38,38,.8); box-shadow: 0 0 0 4px rgba(220,38,38,.2), inset 0 4px 15px rgba(0,0,0,0.5); background: rgba(0,0,0,0.8); transform: translateY(-2px); }
-.fsel option { background-color: var(--dark); color: var(--white); }
+.fsel option { background-color: #07050f; color: var(--white); }
 .fta { height: 140px; resize: none; }
 .fsub { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; color: #fff; font-family: var(--sans); font-size: 16px; font-weight: 800; transition: all .3s; letter-spacing: -.2px; box-shadow: 0 10px 30px rgba(220,38,38,.4); cursor: pointer; margin-top: 1rem; }
 .fsub:hover { opacity: 1; box-shadow: 0 15px 40px rgba(220,38,38,.7); transform: translateY(-3px); border-color: rgba(255,255,255,0.5); }
 
 /* ═══ FOOTER ═══ */
-.footer-bg { background: rgba(3,2,6,0.8); backdrop-filter: blur(30px); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; }
+.footer-bg { background: rgba(3,2,6,0.5); backdrop-filter: blur(30px); border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 3; margin-top: 4rem; }
 footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
 .foot-top { display: grid; grid-template-columns: 2.5fr 1fr 1fr; gap: 5rem; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .foot-logo { font-size: 24px; font-weight: 900; color: var(--white); letter-spacing: -1px; margin-bottom: 1rem; }
@@ -222,18 +267,18 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
 .foot-badge { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t2); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 6px 12px; background: rgba(255,255,255,0.05); }
 
 /* ═══ REVEAL ═══ */
-.ri { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.23,1,.32,1), transform .8s cubic-bezier(.23,1,.32,1); }
+.ri { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.23,1,.32,1), transform .9s cubic-bezier(.23,1,.32,1); }
 .ri.in { opacity: 1; transform: none; }
 .d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;} .d4{transition-delay:.4s;} .d5{transition-delay:.5s;}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:1024px){
-  #hero { grid-template-columns: 1fr; padding-top: 100px; }
-  .hero-left, .hero-right { padding: 2rem; border: none; text-align: center; }
-  .hero-content { padding: 3rem 2rem; }
+  #hero { grid-template-columns: 1fr; padding-top: 100px; text-align: center; justify-items: center; }
+  .hero-left, .hero-right { padding: 0; border: none; }
+  .hero-content { padding: 3rem 2rem; max-width: 100%; margin: 0 1.5rem; }
   .hero-desc { margin: 0 auto 2rem; }
   .hero-cta { justify-content: center; }
-  .stat-grid { grid-template-columns: 1fr 1fr; margin-top: 2rem; padding: 0; }
+  .stat-grid { grid-template-columns: 1fr 1fr; margin-top: 2rem; padding: 0 1.5rem; }
   .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
   .about-content { padding: 2.5rem; }
   .svc-grid, .testi-grid { grid-template-columns: repeat(2,1fr); }
@@ -251,13 +296,12 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
   .foot-top { grid-template-columns: 1fr; gap: 2.5rem; }
   .f2 { grid-template-columns: 1fr; }
   .cform { padding: 2rem 1.5rem; }
-  .hero-content { padding: 2rem 1.5rem; }
 }
 </style>
 </head>
 <body>
 
-<canvas id="fullscreen-3d-bg"></canvas>
+<canvas id="cyber-canvas"></canvas>
 <canvas id="cv-aurora"></canvas>
 
 <div id="c-dot"></div>
@@ -286,24 +330,28 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
 <main>
 
 <section id="hero">
-  <div class="hero-content ri">
-    <div class="hero-eye">Clearance L3 · EDR/XDR · Threat Hunting</div>
-    <div class="hero-name">
-      <span class="hn-solid">RUTVIK</span>
-      <span class="hn-outline">CHAVDA</span>
-    </div>
-    <p class="hero-title">Endpoint Security Engineer</p>
-    <p class="hero-desc">
-      Elite endpoint security consulting and engineering.
-      <strong>3+ years at Sophos</strong> defending enterprise fleets across
-      Windows, macOS, and Linux. I don't monitor threats —
-      <strong>I intercept them before they breathe.</strong>
-    </p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn-grad">Engage InterceptIQ →</a>
-      <a href="#cases" class="btn-glass">View case studies</a>
-    </div>
+  <div class="hero-left">
+      <div class="hero-content ri">
+        <div class="hero-eye">Clearance L3 · EDR/XDR · Threat Hunting</div>
+        <div class="hero-name">
+          <span class="hn-solid">RUTVIK</span>
+          <span class="hn-outline">CHAVDA</span>
+        </div>
+        <p class="hero-title">Endpoint Security Engineer</p>
+        <p class="hero-desc">
+          Elite endpoint security consulting and engineering.
+          <strong>3+ years at Sophos</strong> defending enterprise fleets across
+          Windows, macOS, and Linux. I don't monitor threats —
+          <strong>I intercept them before they breathe.</strong>
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-grad">Engage InterceptIQ →</a>
+          <a href="#cases" class="btn-glass">View case studies</a>
+        </div>
+      </div>
   </div>
+  <div class="hero-right">
+      </div>
 </section>
 
 <div class="stat-grid ri d2">
@@ -332,7 +380,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
     <h2 class="s-title ri d1">Built on 3+ years of<br><span class="r">elite threat operations</span></h2>
   </div>
   <div class="about-layout">
-    <div class="about-content ri d2">
+    <div class="about-content glass-panel ri d2">
       <div class="about-text">
         <p><strong>InterceptIQ</strong> is the security consultancy of <strong>Rutvik Chavda</strong> — a senior Endpoint Security Engineer with 3+ years at <strong>Sophos</strong> in L2/L3 technical support engineering, handling the most complex enterprise security incidents globally.</p>
         <p>I specialise in <strong>EDR/XDR, Sophos Intercept X, Incident Response, and enterprise-scale threat investigation</strong> across Windows, macOS, and Linux. End-to-end ownership of high-priority escalations and direct collaboration with Sophos product engineering on defect validation and fix verification.</p>
@@ -363,12 +411,12 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
     <p class="s-sub ri d2">From ransomware containment to full EDR/XDR deployments — every engagement delivered with Sophos L3 precision.</p>
   </div>
   <div class="svc-grid">
-    <div class="svc-card ri d1"><div class="svc-card-top"><span class="svc-num">01</span><div class="svc-icon">🛡️</div></div><div class="svc-title">Endpoint Security Engineering</div><div class="svc-desc">Full EDR/XDR deployment, policy tuning, and ongoing management. Sophos Central, Intercept X, and aligned platforms.</div><div class="tags"><span class="tag">Sophos Central</span><span class="tag">Intercept X</span><span class="tag">Sophos XDR</span></div></div>
-    <div class="svc-card ri d2"><div class="svc-card-top"><span class="svc-num">02</span><div class="svc-icon">🔍</div></div><div class="svc-title">Threat Hunting & IR</div><div class="svc-desc">Proactive threat hunting across your XDR Data Lake. End-to-end incident response — from triage to full containment.</div><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">Incident Response</span><span class="tag">MITRE ATT&CK</span></div></div>
-    <div class="svc-card ri d3"><div class="svc-card-top"><span class="svc-num">03</span><div class="svc-icon">📊</div></div><div class="svc-title">SIEM & Log Analysis</div><div class="svc-desc">Splunk SIEM implementation, custom detection rules, Windows Event Log and Sysmon analysis. Triage pipeline optimisation.</div><div class="tags"><span class="tag">Splunk SIEM</span><span class="tag">Sysmon</span><span class="tag">Detection Eng</span></div></div>
-    <div class="svc-card ri d4"><div class="svc-card-top"><span class="svc-num">04</span><div class="svc-icon">⚡</div></div><div class="svc-title">Security Automation</div><div class="svc-desc">Custom PowerShell and Bash automation for IR playbooks, forensic triage, and XDR Live Discover SQL libraries.</div><div class="tags"><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">REST API</span></div></div>
-    <div class="svc-card ri d5"><div class="svc-card-top"><span class="svc-num">05</span><div class="svc-icon">🎯</div></div><div class="svc-title">Security Advisory</div><div class="svc-desc">MITRE ATT&CK gap analysis, security posture assessments, and detection engineering advisory for your security stack.</div><div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">Posture Assessment</span></div></div>
-    <div class="svc-card ri d6"><div class="svc-card-top"><span class="svc-num">06</span><div class="svc-icon">🚨</div></div><div class="svc-title">Ransomware Response</div><div class="svc-desc">Rapid containment for active ransomware and APT campaigns. Honeypot tripwires and forensic triage across all endpoints.</div><div class="tags"><span class="tag">Ransomware</span><span class="tag">Containment</span></div></div>
+    <div class="svc-card glass-panel ri d1"><div class="svc-card-top"><span class="svc-num">01</span><div class="svc-icon">🛡️</div></div><div class="svc-title">Endpoint Security Engineering</div><div class="svc-desc">Full EDR/XDR deployment, policy tuning, and ongoing management. Sophos Central, Intercept X, and aligned platforms at enterprise scale across Windows, macOS, and Linux fleets.</div><div class="tags"><span class="tag">Sophos Central</span><span class="tag">Intercept X</span><span class="tag">Sophos XDR</span></div></div>
+    <div class="svc-card glass-panel ri d2"><div class="svc-card-top"><span class="svc-num">02</span><div class="svc-icon">🔍</div></div><div class="svc-title">Threat Hunting & IR</div><div class="svc-desc">Proactive threat hunting across your XDR Data Lake. End-to-end incident response — from triage through root-cause analysis, attack timeline reconstruction, and full containment.</div><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">Incident Response</span><span class="tag">MITRE ATT&CK</span></div></div>
+    <div class="svc-card glass-panel ri d3"><div class="svc-card-top"><span class="svc-num">03</span><div class="svc-icon">📊</div></div><div class="svc-title">SIEM & Log Analysis</div><div class="svc-desc">Splunk SIEM implementation, custom detection rules, Windows Event Log and Sysmon analysis. Alert triage pipeline optimisation — reduce analyst overhead by up to 60%.</div><div class="tags"><span class="tag">Splunk SIEM</span><span class="tag">Sysmon</span><span class="tag">Detection Eng</span></div></div>
+    <div class="svc-card glass-panel ri d4"><div class="svc-card-top"><span class="svc-num">04</span><div class="svc-icon">⚡</div></div><div class="svc-title">Security Automation</div><div class="svc-desc">Custom PowerShell and Bash automation for IR playbooks, forensic triage, and XDR Live Discover SQL libraries. REST API integrations with Sophos Central and allied platforms.</div><div class="tags"><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">REST API</span></div></div>
+    <div class="svc-card glass-panel ri d5"><div class="svc-card-top"><span class="svc-num">05</span><div class="svc-icon">🎯</div></div><div class="svc-title">Security Advisory</div><div class="svc-desc">MITRE ATT&CK gap analysis, security posture assessments, and detection engineering advisory. Identify blind spots in your security stack and deliver actionable remediation roadmaps.</div><div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">Posture Assessment</span></div></div>
+    <div class="svc-card glass-panel ri d6"><div class="svc-card-top"><span class="svc-num">06</span><div class="svc-icon">🚨</div></div><div class="svc-title">Ransomware Response</div><div class="svc-desc">Rapid containment for active ransomware and APT campaigns. Honeypot deception deployments, behavioural tripwires, and forensic triage across all endpoints with zero production downtime.</div><div class="tags"><span class="tag">Ransomware</span><span class="tag">Containment</span></div></div>
   </div>
 </div>
 </div>
@@ -383,8 +431,8 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
     <p class="s-sub ri d2">Engagements resolved with precision. Hard numbers, no fluff.</p>
   </div>
   <div class="cases-grid">
-    <div class="case-card ri d1"><div class="case-top"><span class="badge-ind">Manufacturing · Enterprise</span><span class="badge-ok">Resolved</span></div><div class="case-title">Ransomware Contained Before Encryption</div><div class="case-desc">Detected LockBit pre-encryption via Sophos Intercept X triggers. Deployed honeypots and isolated 400+ hosts in under 3 minutes.</div><div class="case-metrics"><div><div class="met-val gr">&lt;3min</div><div class="met-lbl">Containment</div></div><div><div class="met-val">400+</div><div class="met-lbl">Endpoints</div></div><div><div class="met-val rd">0</div><div class="met-lbl">Files lost</div></div></div></div>
-    <div class="case-card ri d2"><div class="case-top"><span class="badge-ind">Financial Services · MNC</span><span class="badge-ok">Resolved</span></div><div class="case-title">LSASS Campaign — Full Kill Chain RCA</div><div class="case-desc">Investigated credential harvesting targeting domain admins. Traced T1003.001 lateral movement across 6 servers via XDR SQL.</div><div class="case-metrics"><div><div class="met-val gr">4hrs</div><div class="met-lbl">Full RCA</div></div><div><div class="met-val">6</div><div class="met-lbl">Servers</div></div><div><div class="met-val rd">100%</div><div class="met-lbl">TTPs mapped</div></div></div></div>
+    <div class="case-card glass-panel ri d1"><div class="case-top"><span class="badge-ind">Manufacturing · Enterprise</span><span class="badge-ok">Resolved</span></div><div class="case-title">Ransomware Contained Before Encryption</div><div class="case-desc">Detected LockBit pre-encryption via Sophos Intercept X triggers. Deployed honeypots and isolated 400+ hosts in under 3 minutes.</div><div class="case-metrics"><div><div class="met-val gr">&lt;3min</div><div class="met-lbl">Containment</div></div><div><div class="met-val">400+</div><div class="met-lbl">Endpoints</div></div><div><div class="met-val rd">0</div><div class="met-lbl">Files lost</div></div></div></div>
+    <div class="case-card glass-panel ri d2"><div class="case-top"><span class="badge-ind">Financial Services · MNC</span><span class="badge-ok">Resolved</span></div><div class="case-title">LSASS Campaign — Full Kill Chain RCA</div><div class="case-desc">Investigated credential harvesting targeting domain admins. Traced T1003.001 lateral movement across 6 servers via XDR SQL.</div><div class="case-metrics"><div><div class="met-val gr">4hrs</div><div class="met-lbl">Full RCA</div></div><div><div class="met-val">6</div><div class="met-lbl">Servers</div></div><div><div class="met-val rd">100%</div><div class="met-lbl">TTPs mapped</div></div></div></div>
   </div>
 </div>
 </div>
@@ -398,11 +446,11 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
     <h2 class="s-title ri d1">Certifications &amp; <span class="r">Recognition</span></h2>
   </div>
   <div class="creds-grid">
-    <div class="cred-card ri"><div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">SCE</div><div><div class="cred-n">Sophos Central Engineer</div><div class="cred-s">ACTIVE</div></div></div>
-    <div class="cred-card ri d1"><div class="cred-badge" style="background:rgba(139,92,246,.2);color:#c4b5fd;">SPL</div><div><div class="cred-n">SIEM — Splunk</div><div class="cred-s">COMPLETED</div></div></div>
-    <div class="cred-card ri d2"><div class="cred-badge" style="background:rgba(245,158,11,.2);color:#fde68a;">AWS</div><div><div class="cred-n">AWS Cloud Essentials</div><div class="cred-s">COMPLETED</div></div></div>
-    <div class="cred-card ri d3"><div class="cred-badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;">PS1</div><div><div class="cred-n">PowerShell Scripting</div><div class="cred-s">COMPLETED</div></div></div>
-    <div class="cred-card ri d4"><div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">ATT</div><div><div class="cred-n">MITRE ATT&amp;CK Guide</div><div class="cred-s">COMPLETED</div></div></div>
+    <div class="cred-card glass-panel ri"><div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">SCE</div><div><div class="cred-n">Sophos Central Engineer</div><div class="cred-s">ACTIVE</div></div></div>
+    <div class="cred-card glass-panel ri d1"><div class="cred-badge" style="background:rgba(139,92,246,.2);color:#c4b5fd;">SPL</div><div><div class="cred-n">SIEM — Splunk</div><div class="cred-s">COMPLETED</div></div></div>
+    <div class="cred-card glass-panel ri d2"><div class="cred-badge" style="background:rgba(245,158,11,.2);color:#fde68a;">AWS</div><div><div class="cred-n">AWS Cloud Essentials</div><div class="cred-s">COMPLETED</div></div></div>
+    <div class="cred-card glass-panel ri d3"><div class="cred-badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;">PS1</div><div><div class="cred-n">PowerShell Scripting</div><div class="cred-s">COMPLETED</div></div></div>
+    <div class="cred-card glass-panel ri d4"><div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">ATT</div><div><div class="cred-n">MITRE ATT&amp;CK Guide</div><div class="cred-s">COMPLETED</div></div></div>
   </div>
   <div class="awards-row ri d2">
     <div class="aw-pill"><span class="aw-ico">🏆</span><div><div class="aw-text">Top 10 Support Engineer</div><div class="aw-sub">SOPHOS FY25 · GLOBAL</div></div></div>
@@ -423,9 +471,9 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
     <div class="contact-intro ri d2">
       <p>Whether you're facing an active incident, scaling your security programme, or hiring a senior EDR/XDR engineer — InterceptIQ is ready. I work with global MNCs, scale-ups, and enterprise security teams worldwide.</p>
       <div class="c-methods">
-        <a href="mailto:chavdarutvik1849@gmail.com?subject=Enquiry — InterceptIQ" class="c-method"><div class="c-ico">📧</div><div><span class="c-lbl">Email</span><span class="c-val">chavdarutvik1849@gmail.com</span></div></a>
-        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" rel="noopener" class="c-method"><div class="c-ico">💼</div><div><span class="c-lbl">LinkedIn</span><span class="c-val">/in/rutvik-chavda-584b37197</span></div></a>
-        <div class="c-method" style="cursor:default;"><div class="c-ico">📍</div><div><span class="c-lbl">Location</span><span class="c-val">Ahmedabad, India · Remote available</span></div></div>
+        <a href="mailto:chavdarutvik1849@gmail.com?subject=Enquiry — InterceptIQ" class="c-method glass-panel"><div class="c-ico">📧</div><div><span class="c-lbl">Email</span><span class="c-val">chavdarutvik1849@gmail.com</span></div></a>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" rel="noopener" class="c-method glass-panel"><div class="c-ico">💼</div><div><span class="c-lbl">LinkedIn</span><span class="c-val">/in/rutvik-chavda-584b37197</span></div></a>
+        <div class="c-method glass-panel" style="cursor:default;"><div class="c-ico">📍</div><div><span class="c-lbl">Location</span><span class="c-val">Ahmedabad, India · Remote available</span></div></div>
       </div>
     </div>
     
@@ -491,7 +539,6 @@ footer { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 3rem; }
 </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 'use strict';
 
@@ -526,26 +573,24 @@ function animRing(){
 }
 animRing();
 
-document.querySelectorAll('a, button, .svc-card, .case-card, .c-method').forEach(el=>{
+document.querySelectorAll('a, button, .glass-panel').forEach(el=>{
   el.addEventListener('mouseenter',()=>{ dot.style.width='12px'; dot.style.height='12px'; ring.style.width='45px'; ring.style.height='45px'; ring.style.borderColor='rgba(220,38,38,0.8)'; });
   el.addEventListener('mouseleave',()=>{ dot.style.width='6px'; dot.style.height='6px'; ring.style.width='34px'; ring.style.height='34px'; ring.style.borderColor='rgba(255,255,255,0.3)';});
 });
 
-/* ═════════════════════════════════════════════════════════════
-   THE ZERO-TRUST CYBER VORTEX (Three.js)
-═════════════════════════════════════════════════════════════ */
+/* ═══ THE TRUE 3D "GLOBAL THREAT" ENVIRONMENT ═══ */
 (function(){
-  const cv = document.getElementById('fullscreen-3d-bg');
+  const cv = document.getElementById('cyber-canvas');
   if(!cv) return;
 
   const renderer = new THREE.WebGLRenderer({canvas:cv, alpha:true, antialias:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x030206, 0.015); // Deep core fog
+  scene.fog = new THREE.FogExp2(0x030208, 0.04); // Deep black/purple fog hides the back of the scene
 
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 25); 
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 1.5, 6); 
 
   function resize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -555,71 +600,92 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .c-method').forEach
   window.addEventListener('resize', resize);
   resize();
 
-  /* --- 1. MASSIVE CYBER VORTEX --- */
-  const pCount = 18000; // High particle count for dense storm
-  const pGeo = new THREE.BufferGeometry();
-  const pPos = new Float32Array(pCount * 3);
-  const pCol = new Float32Array(pCount * 3);
-  const pBasePhase = new Float32Array(pCount);
-  
-  for(let i=0; i<pCount; i++) {
-    // Distribute in a massive hollow cylinder/vortex stretching along Z axis
-    const angle = Math.random() * Math.PI * 2;
-    const radius = 15 + Math.random() * 40; // Hollow center
-    
-    pPos[i*3] = Math.cos(angle) * radius;
-    pPos[i*3+1] = Math.sin(angle) * radius;
-    pPos[i*3+2] = 50 - Math.random() * 300; // Huge depth
-    
-    pBasePhase[i] = Math.random() * Math.PI * 2;
-
-    const isRed = Math.random() > 0.4;
-    pCol[i*3] = isRed ? 0.86 : 0.45; // R
-    pCol[i*3+1] = isRed ? 0.15 : 0.22; // G
-    pCol[i*3+2] = isRed ? 0.15 : 0.92; // B
-  }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
-  
-  // Custom additive material for glowing storm effect
-  const pMat = new THREE.PointsMaterial({
-      size: 0.12, 
-      vertexColors: true, 
-      transparent: true, 
-      opacity: 0.6, 
+  /* 1. THE INFINITE CYBER GRID FLOOR */
+  const gridGeo = new THREE.PlaneGeometry(200, 200, 80, 80);
+  const gridMat = new THREE.MeshBasicMaterial({
+      color: 0x7c3aed, // Sophos Purple
+      wireframe: true,
+      transparent: true,
+      opacity: 0.15,
       blending: THREE.AdditiveBlending
   });
-  const vortex = new THREE.Points(pGeo, pMat);
-  scene.add(vortex);
+  const grid = new THREE.Mesh(gridGeo, gridMat);
+  grid.rotation.x = -Math.PI / 2;
+  grid.position.y = -2;
+  scene.add(grid);
 
-  /* --- 2. ENCRYPTED DATA RINGS --- */
-  const rings = new THREE.Group();
-  scene.add(rings);
-  for(let i=0; i<8; i++) {
-      const ringGeo = new THREE.TorusGeometry( 18 + i*2, 0.05, 8, 100 );
-      const ringMat = new THREE.MeshBasicMaterial({ color: i%2===0 ? 0xdc2626 : 0x8b5cf6, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      ring.position.z = -i * 30; // Space them out down the tunnel
-      rings.add(ring);
+  /* 2. THE THREAT GLOBE */
+  const globeGroup = new THREE.Group();
+  scene.add(globeGroup);
+
+  // Responsive Globe Position
+  function updateGlobePos() {
+      if(window.innerWidth > 1024) {
+          globeGroup.position.set(3, 0, 0); // Desktop: Right side
+      } else {
+          globeGroup.position.set(0, -0.5, -2); // Mobile: Centered, pushed back
+      }
   }
+  updateGlobePos();
+  window.addEventListener('resize', updateGlobePos);
 
-  /* --- 3. LIGHTS --- */
-  scene.add(new THREE.AmbientLight(0x0a0515, 2));
-  const ptLight = new THREE.PointLight(0xdc2626, 4, 100);
-  ptLight.position.set(0, 0, 0);
-  scene.add(ptLight);
+  // Outer Wireframe Globe
+  const globeGeo = new THREE.IcosahedronGeometry(2.4, 3);
+  const globeMat = new THREE.MeshBasicMaterial({
+      color: 0xdc2626, // Sophos Red
+      wireframe: true,
+      transparent: true,
+      opacity: 0.35,
+      blending: THREE.AdditiveBlending
+  });
+  const globeWire = new THREE.Mesh(globeGeo, globeMat);
+  globeGroup.add(globeWire);
+
+  // Solid Inner Core (Hides the back wireframes to make it look solid)
+  const coreGeo = new THREE.SphereGeometry(2.35, 32, 32);
+  const coreMat = new THREE.MeshBasicMaterial({color: 0x030208});
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  globeGroup.add(core);
+
+  /* 3. CONTAINMENT RINGS */
+  const ring1 = new THREE.Mesh(
+      new THREE.TorusGeometry(2.7, 0.01, 8, 100),
+      new THREE.MeshBasicMaterial({color: 0xdc2626, transparent: true, opacity: 0.5})
+  );
+  globeGroup.add(ring1);
+  
+  const ring2 = new THREE.Mesh(
+      new THREE.TorusGeometry(2.9, 0.01, 8, 100),
+      new THREE.MeshBasicMaterial({color: 0x8b5cf6, transparent: true, opacity: 0.5})
+  );
+  ring2.rotation.x = Math.PI / 2;
+  globeGroup.add(ring2);
+
+  /* 4. FLOATING DATA NODES (Particles) */
+  const pCount = 1500;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(pCount * 3);
+  for(let i=0; i<pCount*3; i+=3) {
+      pPos[i] = (Math.random() - 0.5) * 40;   // X spread
+      pPos[i+1] = (Math.random() - 0.5) * 40; // Y spread
+      pPos[i+2] = 10 - (Math.random() * 50);  // Z spread (deep)
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const pMat = new THREE.PointsMaterial({
+      color: 0x8b5cf6, 
+      size: 0.06, 
+      transparent: true, 
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
+  });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
 
   /* --- INTERACTIONS --- */
   let scrollPercent = 0;
-  let targetCamZ = 25;
-
   window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollPercent = scrollY / (maxScroll || 1); 
-      
-      // Dive deep down the Z axis through the vortex!
-      targetCamZ = 25 - (scrollPercent * 180); 
+      scrollPercent = window.scrollY / (maxScroll || 1); 
   });
 
   let mouseX = 0, mouseY = 0;
@@ -628,52 +694,48 @@ document.querySelectorAll('a, button, .svc-card, .case-card, .c-method').forEach
       mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
   });
 
-  let time = 0;
+  /* --- ANIMATION LOOP --- */
+  const clock = new THREE.Clock();
+  
   function animate() {
-    requestAnimationFrame(animate);
-    time += 0.005;
+      requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
 
-    // 1. Camera Flight Interpolation
-    camera.position.z += (targetCamZ - camera.position.z) * 0.05;
-    
-    // Mouse Parallax looking down the tunnel
-    camera.position.x += ((mouseX * 4) - camera.position.x) * 0.05;
-    camera.position.y += ((mouseY * 4) - camera.position.y) * 0.05;
-    camera.lookAt(mouseX * 2, mouseY * 2, camera.position.z - 50); // Look deep into the vortex
+      // 1. Animate Globe & Rings
+      globeGroup.rotation.y = time * 0.15;
+      globeGroup.rotation.z = Math.sin(time * 0.2) * 0.1; // Gentle sway
+      
+      ring1.rotation.x = time * 0.5;
+      ring1.rotation.y = time * 0.2;
+      ring2.rotation.y = time * 0.3;
+      ring2.rotation.z = time * 0.4;
 
-    // Update point light to follow camera for cool illumination
-    ptLight.position.z = camera.position.z - 10;
+      // 2. Infinite Grid Motion (moves forward)
+      grid.position.z = (time * 3) % 2.5;
 
-    // 2. Animate the Vortex (Rotation + Wave distortion)
-    vortex.rotation.z -= 0.001; // Spin the whole storm
-    
-    const positions = vortex.geometry.attributes.position.array;
-    for(let i=0; i<pCount; i++) {
-        // Move particles towards camera slowly
-        positions[i*3+2] += 0.2; 
-        
-        // Wrap particles back to the end of the tunnel
-        if(positions[i*3+2] > camera.position.z + 10) {
-            positions[i*3+2] = camera.position.z - 250;
-        }
-        
-        // Wavy mathematical distortion to make it look fluid/organic
-        const zPos = positions[i*3+2];
-        const phase = pBasePhase[i];
-        const radiusOffset = Math.sin(time * 5 + zPos * 0.05 + phase) * 0.05;
-        
-        positions[i*3] += positions[i*3] * radiusOffset * 0.01;
-        positions[i*3+1] += positions[i*3+1] * radiusOffset * 0.01;
-    }
-    vortex.geometry.attributes.position.needsUpdate = true;
+      // 3. Floating Particles (flow upward like data)
+      const positions = particles.geometry.attributes.position.array;
+      for(let i=1; i<pCount*3; i+=3) {
+          positions[i] += 0.02; 
+          if(positions[i] > 15) positions[i] = -15; // Loop back to bottom
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
 
-    // 3. Animate Rings
-    rings.children.forEach((ring, idx) => {
-        ring.rotation.x = Math.sin(time + idx) * 0.2;
-        ring.rotation.y = Math.cos(time + idx) * 0.2;
-    });
+      // 4. THE PARALLAX CAMERA FLIGHT
+      // As user scrolls, the camera swoops down closer to the grid, looking UP at the globe
+      const targetCamY = 1.5 - (scrollPercent * 3); // Drops down
+      const targetCamZ = 6 - (scrollPercent * 2);   // Moves forward slightly
 
-    renderer.render(scene, camera);
+      camera.position.y += (targetCamY - camera.position.y) * 0.05;
+      camera.position.z += (targetCamZ - camera.position.z) * 0.05;
+      
+      // Mouse sway
+      camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
+      
+      // Camera always looks at the center, creating a massive cinematic sweep
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
   }
   animate();
 })();
@@ -710,18 +772,7 @@ window.addEventListener('load',()=>{
   document.querySelectorAll('#hero .ri, .stat-grid').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*150));
 });
 
-/* ═══ 3D MAGNETIC TILT on cards ═══ */
-document.querySelectorAll('.svc-card, .case-card, .testi-card, .hero-content').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const x=(e.clientX-r.left-r.width/2)/r.width;
-    const y=(e.clientY-r.top-r.height/2)/r.height;
-    card.style.transform=`translateY(-8px) rotateX(${-y*10}deg) rotateY(${x*10}deg)`;
-  });
-  card.addEventListener('mouseleave',()=>card.style.transform='');
-});
-
-/* ═══ WEB3FORMS HANDLER (PERFECT DARK MODE) ═══ */
+/* ═══ WEB3FORMS HANDLER ═══ */
 const form = document.getElementById('contact-form');
 const result = document.getElementById('result');
 const btn = document.getElementById('submit-btn');
