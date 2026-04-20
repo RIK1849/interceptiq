@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rutvik Chavda | Senior Endpoint Security Engineer</title>
-<meta name="description" content="Rutvik Chavda — Endpoint Security Engineer specializing in EDR/XDR, Digital Forensics, Incident Response (DFIR), and Threat Hunting.">
-<meta name="keywords" content="Rutvik Chavda, Endpoint Security Engineer, EDR, XDR, MDR, Sophos, CrowdStrike, Palo Alto, Zscaler, Incident Response, DFIR, Threat Hunting, Splunk SIEM, MITRE ATT&CK, Zero Trust, Security Automation">
+<title>Rutvik Chavda | Senior Endpoint Security Engineer | DFIR</title>
+<meta name="description" content="Rutvik Chavda: L3 Endpoint Security Engineer specializing in EDR/XDR, DFIR, Threat Hunting, and Security Automation.">
+<meta name="keywords" content="Endpoint Security Engineer, EDR, XDR, MDR, Sophos Intercept X, CrowdStrike, Incident Response, DFIR, Threat Hunting, Splunk SIEM, MITRE ATT&CK, Zero Trust, Malware Analysis, L3 Escalation">
 <meta name="author" content="Rutvik Chavda">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -13,25 +13,24 @@
 
 <style>
 /* ═══════════════════════════════════════════════
-   INTERCEPTIQ — ELITE TOPOGRAPHY EDITION
-   Premium Procedural 3D + ATS Optimized UX
+   INTERCEPTIQ — HOLOGRAPHIC NEURAL CORE EDITION
+   Elite 3D Procedural Engine & Magnetic UI UX
 ═══════════════════════════════════════════════ */
 
 html, body { color-scheme: dark; scroll-behavior: smooth; }
 
 :root {
-  --bg-color: #020106;
-  --red: #dc2626; --red-glow: rgba(220,38,38,0.5);
-  --purple: #8b5cf6; --purple-glow: rgba(139,92,246,0.5);
+  --bg-color: #030305;
+  --red: #e11d48; --red-glow: rgba(225, 29, 72, 0.6);
+  --purple: #7c3aed; --purple-glow: rgba(124, 58, 237, 0.6);
+  --cyan: #06b6d4; --cyan-glow: rgba(6, 182, 212, 0.4);
   --white: #ffffff; --t2: #e2e8f0; --t3: #94a3b8; --t4: #475569;
-  --sans: 'Inter', system-ui, sans-serif; 
-  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
   
-  /* Precision Glassmorphism */
-  --glass-bg: rgba(6, 4, 12, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-top: rgba(255, 255, 255, 0.15);
-  --glass-blur: blur(24px);
+  /* Elite Glass Variables */
+  --glass-bg: rgba(10, 10, 15, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(20px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,415 +39,474 @@ body {
   overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
-::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--red), var(--purple)); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--red), var(--purple)); }
 
 /* ═══ 3D ENGINE LAYER ═══ */
-#canvas-container {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle at center, #0a0514 0%, #020106 100%);
-}
+#webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+.ambient-glow { position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; transform: translate(-50%, -50%); background: radial-gradient(circle at center, rgba(124,58,237,0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
 
-/* ═══ CUSTOM CURSOR ═══ */
+/* ═══ CUSTOM MAGNETIC CURSOR ═══ */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }
-  #c-dot { position: fixed; z-index: 99999; pointer-events: none; width: 5px; height: 5px; border-radius: 50%; background: var(--white); box-shadow: 0 0 10px var(--white); transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s; }
-  #c-ring { position: fixed; z-index: 99998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); transform: translate(-50%,-50%); transition: all 0.15s ease-out; }
+  #cursor-dot { position: fixed; z-index: 99999; pointer-events: none; width: 4px; height: 4px; border-radius: 50%; background: var(--white); transform: translate(-50%,-50%); transition: opacity 0.2s; }
+  #cursor-ring { position: fixed; z-index: 99998; pointer-events: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s; box-sizing: border-box; }
+  .magnetic-hover #cursor-ring { width: 60px; height: 60px; border-color: transparent; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
+  .magnetic-hover #cursor-dot { opacity: 0; }
 }
 
-/* ═══ NAVBAR ═══ */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; background: rgba(2, 1, 6, 0.5); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); }
+/* ═══ ELITE NAVBAR ═══ */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; background: linear-gradient(to bottom, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%); backdrop-filter: blur(10px); mask-image: linear-gradient(to bottom, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
 .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-mark { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; font-weight: 800; color: #fff; box-shadow: 0 0 15px var(--red-glow); }
-.nav-name { font-size: 16px; font-weight: 700; color: var(--white); letter-spacing: -0.2px; }
+.nav-mark { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; font-weight: 800; color: #fff; box-shadow: 0 0 20px var(--red-glow); }
+.nav-name { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.2px; text-transform: uppercase; }
 .nav-links { display: flex; gap: 3rem; list-style: none; }
-.nav-links a { font-size: 13px; font-weight: 500; color: var(--t3); text-decoration: none; transition: color 0.3s; text-transform: uppercase; letter-spacing: 0.1em; }
-.nav-links a:hover { color: var(--white); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
-.nav-cta { font-size: 13px; font-weight: 600; color: var(--white); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 8px 20px; text-decoration: none; transition: all 0.3s; background: rgba(255,255,255,0.03); }
-.nav-cta:hover { background: var(--white); color: var(--black); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+.nav-links a { font-size: 12px; font-weight: 600; color: var(--t3); text-decoration: none; transition: color 0.3s; text-transform: uppercase; letter-spacing: 0.15em; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background: var(--white); transition: width 0.3s ease; }
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
 
-/* ═══ LAYOUT & TYPOGRAPHY ═══ */
+/* ═══ TYPOGRAPHY & LAYOUT ═══ */
 main { position: relative; z-index: 10; width: 100%; display: flex; flex-direction: column; align-items: center; }
-.section-inner { width: 100%; max-width: 1200px; padding: 8rem 2rem; position: relative; }
+.section-inner { width: 100%; max-width: 1300px; padding: 10rem 2rem; position: relative; }
 
-.eye-brow { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--red2); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
-.eye-brow::before { content: ''; width: 40px; height: 1px; background: var(--red); }
+.sys-status { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 12px; padding: 6px 16px; border: 1px solid var(--cyan-glow); border-radius: 100px; background: rgba(6, 182, 212, 0.05); }
+.sys-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
 
-.h-title { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; color: var(--white); margin-bottom: 1.5rem; }
-.h-title span { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-title { font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 900; line-height: 1; letter-spacing: -3px; color: var(--white); margin-bottom: 1.5rem; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+.h-title span { display: block; background: linear-gradient(to right, var(--white), var(--t4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-title .gradient-text { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-.sub-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.1; margin-bottom: 1.5rem; }
-.sub-title .accent { color: var(--purple2); }
+.sub-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: var(--white); letter-spacing: -2px; line-height: 1.1; margin-bottom: 1.5rem; }
+.sub-title span { color: var(--purple); }
 
-.p-text { font-size: 1.125rem; color: var(--t3); line-height: 1.8; max-width: 700px; }
-.p-text strong { color: var(--white); font-weight: 600; }
+.p-text { font-size: 1.2rem; color: var(--t2); line-height: 1.8; max-width: 750px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.p-text strong { color: var(--white); font-weight: 700; }
 
-/* ═══ ATS KEYWORD STRIP ═══ */
-.ats-strip { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: 0.05em; line-height: 1.8; margin: 2rem 0; max-width: 800px; word-spacing: 2px; }
-.ats-strip span { color: var(--t2); font-weight: 600; }
+/* ═══ ATS KEYWORD TERMINAL ═══ */
+.terminal-box { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1.5rem; font-family: var(--mono); font-size: 12px; color: var(--t3); line-height: 1.8; margin: 2.5rem 0; position: relative; overflow: hidden; max-width: 850px; }
+.terminal-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--red), var(--purple)); }
+.term-line span { color: var(--purple2); font-weight: 700; }
+.term-keyword { color: var(--t1); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; margin: 0 4px; border: 1px solid rgba(255,255,255,0.05); }
 
-/* ═══ BUTTONS ═══ */
-.btn-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
-.btn-primary { font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, var(--red), var(--purple)); border: none; border-radius: 8px; padding: 14px 32px; text-decoration: none; transition: all 0.3s; box-shadow: 0 4px 15px var(--red-glow); cursor: pointer; }
-.btn-primary:hover { box-shadow: 0 8px 25px var(--red-glow); transform: translateY(-2px); }
-.btn-secondary { font-size: 14px; font-weight: 500; color: var(--white); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 14px 32px; text-decoration: none; transition: all 0.3s; backdrop-filter: blur(10px); }
-.btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+/* ═══ MAGNETIC BUTTONS ═══ */
+.btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+.btn-mag { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 18px 40px; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border-radius: 12px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; transform-style: preserve-3d; }
+.btn-primary { color: #fff; background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 30px var(--red-glow); }
+.btn-secondary { color: var(--white); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
 
-/* ═══ GLASS PANELS (The Core UI Element) ═══ */
-.glass-panel {
+/* ═══ ANIMATED GLOW CARDS ═══ */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+
+.glow-card {
+  position: relative;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-top: 1px solid var(--glass-top);
-  border-left: 1px solid var(--glass-top);
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  transition: all 0.4s ease;
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  overflow: hidden;
+  z-index: 1;
 }
-.glass-panel:hover {
-  border-color: rgba(220,38,38,0.3);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px var(--red-glow);
-  transform: translateY(-5px);
-  background: rgba(10, 8, 20, 0.4);
+/* The animated border gradient */
+.glow-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 2px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0), rgba(255,255,255,0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; transition: all 0.5s ease;
 }
+.glow-card:hover::before { background: linear-gradient(135deg, var(--red), var(--purple), var(--cyan)); animation: borderRotate 3s linear infinite; }
+@keyframes borderRotate { 100% { filter: hue-rotate(360deg); } }
 
-/* ═══ HERO SECTION ═══ */
-#hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.glow-card:hover { background: rgba(20, 15, 30, 0.6); transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.1); }
 
-/* ═══ STATS ═══ */
-.stat-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: -3rem; position: relative; z-index: 20; width: 100%; max-width: 1200px; padding: 0 2rem; }
-.stat-box { text-align: center; padding: 2rem 1.5rem; }
-.stat-num { font-size: 3rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -1px; }
-.stat-num.r { color: var(--red2); }
-.stat-num.p { color: var(--purple3); }
-.stat-num.g { color: #34d399; }
-.stat-label { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.card-icon { font-size: 28px; margin-bottom: 2rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; box-shadow: inset 0 0 20px rgba(255,255,255,0.05); }
+.card-title { font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
+.card-desc { font-size: 15px; color: var(--t3); line-height: 1.8; margin-bottom: 2rem; }
 
-/* ═══ GRIDS ═══ */
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.tech-tag { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 6px; color: var(--t2); background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.05em; transition: all 0.3s; }
+.glow-card:hover .tech-tag { border-color: var(--purple-glow); color: var(--white); }
 
-/* ═══ SERVICE CARDS ═══ */
-.icon-box { width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, rgba(220,38,38,0.1), rgba(124,58,237,0.1)); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 1.5rem; color: var(--white); box-shadow: inset 0 0 10px rgba(255,255,255,0.05); }
-.card-title { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
-.card-desc { font-size: 0.95rem; color: var(--t3); line-height: 1.7; margin-bottom: 1.5rem; }
-.tech-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tech-tag { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 4px; color: var(--t2); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.05em; }
+/* ═══ STATS BAR ═══ */
+.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: -4rem; position: relative; z-index: 20; padding: 0 2rem; }
+.stat-item { text-align: center; }
+.stat-val { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -2px; }
+.stat-val.red { background: linear-gradient(to bottom, var(--red), #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-val.purp { background: linear-gradient(to bottom, var(--purple2), #d8b4fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-val.wht { color: var(--white); }
+.stat-lbl { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--t3); letter-spacing: 0.15em; text-transform: uppercase; }
 
-/* ═══ ABOUT/RESUME ═══ */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-.timeline-item { padding-left: 2rem; position: relative; padding-bottom: 2.5rem; }
-.timeline-item::before { content: ''; position: absolute; left: 4px; top: 5px; bottom: 0; width: 1px; background: rgba(255,255,255,0.1); }
-.timeline-item:last-child::before { display: none; }
-.timeline-dot { position: absolute; left: 0; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
-.timeline-date { font-family: var(--mono); font-size: 11px; color: var(--red3); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-.timeline-role { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
-.timeline-comp { font-size: 0.9rem; color: var(--t3); }
+/* ═══ TIMELINE & PROFILE ═══ */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--red), var(--purple), transparent); }
+.tl-node { position: relative; padding-bottom: 3rem; }
+.tl-node::before { content: ''; position: absolute; left: -37px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-color); border: 2px solid var(--red); box-shadow: 0 0 15px var(--red-glow); }
+.tl-date { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--red3); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.tl-title { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 0.25rem; }
+.tl-comp { font-size: 14px; color: var(--t3); font-weight: 500; }
 
-/* ═══ CONTACT FORM (HARD-LOCKED DARK MODE) ═══ */
-.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
-.contact-info { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-.contact-pill { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-radius: 12px; text-decoration: none; }
-.contact-pill .icon { font-size: 1.5rem; }
-.contact-pill .data span { display: block; font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
-.contact-pill .data strong { font-size: 1rem; color: var(--white); font-weight: 600; }
+/* ═══ METRICS CARDS ═══ */
+.metric-row { display: flex; gap: 3rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+.metric-box h4 { font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 5px; }
+.metric-box p { font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; }
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-.form-group { margin-bottom: 1.5rem; }
-.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--t2); margin-bottom: 8px; }
+/* ═══ CONTACT TERMINAL ═══ */
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
+.contact-info-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
+.info-link { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; transition: all 0.3s; }
+.info-link:hover { background: rgba(255,255,255,0.03); border-color: var(--red-glow); transform: translateX(10px); }
+.info-link i { font-size: 24px; font-style: normal; }
+.info-link div span { display: block; font-family: var(--mono); font-size: 11px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.info-link div strong { font-size: 16px; color: var(--white); font-weight: 600; }
 
-/* Critical Fix for Inputs & Dropdowns */
-.form-control {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 14px 16px;
-  color: var(--white);
-  font-family: var(--sans);
-  font-size: 15px;
-  outline: none;
-  transition: all 0.3s;
-  color-scheme: dark; /* Forces native dark UI */
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+/* Perfected Form */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--t2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.form-input {
+  width: 100%; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+  padding: 16px; color: var(--white); font-family: var(--sans); font-size: 15px; outline: none;
+  transition: all 0.3s; color-scheme: dark; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
 }
-.form-control::placeholder { color: var(--t4); }
-.form-control:focus { border-color: var(--red); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 3px rgba(220,38,38,0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
-select.form-control option { background-color: #0a0514; color: var(--white); }
-textarea.form-control { height: 120px; resize: none; }
+.form-input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px var(--purple-glow), inset 0 2px 10px rgba(0,0,0,0.5); background: #000; }
+select.form-input option { background-color: #05040a; color: var(--white); }
+textarea.form-input { height: 150px; resize: none; }
+.btn-submit { width: 100%; padding: 20px; margin-top: 1rem; font-size: 16px; }
 
 /* ═══ FOOTER ═══ */
-footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; }
-.f-copy { font-family: var(--mono); font-size: 11px; color: var(--t4); letter-spacing: 0.05em; }
+footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 6rem; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+.f-copy { font-family: var(--mono); font-size: 11px; color: var(--t4); letter-spacing: 0.1em; text-transform: uppercase; }
 
-/* ═══ REVEAL ANIMATIONS ═══ */
-.ri { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.ri.in { opacity: 1; transform: translateY(0); }
-.d1{transition-delay:0.1s;} .d2{transition-delay:0.2s;} .d3{transition-delay:0.3s;}
+/* ═══ ELITE ANIMATIONS ═══ */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width: 1024px) {
-  .h-title { font-size: 3.5rem; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .grid-3, .grid-2, .stat-wrapper { grid-template-columns: repeat(2, 1fr); }
+  .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 4rem; }
+  .grid-3, .stat-bar { grid-template-columns: repeat(2, 1fr); }
   nav { padding: 0 2rem; }
   .nav-links { display: none; }
+  .section-inner { padding: 6rem 2rem; }
 }
 @media(max-width: 640px) {
-  .h-title { font-size: 2.5rem; }
-  .sub-title { font-size: 1.8rem; }
-  .section-inner { padding: 5rem 1.5rem; }
-  .grid-3, .grid-2, .stat-wrapper, .form-row { grid-template-columns: 1fr; }
-  .stat-wrapper { margin-top: 1rem; }
+  .h-title { font-size: 3rem; letter-spacing: -1px; }
+  .sub-title { font-size: 2.2rem; }
+  .grid-3, .grid-2, .form-grid, .stat-wrapper { grid-template-columns: 1fr; }
+  .stat-wrapper { margin-top: 2rem; }
+  .hero-cta { flex-direction: column; width: 100%; }
+  .btn-mag { width: 100%; }
 }
 </style>
 </head>
 <body>
 
-<div id="canvas-container"></div>
+<div id="webgl-container"></div>
+<div class="ambient-glow"></div>
 
-<div id="c-dot"></div>
-<div id="c-ring"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
 <nav>
-  <a href="#hero" class="nav-brand">
+  <a href="#hero" class="nav-brand magnetic-hover">
     <div class="nav-mark">IQ</div>
     <div class="nav-name">Intercept<span class="accent">IQ</span></div>
   </a>
   <ul class="nav-links">
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#operations">Operations</a></li>
-    <li><a href="#profile">Profile</a></li>
+    <li><a href="#expertise" class="magnetic-hover">Architecture</a></li>
+    <li><a href="#operations" class="magnetic-hover">Operations</a></li>
+    <li><a href="#profile" class="magnetic-hover">Telemetry</a></li>
   </ul>
   <div class="nav-right">
-    <a href="#contact" class="nav-cta">Initiate Contact</a>
+    <div class="nav-badge">L3 Clearance Active</div>
   </div>
 </nav>
 
 <main>
 
-<div class="section-inner" id="hero">
-  <div class="eye-brow ri">Clearance Level: L3 Engineer</div>
-  <h1 class="h-title ri d1">Rutvik Chavda<br><span>Endpoint Security</span></h1>
+<div class="section-inner" id="hero" style="min-height: 100vh; padding-top: 120px;">
+  <div class="sys-status reveal">System Status: Monitoring Endpoint Telemetry</div>
+  <h1 class="h-title reveal d1">
+    Rutvik Chavda
+    <span class="gradient-text">Endpoint Security</span>
+  </h1>
   
-  <p class="ats-strip ri d2">
-    <span>[CORE_STACK]:</span> EDR/XDR | Sophos Intercept X | CrowdStrike Falcon | Palo Alto Cortex | Zscaler<br>
-    <span>[OPERATIONS]:</span> Incident Response (DFIR) | Threat Hunting | Malware Reverse Engineering | Zero Trust Architecture<br>
-    <span>[INTELLIGENCE]:</span> Splunk SIEM | SOAR | MITRE ATT&CK | Windows Internals | PowerShell / Python Automation
+  <div class="terminal-box reveal d2">
+    <div class="term-line"><span>></span> INITIALIZING OPERATOR PROFILE...</div>
+    <div class="term-line"><span>></span> CORE_STACK: <span class="term-keyword">EDR/XDR</span> <span class="term-keyword">Sophos Intercept X</span> <span class="term-keyword">CrowdStrike</span> <span class="term-keyword">Palo Alto</span></div>
+    <div class="term-line"><span>></span> CAPABILITIES: <span class="term-keyword">DFIR</span> <span class="term-keyword">Threat Hunting</span> <span class="term-keyword">Memory Forensics</span> <span class="term-keyword">Zero Trust</span></div>
+    <div class="term-line"><span>></span> INTELLIGENCE: <span class="term-keyword">Splunk SIEM</span> <span class="term-keyword">MITRE ATT&CK</span> <span class="term-keyword">Python/PowerShell Automation</span></div>
+    <div class="term-line"><span>></span> STATUS: READY FOR MNC DEPLOYMENT.</div>
+  </div>
+  
+  <p class="p-text reveal d3">
+    Defending enterprise architectures through advanced EDR/XDR telemetry analysis, behavioral detection engineering, and rapid incident containment. As an L3 escalation authority with <strong>3+ years at Sophos</strong>, I dismantle attacks before execution.
   </p>
   
-  <p class="p-text ri d3">
-    Elite cybersecurity consulting and enterprise threat defense. With <strong>3+ years at Sophos</strong> analyzing complex telemetry across Windows, macOS, and Linux fleets, I don't just monitor alerts — <strong>I dismantle attacks before execution.</strong>
-  </p>
-  
-  <div class="btn-group ri d3">
-    <a href="#contact" class="btn-primary">Deploy InterceptIQ</a>
-    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn-secondary">View LinkedIn Profile</a>
+  <div class="btn-group reveal d3">
+    <a href="#contact" class="btn-mag btn-primary magnetic-hover">Initiate Secure Protocol</a>
+    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn-mag btn-secondary magnetic-hover">Access LinkedIn Record</a>
   </div>
 </div>
 
-<div class="stat-wrapper ri d3">
-  <div class="stat-box glass-panel">
-    <div class="stat-num red">3+</div>
-    <div class="stat-label">Years at Sophos</div>
+<div class="stat-bar reveal d3">
+  <div class="stat-item">
+    <div class="stat-val red">3+</div>
+    <div class="stat-lbl">Years Enterprise Ops</div>
   </div>
-  <div class="stat-box glass-panel">
-    <div class="stat-num purple">Top10</div>
-    <div class="stat-label">Global Engineer FY25</div>
+  <div class="stat-item">
+    <div class="stat-val purp">Top10</div>
+    <div class="stat-lbl">Sophos Global Rank</div>
   </div>
-  <div class="stat-box glass-panel">
-    <div class="stat-num">L3</div>
-    <div class="stat-label">Escalation Authority</div>
+  <div class="stat-item">
+    <div class="stat-val wht">L3</div>
+    <div class="stat-lbl">Escalation Authority</div>
   </div>
-  <div class="stat-box glass-panel">
-    <div class="stat-num green">&lt;5m</div>
-    <div class="stat-label">Avg Triage MTTR</div>
+  <div class="stat-item">
+    <div class="stat-val wht">&lt;5m</div>
+    <div class="stat-lbl">Avg Triage MTTR</div>
   </div>
 </div>
 
 <div class="section-inner" id="expertise">
-  <div class="eye-brow ri">Tactical Capabilities</div>
-  <h2 class="sub-title ri d1">Enterprise Threat <span class="accent">Defense</span></h2>
+  <div class="section-header">
+    <div class="sys-status reveal">Module 01</div>
+    <h2 class="sub-title reveal d1">Tactical <span>Capabilities</span></h2>
+    <p class="p-text reveal d2" style="margin: 0 auto; text-align: center;">Engineered for zero-trust environments. Comprehensive defense from perimeter to kernel.</p>
+  </div>
   
-  <div class="grid-3" style="margin-top: 3rem;">
-    
-    <div class="glass-panel ri d1">
-      <div class="icon-box">🛡️</div>
-      <h3 class="card-title">EDR / XDR Architecture</h3>
-      <p class="card-desc">End-to-end deployment, policy tuning, and sensor management for massive enterprise fleets. Eliminating blind spots across multi-OS environments.</p>
-      <div class="tech-tags">
+  <div class="grid-3">
+    <div class="glow-card reveal d1 magnetic-hover">
+      <div class="card-icon">🛡️</div>
+      <h3 class="card-title">EDR/XDR Architecture</h3>
+      <p class="card-desc">End-to-end deployment, policy tuning, and sensor management for massive enterprise fleets. Eliminating blind spots across Windows, macOS, and Linux infrastructures.</p>
+      <div class="tech-stack">
         <span class="tech-tag">Sophos Central</span>
-        <span class="tech-tag">CrowdStrike</span>
-        <span class="tech-tag">Zero Trust</span>
+        <span class="tech-tag">CrowdStrike Falcon</span>
+        <span class="tech-tag">MDE</span>
       </div>
     </div>
 
-    <div class="glass-panel ri d2">
-      <div class="icon-box">🔬</div>
-      <h3 class="card-title">Digital Forensics & IR (DFIR)</h3>
-      <p class="card-desc">Rapid containment of active ransomware and APTs. Root-cause analysis, memory forensics, and kill-chain reconstruction using advanced telemetry.</p>
-      <div class="tech-tags">
+    <div class="glow-card reveal d2 magnetic-hover">
+      <div class="card-icon">🔬</div>
+      <h3 class="card-title">DFIR & Containment</h3>
+      <p class="card-desc">Rapid containment of active ransomware and APT campaigns. Root-cause analysis (RCA), memory forensics, and kill-chain reconstruction using advanced behavioral telemetry.</p>
+      <div class="tech-stack">
         <span class="tech-tag">Incident Response</span>
-        <span class="tech-tag">Malware Analysis</span>
+        <span class="tech-tag">Malware Reversing</span>
         <span class="tech-tag">Sysmon</span>
       </div>
     </div>
 
-    <div class="glass-panel ri d3">
-      <div class="icon-box">🎯</div>
+    <div class="glow-card reveal d3 magnetic-hover">
+      <div class="card-icon">🎯</div>
       <h3 class="card-title">Advanced Threat Hunting</h3>
-      <p class="card-desc">Proactive sweeping of XDR Data Lakes to identify dormant footholds. Mapping adversary behavior directly to the MITRE ATT&CK framework.</p>
-      <div class="tech-tags">
+      <p class="card-desc">Executing L3 proactive sweeps across XDR Data Lakes to identify dormant footholds. Mapping adversary behavior directly to the MITRE ATT&CK framework.</p>
+      <div class="tech-stack">
         <span class="tech-tag">Live Discover SQL</span>
         <span class="tech-tag">MITRE ATT&CK</span>
-        <span class="tech-tag">Threat Intel</span>
+        <span class="tech-tag">YARA</span>
       </div>
     </div>
 
-    <div class="glass-panel ri d1">
-      <div class="icon-box">📊</div>
+    <div class="glow-card reveal d1 magnetic-hover">
+      <div class="card-icon">📊</div>
       <h3 class="card-title">SIEM & Detection Engineering</h3>
-      <p class="card-desc">Building high-fidelity detection rules to eliminate alert fatigue. Aggregating Windows Event Logs and network traffic for correlated SOC visibility.</p>
-      <div class="tech-tags">
+      <p class="card-desc">Engineering high-fidelity behavioral detections to eliminate SOC alert fatigue. Aggregating Windows Event Logs and network telemetry for correlated visibility.</p>
+      <div class="tech-stack">
         <span class="tech-tag">Splunk SIEM</span>
         <span class="tech-tag">Windows Internals</span>
-        <span class="tech-tag">LogQL</span>
+        <span class="tech-tag">KQL / LogQL</span>
       </div>
     </div>
 
-    <div class="glass-panel ri d2">
-      <div class="icon-box">⚡</div>
+    <div class="glow-card reveal d2 magnetic-hover">
+      <div class="card-icon">⚡</div>
       <h3 class="card-title">Security Automation (SOAR)</h3>
-      <p class="card-desc">Engineering custom scripts to automate forensic data collection, threat containment, and API integrations, reducing manual analyst overhead by 60%.</p>
-      <div class="tech-tags">
+      <p class="card-desc">Developing custom scripts to automate forensic data acquisition, threat containment, and complex API integrations, reducing manual analyst overhead by 60%.</p>
+      <div class="tech-stack">
         <span class="tech-tag">PowerShell</span>
         <span class="tech-tag">Python</span>
         <span class="tech-tag">REST APIs</span>
       </div>
     </div>
 
-    <div class="glass-panel ri d3">
-      <div class="icon-box">🌐</div>
-      <h3 class="card-title">Cloud & Network Security</h3>
-      <p class="card-desc">Securing the perimeter and the endpoint. Expertise in secure web gateways, cloud access security brokers (CASB), and AWS infrastructure.</p>
-      <div class="tech-tags">
+    <div class="glow-card reveal d3 magnetic-hover">
+      <div class="card-icon">🌐</div>
+      <h3 class="card-title">Cloud & Zero Trust</h3>
+      <p class="card-desc">Securing the perimeter alongside the endpoint. Expertise in secure web gateways (SWG), zero-trust network access (ZTNA), and AWS cloud infrastructure.</p>
+      <div class="tech-stack">
         <span class="tech-tag">Zscaler</span>
-        <span class="tech-tag">Palo Alto Networks</span>
+        <span class="tech-tag">Palo Alto Cortex</span>
         <span class="tech-tag">AWS</span>
       </div>
     </div>
+  </div>
+</div>
 
+<div class="section-inner" id="operations">
+  <div class="section-header">
+    <div class="sys-status reveal">Module 02</div>
+    <h2 class="sub-title reveal d1">Operational <span>Intelligence</span></h2>
+  </div>
+
+  <div class="grid-2">
+    <div class="glow-card reveal d1 magnetic-hover">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+        <span class="badge-ind">Enterprise Manufacturing</span>
+        <span class="badge-ok">THREAT NEUTRALIZED</span>
+      </div>
+      <h3 class="card-title">Ransomware Containment & Remediation</h3>
+      <p class="card-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioral triggers. Deployed honeypot tripwires and Live Response kill scripts to isolate 400+ affected hosts in under 3 minutes.</p>
+      <div class="metric-row">
+        <div class="metric-box"><h4>&lt;3m</h4><p>Containment Time</p></div>
+        <div class="metric-box"><h4>400+</h4><p>Secured Nodes</p></div>
+        <div class="metric-box"><h4 style="color:var(--red2);">0</h4><p>Files Encrypted</p></div>
+      </div>
+    </div>
+
+    <div class="glow-card reveal d2 magnetic-hover">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+        <span class="badge-ind">Global Financial Services</span>
+        <span class="badge-ok">KILL CHAIN MAPPED</span>
+      </div>
+      <h3 class="card-title">LSASS Campaign RCA via XDR</h3>
+      <p class="card-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Utilized Sophos XDR Live Discover SQL to trace T1003.001 lateral movement across 6 critical servers.</p>
+      <div class="metric-row">
+        <div class="metric-box"><h4>4hr</h4><p>Full RCA Delivered</p></div>
+        <div class="metric-box"><h4>6</h4><p>Servers Audited</p></div>
+        <div class="metric-box"><h4 style="color:var(--purple2);">100%</h4><p>TTPs Mapped</p></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="section-inner" id="profile">
   <div class="about-grid">
     <div>
-      <div class="eye-brow ri">Operator Profile</div>
-      <h2 class="sub-title ri d1">3+ Years of <span class="accent">Telemetry</span></h2>
-      <p class="p-text ri d2" style="margin-bottom: 1.5rem;">
-        Based in Ahmedabad, India, I have spent my career at the bleeding edge of endpoint security. Handling L3 escalations at Sophos means I am the last line of defense against complex, undocumented threats.
+      <div class="sys-status reveal">Module 03</div>
+      <h2 class="sub-title reveal d1">Operator <span>Timeline</span></h2>
+      <p class="p-text reveal d2" style="margin-bottom: 2rem;">
+        Operating out of Ahmedabad, India, I specialize in bridging the gap between deep technical forensic analysis and enterprise-wide security posture. As an L3 authority, I am the final line of defense against undocumented payloads and advanced persistent threats (APTs). Open to global deployments.
       </p>
-      <p class="p-text ri d2">
-        I specialize in bridging the gap between deep technical analysis and high-level security posture. Whether it's reverse-engineering a malicious payload or designing an automated triage pipeline in Python, my goal is absolute network resilience. Open to global roles at leading MNCs.
-      </p>
+      
+      <div class="timeline reveal d3">
+        <div class="tl-node">
+          <div class="tl-date">JULY 2023 — PRESENT</div>
+          <div class="tl-title">Technical Support Engineer L2/L3</div>
+          <div class="tl-comp">SOPHOS · AHMEDABAD, INDIA</div>
+        </div>
+        <div class="tl-node">
+          <div class="tl-date">JAN 2023 — JUNE 2023</div>
+          <div class="tl-title">Technical Support Engineer Intern</div>
+          <div class="tl-comp">SOPHOS · AHMEDABAD, INDIA</div>
+        </div>
+        <div class="tl-node" style="padding-bottom: 0;">
+          <div class="tl-date">2019 — 2023</div>
+          <div class="tl-title">B.Tech — Computer Engineering</div>
+          <div class="tl-comp">GANPAT UNIVERSITY · GUJARAT</div>
+        </div>
+      </div>
     </div>
     
-    <div class="glass-panel ri d3">
-      <h3 class="card-title" style="margin-bottom: 2rem;">Career Timeline</h3>
-      
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-date">JULY 2023 — PRESENT</div>
-        <div class="timeline-role">Technical Support Engineer L2/L3</div>
-        <div class="timeline-comp">SOPHOS · AHMEDABAD, INDIA</div>
-      </div>
-      
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--t4); box-shadow:none;"></div>
-        <div class="timeline-date">JANUARY 2023 — JUNE 2023</div>
-        <div class="timeline-role">Technical Support Engineer Intern</div>
-        <div class="timeline-comp">SOPHOS · AHMEDABAD, INDIA</div>
-      </div>
-      
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--t4); box-shadow:none;"></div>
-        <div class="timeline-date">2019 — 2023</div>
-        <div class="timeline-role">B.Tech — Computer Engineering</div>
-        <div class="timeline-comp">GANPAT UNIVERSITY · GUJARAT</div>
+    <div>
+      <div class="glow-card reveal d2">
+        <h3 class="card-title" style="margin-bottom: 2rem;">Verified Certifications</h3>
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          <div class="cred-card">
+            <div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">SCE</div>
+            <div><div class="cred-n">Sophos Central Engineer</div><div class="cred-s">Active · Sophos</div></div>
+          </div>
+          <div class="cred-card">
+            <div class="cred-badge" style="background:rgba(139,92,246,.2);color:#c4b5fd;">SPL</div>
+            <div><div class="cred-n">SIEM Implementation</div><div class="cred-s">Completed · Splunk</div></div>
+          </div>
+          <div class="cred-card">
+            <div class="cred-badge" style="background:rgba(6,182,212,.2);color:#67e8f9;">AWS</div>
+            <div><div class="cred-n">Cloud Technical Essentials</div><div class="cred-s">Completed · Amazon</div></div>
+          </div>
+          <div class="cred-card">
+            <div class="cred-badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;">PS1</div>
+            <div><div class="cred-n">Practical PowerShell Scripting</div><div class="cred-s">Completed</div></div>
+          </div>
+        </div>
+        
+        <h3 class="card-title" style="margin-top: 3rem; margin-bottom: 1.5rem;">Awards & Recognition</h3>
+        <div class="aw-pill"><span class="aw-ico">🏆</span><div><div class="aw-text">Top 10 Global Support Engineer</div><div class="aw-sub">SOPHOS FY25</div></div></div>
+        <div class="aw-pill" style="margin-top: 1rem;"><span class="aw-ico">⭐</span><div><div class="aw-text">Top Staff Contributor</div><div class="aw-sub">SOPHOS COMMUNITY CY25</div></div></div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="section-inner" id="contact">
-  <div class="glass-panel" style="padding: 4rem;">
-    <div class="contact-grid">
+  <div class="contact-wrapper">
+    
+    <div>
+      <div class="sys-status reveal">Module 04</div>
+      <h2 class="sub-title reveal d1">Secure <span>Comms</span></h2>
+      <p class="p-text reveal d2">Ready to harden your infrastructure or expand your security engineering team? Transmit an encrypted payload below. Standard SLA for reply is under 12 hours.</p>
       
-      <div>
-        <div class="eye-brow ri">Initiate Protocol</div>
-        <h2 class="sub-title ri d1">Secure <span class="accent">Comms</span></h2>
-        <p class="p-text ri d2">Ready to harden your infrastructure or expand your security engineering team? Transmit a message below. Standard SLA for reply is under 12 hours.</p>
-        
-        <div class="contact-info ri d3">
-          <a href="mailto:chavdarutvik1849@gmail.com" class="contact-pill glass-panel" style="padding: 1rem;">
-            <div class="icon">📧</div>
-            <div class="data"><span>Email</span><strong>chavdarutvik1849@gmail.com</strong></div>
-          </a>
-          <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="contact-pill glass-panel" style="padding: 1rem;">
-            <div class="icon">💼</div>
-            <div class="data"><span>LinkedIn</span><strong>/in/rutvik-chavda</strong></div>
-          </a>
-          <div class="contact-pill glass-panel" style="padding: 1rem;">
-            <div class="icon">📍</div>
-            <div class="data"><span>Location</span><strong>Ahmedabad, India (Open to Remote/Relocation)</strong></div>
-          </div>
+      <div class="contact-info-list reveal d3">
+        <a href="mailto:chavdarutvik1849@gmail.com" class="info-link magnetic-hover">
+          <i>📧</i>
+          <div><span>Direct Email</span><strong>chavdarutvik1849@gmail.com</strong></div>
+        </a>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="info-link magnetic-hover">
+          <i>💼</i>
+          <div><span>Professional Network</span><strong>linkedin.com/in/rutvik-chavda</strong></div>
+        </a>
+        <div class="info-link">
+          <i>📍</i>
+          <div><span>Base of Operations</span><strong>Ahmedabad, India (Open to Relocation)</strong></div>
         </div>
       </div>
-
-      <form id="contact-form" class="ri d2" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="9f72abfd-a57b-4428-96e0-0f935d46f6b1">
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" placeholder="John Doe" required>
-          </div>
-          <div class="form-group">
-            <label>Company</label>
-            <input type="text" name="company" class="form-control" placeholder="Cyber Corp">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" class="form-control" placeholder="john@cybercorp.com" required>
-        </div>
-        
-        <div class="form-group">
-          <label>Inquiry Type</label>
-          <select name="enquiry_type" class="form-control" required>
-            <option value="" disabled selected>Select classification...</option>
-            <option value="MNC Role Offer">MNC Role / Full-Time</option>
-            <option value="Contract/Consulting">Security Consulting</option>
-            <option value="Incident Response">Active Incident Response</option>
-            <option value="General">General Inquiry</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Encrypted Payload (Message)</label>
-          <textarea name="message" class="form-control" placeholder="Define the operational parameters..." required></textarea>
-        </div>
-        
-        <button type="submit" class="btn-primary" id="submit-btn" style="width: 100%; font-size: 16px;">Transmit Payload →</button>
-        <div id="result" style="margin-top:15px; text-align:center; font-size: 14px; font-weight: 600;"></div>
-      </form>
-      
     </div>
+
+    <form id="contact-form" class="glow-card reveal d2" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="9f72abfd-a57b-4428-96e0-0f935d46f6b1">
+      <h3 class="cform-title">Transmission Protocol</h3>
+      
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Operator Name</label>
+          <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+        </div>
+        <div class="input-group">
+          <label>Organization</label>
+          <input type="text" name="company" class="form-input" placeholder="Cyber Corp">
+        </div>
+      </div>
+      
+      <div class="input-group" style="margin-bottom: 1.5rem;">
+        <label>Return Address (Email)</label>
+        <input type="email" name="email" class="form-input" placeholder="john@cybercorp.com" required>
+      </div>
+      
+      <div class="input-group" style="margin-bottom: 1.5rem;">
+        <label>Classification</label>
+        <select name="enquiry_type" class="form-input" required>
+          <option value="" disabled selected>Select routing...</option>
+          <option value="MNC Role Offer">MNC Role / Full-Time</option>
+          <option value="Contract/Consulting">Security Consulting</option>
+          <option value="Incident Response">Active Incident Response</option>
+          <option value="General">General Inquiry</option>
+        </select>
+      </div>
+      
+      <div class="input-group">
+        <label>Encrypted Payload</label>
+        <textarea name="message" class="form-input" placeholder="Define the operational parameters..." required></textarea>
+      </div>
+      
+      <button type="submit" class="btn-mag btn-primary btn-submit magnetic-hover" id="submit-btn">Transmit Payload →</button>
+      <div id="result" style="margin-top:15px; text-align:center; font-size: 14px; font-weight: 600;"></div>
+    </form>
+    
   </div>
 </div>
 
@@ -461,10 +519,10 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
 <script>
 'use strict';
 
-/* ═══ CUSTOM CURSOR LOGIC ═══ */
+/* ═══ MAGNETIC CURSOR & BUTTON PHYSICS ═══ */
 if (window.matchMedia("(pointer: fine)").matches) {
-  const dot = document.getElementById('c-dot');
-  const ring = document.getElementById('c-ring');
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
   let mx=0, my=0, rx=0, ry=0;
 
   document.addEventListener('mousemove', e => {
@@ -473,21 +531,39 @@ if (window.matchMedia("(pointer: fine)").matches) {
   });
 
   function animRing(){
-    rx += (mx-rx)*0.2; ry += (my-ry)*0.2;
+    rx += (mx-rx)*0.15; ry += (my-ry)*0.15;
     ring.style.left = rx+'px'; ring.style.top = ry+'px';
     requestAnimationFrame(animRing);
   }
   animRing();
 
-  document.querySelectorAll('a, button, .glass-panel, input, select, textarea').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ dot.style.width='10px'; dot.style.height='10px'; ring.style.width='45px'; ring.style.height='45px'; ring.style.borderColor='rgba(220,38,38,0.8)'; });
-    el.addEventListener('mouseleave',()=>{ dot.style.width='5px'; dot.style.height='5px'; ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(255,255,255,0.4)';});
+  // Magnetic hover effect for buttons and cards
+  document.querySelectorAll('.magnetic-hover').forEach(el => {
+    el.addEventListener('mousemove', function(e) {
+      const pos = this.getBoundingClientRect();
+      const x = e.clientX - pos.left - pos.width / 2;
+      const y = e.clientY - pos.top - pos.height / 2;
+      
+      // Pull the button towards cursor
+      if(this.classList.contains('btn-mag')) {
+          this.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+      }
+    });
+    
+    el.addEventListener('mouseenter', () => { document.body.classList.add('magnetic-hover'); });
+    
+    el.addEventListener('mouseleave', function() { 
+        document.body.classList.remove('magnetic-hover'); 
+        if(this.classList.contains('btn-mag')) {
+            this.style.transform = `translate(0px, 0px)`;
+        }
+    });
   });
 }
 
-/* ═══ THREE.JS PROCEDURAL DATA OCEAN ═══ */
+/* ═══ PROCEDURAL 3D NEURAL MESH (WEBGL) ═══ */
 (function(){
-  const container = document.getElementById('canvas-container');
+  const container = document.getElementById('webgl-container');
   if(!container) return;
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -496,10 +572,10 @@ if (window.matchMedia("(pointer: fine)").matches) {
   container.appendChild(renderer.domElement);
   
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x020106, 0.025); // Deep background fade
+  scene.fog = new THREE.FogExp2(0x030305, 0.012); // Deep fog integration
 
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 5, 20);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 30);
 
   window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -507,50 +583,61 @@ if (window.matchMedia("(pointer: fine)").matches) {
     camera.updateProjectionMatrix();
   });
 
-  // 1. CREATE THE PROCEDURAL GRID (The Data Lake)
-  // We use a high-density plane geometry that we will manipulate with math
-  const planeWidth = 100;
-  const planeDepth = 100;
-  const segments = 80;
-  const geometry = new THREE.PlaneGeometry(planeWidth, planeDepth, segments, segments);
-  
-  // Rotate plane to lay flat
-  geometry.rotateX(-Math.PI / 2);
+  /* 1. THE NEURAL CORE (Central morphing geometry) */
+  const coreGroup = new THREE.Group();
+  scene.add(coreGroup);
 
-  // Apply colors to vertices (Red to Purple gradient based on X position)
-  const count = geometry.attributes.position.count;
-  const colors = new Float32Array(count * 3);
-  const color1 = new THREE.Color(0xdc2626); // Sophos Red
-  const color2 = new THREE.Color(0x8b5cf6); // Cyber Purple
+  // We use a TorusKnot to simulate a complex, twisting neural network
+  const geometry = new THREE.TorusKnotGeometry(12, 4, 300, 30, 3, 5);
   
-  for(let i=0; i<count; i++) {
-      const x = geometry.attributes.position.getX(i);
-      // Normalize X from -50...50 to 0...1
-      const mixRatio = (x + (planeWidth/2)) / planeWidth; 
-      const mixedColor = color1.clone().lerp(color2, mixRatio);
-      
-      colors[i*3] = mixedColor.r;
-      colors[i*3+1] = mixedColor.g;
-      colors[i*3+2] = mixedColor.b;
-  }
-  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-  // Use Points to make it look like a matrix of data nodes
-  const material = new THREE.PointsMaterial({
-      size: 0.15,
-      vertexColors: true,
+  // Custom wireframe material that glows
+  const material = new THREE.LineBasicMaterial({
+      color: 0x7c3aed,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.15,
       blending: THREE.AdditiveBlending
   });
 
-  const dataOcean = new THREE.Points(geometry, material);
-  // Shift ocean forward so we are inside it
-  dataOcean.position.z = -10;
-  dataOcean.position.y = -5;
-  scene.add(dataOcean);
+  // Convert geometry to wireframe lines
+  const wireframe = new THREE.WireframeGeometry(geometry);
+  const neuralCore = new THREE.LineSegments(wireframe, material);
+  coreGroup.add(neuralCore);
 
-  // 2. SCROLL AND MOUSE INTERACTION
+  /* 2. THE THREAT PARTICLES (Red anomalies flowing through the network) */
+  const pCount = 3000;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(pCount * 3);
+  const pCol = new Float32Array(pCount * 3);
+  const pSpeed = new Float32Array(pCount);
+  
+  for(let i=0; i<pCount; i++) {
+      // Scatter particles wildly around the core
+      pPos[i*3] = (Math.random() - 0.5) * 80;
+      pPos[i*3+1] = (Math.random() - 0.5) * 80;
+      pPos[i*3+2] = (Math.random() - 0.5) * 80;
+      
+      pSpeed[i] = 0.02 + Math.random() * 0.05;
+
+      const isThreat = Math.random() > 0.8; // 20% are red "threats"
+      pCol[i*3] = isThreat ? 0.88 : 0.48; // R
+      pCol[i*3+1] = isThreat ? 0.11 : 0.22; // G
+      pCol[i*3+2] = isThreat ? 0.28 : 0.92; // B
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+  
+  const particleMat = new THREE.PointsMaterial({
+      size: 0.15,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
+  });
+
+  const particles = new THREE.Points(pGeo, particleMat);
+  scene.add(particles);
+
+  /* 3. INTERACTIONS (Scroll & Mouse Parallax) */
   let scrollPercent = 0;
   window.addEventListener('scroll', () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -569,35 +656,45 @@ if (window.matchMedia("(pointer: fine)").matches) {
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // --- ANIMATE THE PROCEDURAL WAVES ---
-      // We modify the Y coordinate of every point using sine/cosine math
-      const positions = dataOcean.geometry.attributes.position.array;
-      for(let i=0; i<count; i++) {
+      // --- ANIMATE NEURAL CORE ---
+      // The core continuously twists and turns
+      neuralCore.rotation.x = time * 0.1;
+      neuralCore.rotation.y = time * 0.15;
+      
+      // Create a "breathing" effect by scaling the core
+      const scale = 1 + Math.sin(time * 0.5) * 0.05;
+      neuralCore.scale.set(scale, scale, scale);
+
+      // --- ANIMATE PARTICLES (Data Flow) ---
+      const positions = particles.geometry.attributes.position.array;
+      for(let i=0; i<pCount; i++) {
+          // Particles rotate around the center creating a vortex
           const x = positions[i*3];
           const z = positions[i*3+2];
           
-          // Complex mathematical wave formula
-          const wave1 = Math.sin(x * 0.1 + time * 0.8) * 1.5;
-          const wave2 = Math.cos(z * 0.1 + time * 0.6) * 1.5;
-          const threatSpike = Math.sin((x+z) * 0.2 - time) * 0.5; // Sharp little spikes
+          // Basic vortex math
+          positions[i*3] = x * Math.cos(pSpeed[i]) - z * Math.sin(pSpeed[i]);
+          positions[i*3+2] = z * Math.cos(pSpeed[i]) + x * Math.sin(pSpeed[i]);
           
-          positions[i*3+1] = wave1 + wave2 + threatSpike - 5; // Apply to Y axis
+          // Slowly move up
+          positions[i*3+1] += pSpeed[i];
+          if(positions[i*3+1] > 40) positions[i*3+1] = -40; // Reset
       }
-      dataOcean.geometry.attributes.position.needsUpdate = true;
+      particles.geometry.attributes.position.needsUpdate = true;
 
-      // --- CAMERA FLIGHT MECHANICS ---
-      // As you scroll down, the camera flies FORWARD and DOWN into the waves
-      const targetCamZ = 20 - (scrollPercent * 30); // Fly deep into the Z axis
-      const targetCamY = 5 - (scrollPercent * 8);   // Drop closer to the waves
+      // --- CINEMATIC CAMERA FLIGHT ---
+      // As user scrolls, the camera pushes DEEP into the core
+      const targetCamZ = 30 - (scrollPercent * 25); 
+      // Camera tilts slightly down
+      const targetCamY = -(scrollPercent * 10);
       
       camera.position.z += (targetCamZ - camera.position.z) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
       
-      // Mouse Parallax 
-      camera.position.x += ((mouseX * 3) - camera.position.x) * 0.05;
+      // Mouse Parallax (Environment shifts when user looks around)
+      camera.position.x += ((mouseX * 5) - camera.position.x) * 0.05;
       
-      // Always look slightly down at the horizon
-      camera.lookAt(camera.position.x * 0.5, camera.position.y - 2, camera.position.z - 20);
+      camera.lookAt(0, 0, 0); // Always focus on the Neural Core
 
       renderer.render(scene, camera);
   }
@@ -607,16 +704,12 @@ if (window.matchMedia("(pointer: fine)").matches) {
 /* ═══ SCROLL REVEAL LOGIC ═══ */
 const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+    if(e.isIntersecting) { e.target.classList.add('active'); revObs.unobserve(e.target); }
   });
 },{threshold: 0.1});
-document.querySelectorAll('.ri').forEach(el=>revObs.observe(el));
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
-window.addEventListener('load', ()=>{
-  document.querySelectorAll('#hero .ri, .stat-wrapper.ri').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), i*150));
-});
-
-/* ═══ WEB3FORMS EMAIL HANDLER ═══ */
+/* ═══ SECURE FORM TRANSMISSION (WEB3FORMS) ═══ */
 const form = document.getElementById('contact-form');
 const result = document.getElementById('result');
 const btn = document.getElementById('submit-btn');
@@ -644,12 +737,12 @@ form.addEventListener('submit', function(e) {
       form.reset();
     } else {
       result.innerHTML = json.message;
-      result.style.color = "#f87171";
+      result.style.color = "#ef4444";
     }
   })
   .catch(error => {
     result.innerHTML = "Connection failed. Please retry.";
-    result.style.color = "#f87171";
+    result.style.color = "#ef4444";
   })
   .then(function() {
     btn.textContent = originalText;
