@@ -13,376 +13,359 @@
 
 <style>
 /* ═══════════════════════════════════════════════
-   INTERCEPTIQ — AEGIS CORE (ELITE AGENCY EDITION)
-   Cinematic Scroll-Linked 3D & Noise Textures
+   INTERCEPTIQ — THE SENTINEL EYE EDITION
+   Cinematic 3-Phase 3D Engine & Editorial Bento UI
 ═══════════════════════════════════════════════ */
 
-/* Lock UI to dark mode */
-html, body { color-scheme: dark; scroll-behavior: smooth; }
+html, body { color-scheme: dark; scroll-behavior: smooth; background: #010103; }
 
 :root {
   --bg-color: #010103;
-  --red: #e11d48; --red-glow: rgba(225, 29, 72, 0.4);
-  --purple: #7c3aed; --purple-glow: rgba(124, 58, 237, 0.4);
+  --red: #f43f5e; --red-glow: rgba(244, 63, 94, 0.5);
+  --purple: #8b5cf6; --purple-glow: rgba(139, 92, 246, 0.5);
   --white: #ffffff; --t2: #e2e8f0; --t3: #94a3b8; --t4: #475569;
   --sans: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
   
-  /* Elite Ultra-Deep Glass */
-  --glass-bg: rgba(5, 5, 8, 0.35);
-  --glass-border: rgba(255, 255, 255, 0.04);
-  --glass-highlight: rgba(255, 255, 255, 0.12);
-  --glass-blur: blur(28px);
+  /* Elite Glassmorphism */
+  --glass-bg: rgba(6, 6, 10, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(24px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  background: var(--bg-color); color: var(--t2); font-family: var(--sans); line-height: 1.6;
+  color: var(--t2); font-family: var(--sans); line-height: 1.6;
   overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 0px; } /* Invisible scrollbar for cinematic feel */
+::-webkit-scrollbar { width: 0px; } /* Cinematic invisible scrollbar */
 
-/* ═══ ELITE NOISE OVERLAY ═══ */
-.noise-overlay {
+/* ═══ 3D ENGINE & POST-PROCESSING ═══ */
+#webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+.scanline-overlay {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9996; pointer-events: none;
-  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+  background-size: 100% 4px; opacity: 0.4; mix-blend-mode: overlay;
+}
+.vignette {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9995; pointer-events: none;
+  background: radial-gradient(circle at center, transparent 40%, #010103 120%);
 }
 
-/* ═══ 3D ENGINE LAYER ═══ */
-#webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-.ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at 70% 30%, rgba(225,29,72,0.06) 0%, transparent 50%), radial-gradient(circle at 30% 70%, rgba(124,58,237,0.06) 0%, transparent 50%); z-index: -1; pointer-events: none; }
-
-/* ═══ CUSTOM MAGNETIC CURSOR ═══ */
+/* ═══ MAGNETIC CURSOR ═══ */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }
-  #cursor-dot { position: fixed; z-index: 99999; pointer-events: none; width: 4px; height: 4px; border-radius: 50%; background: var(--white); transform: translate(-50%,-50%); transition: opacity 0.2s; }
-  #cursor-ring { position: fixed; z-index: 99998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s; box-sizing: border-box; }
-  .magnetic-hover #cursor-ring { width: 56px; height: 56px; border-color: transparent; background: rgba(255,255,255,0.08); backdrop-filter: blur(2px); }
-  .magnetic-hover #cursor-dot { opacity: 0; }
+  #cursor-dot { position: fixed; z-index: 99999; pointer-events: none; width: 4px; height: 4px; border-radius: 50%; background: var(--white); transform: translate(-50%,-50%); }
+  #cursor-ring { position: fixed; z-index: 99998; pointer-events: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s; }
+  .hover-active #cursor-ring { width: 60px; height: 60px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
+  .hover-active #cursor-dot { opacity: 0; }
 }
 
 /* ═══ ELITE NAVBAR ═══ */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; background: linear-gradient(to bottom, rgba(1,1,3,0.8) 0%, rgba(1,1,3,0) 100%); backdrop-filter: blur(8px); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4vw; background: linear-gradient(to bottom, rgba(1,1,3,0.9) 0%, rgba(1,1,3,0) 100%); }
 .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-mark { width: 32px; height: 32px; border-radius: 6px; background: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 800; color: var(--black); }
-.nav-name { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-mark { width: 32px; height: 32px; border-radius: 6px; background: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; font-weight: 900; color: var(--bg-color); }
+.nav-name { font-size: 15px; font-weight: 800; color: var(--white); letter-spacing: 0.15em; text-transform: uppercase; }
 .nav-links { display: flex; gap: 3rem; list-style: none; }
 .nav-links a { font-size: 11px; font-weight: 600; color: var(--t4); text-decoration: none; transition: color 0.3s; text-transform: uppercase; letter-spacing: 0.2em; position: relative; }
-.nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background: var(--white); transition: width 0.3s ease; }
+.nav-links a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0; height: 1px; background: var(--white); transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .nav-links a:hover { color: var(--white); }
 .nav-links a:hover::after { width: 100%; }
 
 /* ═══ TYPOGRAPHY & LAYOUT ═══ */
 main { position: relative; z-index: 10; width: 100%; display: flex; flex-direction: column; align-items: center; }
-.section-inner { width: 100%; max-width: 1400px; padding: 12rem 4rem; position: relative; }
+.section-inner { width: 100%; max-width: 1400px; padding: 10rem 4vw; position: relative; }
 
-.sys-status { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 12px; }
-.sys-status::before { content: ''; width: 30px; height: 1px; background: var(--t4); }
+.sys-label { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--t4); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 16px; }
+.sys-label::before { content: ''; width: 40px; height: 1px; background: var(--t4); }
 
-.h-title { font-size: clamp(4rem, 8vw, 7.5rem); font-weight: 900; line-height: 0.95; letter-spacing: -3px; color: var(--white); margin-bottom: 2rem; }
-.h-title span { display: block; color: var(--t4); font-weight: 700; letter-spacing: -2px; }
+.h-mega { font-size: clamp(4rem, 8vw, 8.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; color: var(--white); margin-bottom: 2rem; text-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+.h-mega span { display: block; color: var(--t4); font-weight: 800; }
+.h-mega .gradient { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 0 20px var(--red-glow)); }
 
-.sub-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1.5rem; }
-.sub-title span { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-section { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 3rem; max-width: 800px; }
 
-.p-text { font-size: 1.1rem; color: var(--t3); line-height: 1.9; max-width: 600px; font-weight: 300; }
-.p-text strong { color: var(--white); font-weight: 500; }
+.p-lead { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--t3); line-height: 1.8; max-width: 650px; font-weight: 300; }
+.p-lead strong { color: var(--white); font-weight: 600; }
 
-/* ═══ ATS KEYWORD TERMINAL ═══ */
-.terminal-box { background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem 2rem; font-family: var(--mono); font-size: 11px; color: var(--t3); line-height: 2; margin: 2rem 0 3rem; max-width: 600px; border-left: 2px solid var(--red); }
-.term-line span { color: var(--red); font-weight: 700; margin-right: 8px; }
-.term-keyword { color: var(--t1); background: rgba(255,255,255,0.03); padding: 2px 6px; border-radius: 4px; margin: 0 4px; border: 1px solid rgba(255,255,255,0.05); }
+/* ═══ GLITCH TEXT EFFECT ═══ */
+.glitch-text { position: relative; display: inline-block; }
+.glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; }
+.glitch-text::before { left: 2px; text-shadow: -1px 0 var(--red); clip: rect(24px, 550px, 90px, 0); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+.glitch-text::after { left: -2px; text-shadow: -1px 0 var(--purple); clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 2.5s infinite linear alternate-reverse; }
+@keyframes glitch-anim { 0% { clip: rect(32px, 9999px, 28px, 0); } 20% { clip: rect(13px, 9999px, 86px, 0); } 40% { clip: rect(74px, 9999px, 11px, 0); } 60% { clip: rect(98px, 9999px, 73px, 0); } 80% { clip: rect(4px, 9999px, 55px, 0); } 100% { clip: rect(44px, 9999px, 22px, 0); } }
+@keyframes glitch-anim-2 { 0% { clip: rect(82px, 9999px, 18px, 0); } 20% { clip: rect(23px, 9999px, 96px, 0); } 40% { clip: rect(14px, 9999px, 41px, 0); } 60% { clip: rect(68px, 9999px, 93px, 0); } 80% { clip: rect(84px, 9999px, 35px, 0); } 100% { clip: rect(14px, 9999px, 82px, 0); } }
 
-/* ═══ MAGNETIC BUTTONS ═══ */
-.btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-.btn-mag { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 16px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; }
-.btn-primary { color: #fff; background: var(--white); color: var(--black); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
-.btn-secondary { color: var(--white); background: transparent; border: 1px solid rgba(255,255,255,0.2); }
+/* ═══ KINETIC BUTTONS ═══ */
+.btn-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 18px 40px; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border-radius: 8px; overflow: hidden; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; }
+.btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transform: translateX(-100%); transition: transform 0.6s ease; }
+.btn:hover::before { transform: translateX(100%); }
+.btn-primary { background: var(--white); color: var(--bg-color); box-shadow: 0 10px 30px rgba(255,255,255,0.15); }
+.btn-primary:hover { box-shadow: 0 15px 40px rgba(255,255,255,0.25); transform: translateY(-3px); }
+.btn-secondary { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
+.btn-secondary:hover { border-color: var(--white); transform: translateY(-3px); }
 
-/* ═══ GLASS PANELS (Elite Minimalist) ═══ */
+/* ═══ BENTO BOX UI (Editorial Glass Panels) ═══ */
+.bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; gap: 1.5rem; }
+.bento-col-2 { grid-column: span 2; }
+.bento-col-3 { grid-column: span 3; }
+.bento-row-2 { grid-row: span 2; }
+
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-top: 1px solid var(--glass-highlight);
-  border-radius: 24px;
-  padding: 3rem;
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-left: 1px solid var(--glass-highlight);
+  border-radius: 24px; padding: 3rem;
+  display: flex; flex-direction: column; justify-content: space-between;
   transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 .glass-panel:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.2);
   background: rgba(15, 15, 20, 0.5);
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(244, 63, 94, 0.1);
 }
 
-/* ═══ STATS BAR ═══ */
-.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; width: 100%; max-width: 1400px; padding: 0 4rem; margin-top: -5rem; position: relative; z-index: 20; }
-.stat-item { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem; }
-.stat-val { font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -2px; color: var(--white); }
-.stat-lbl { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.2em; text-transform: uppercase; }
+.panel-icon { font-size: 32px; margin-bottom: 2rem; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
+.panel-title { font-size: 24px; font-weight: 800; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.03em; line-height: 1.2; }
+.panel-desc { font-size: 15px; color: var(--t3); line-height: 1.7; font-weight: 300; margin-bottom: 2rem; }
 
-/* ═══ SERVICES & CASES GRIDS ═══ */
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.tag { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 6px 12px; border-radius: 100px; color: var(--t2); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.1em; text-transform: uppercase; background: rgba(0,0,0,0.3); transition: all 0.3s; }
+.glass-panel:hover .tag { border-color: rgba(255,255,255,0.3); color: var(--white); }
 
-.card-title { font-size: 24px; font-weight: 700; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
-.card-desc { font-size: 15px; color: var(--t3); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+/* ═══ HERO METRICS ═══ */
+.hero-metrics { display: flex; gap: 4rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; max-width: 800px; }
+.metric-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.metric-val { font-size: 2.5rem; font-weight: 900; color: var(--white); letter-spacing: -1px; line-height: 1; }
+.metric-lbl { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
 
-.tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-.tech-tag { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 6px 12px; border-radius: 100px; color: var(--t2); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.05em; transition: all 0.3s; }
-.glass-panel:hover .tech-tag { border-color: rgba(255,255,255,0.3); color: var(--white); }
-
-/* Case Specifics */
-.badge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
-.badge { font-family: var(--mono); font-size: 10px; padding: 6px 12px; border-radius: 100px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
-.b-ind { border: 1px solid rgba(255,255,255,0.2); color: var(--t2); }
-.b-ok { border: 1px solid rgba(16,185,129,0.3); color: #10b981; background: rgba(16,185,129,0.05); }
-.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
-.metric-box h4 { font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 5px; }
-.metric-box p { font-family: var(--mono); font-size: 9px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+/* ═══ OPERATIONS (Cases) ═══ */
+.case-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 6px 12px; border-radius: 100px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 2rem; border: 1px solid rgba(16,185,129,0.3); color: #10b981; background: rgba(16,185,129,0.05); }
+.case-stats { display: flex; gap: 2rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+.c-stat h4 { font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 5px; }
+.c-stat p { font-family: var(--mono); font-size: 9px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
 
 /* ═══ TIMELINE & PROFILE ═══ */
-.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8rem; align-items: center; }
-.timeline { position: relative; padding-left: 2rem; margin-top: 3rem; }
-.timeline::before { content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: rgba(255,255,255,0.1); }
-.tl-node { position: relative; padding-bottom: 3rem; }
-.tl-node::before { content: ''; position: absolute; left: -34px; top: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--white); box-shadow: 0 0 10px var(--white); }
-.tl-date { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
-.tl-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
-.tl-comp { font-size: 13px; color: var(--t3); }
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.timeline-container { position: relative; padding-left: 2rem; }
+.timeline-container::before { content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, var(--red), rgba(255,255,255,0.1)); }
+.tl-node { position: relative; padding-bottom: 3.5rem; }
+.tl-node::before { content: ''; position: absolute; left: -36px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--bg-color); border: 2px solid var(--white); }
+.tl-node:first-child::before { border-color: var(--red); box-shadow: 0 0 15px var(--red-glow); background: var(--red); }
+.tl-date { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--t4); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+.tl-title { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 0.25rem; letter-spacing: -0.5px; }
+.tl-comp { font-size: 14px; color: var(--t3); }
 
 /* ═══ CONTACT TERMINAL ═══ */
-.contact-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8rem; align-items: start; }
-.info-link { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
-.info-link:hover { transform: translateX(10px); border-bottom-color: rgba(255,255,255,0.3); }
-.info-link div span { display: block; font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 600; }
-.info-link div strong { font-size: 16px; color: var(--white); font-weight: 500; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: center; }
+.comms-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
+.comm-item { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
+.comm-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); transform: translateX(10px); }
+.comm-icon { font-size: 24px; font-style: normal; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 12px; }
+.comm-data span { display: block; font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 4px; font-weight: 600; }
+.comm-data strong { font-size: 16px; color: var(--white); font-weight: 600; }
 
-/* Perfected Dark Form */
+/* Perfect Form UI */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-.input-group label { display: block; font-size: 11px; font-weight: 600; color: var(--t4); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+.input-wrapper label { display: block; font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
 .form-input {
-  width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px 0; color: var(--white); font-family: var(--sans); font-size: 16px; outline: none;
-  transition: all 0.3s; color-scheme: dark; border-radius: 0;
+  width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+  padding: 16px 20px; color: var(--white); font-family: var(--sans); font-size: 15px; outline: none;
+  transition: all 0.3s; color-scheme: dark;
 }
-.form-input::placeholder { color: var(--t4); font-weight: 300; }
-.form-input:focus { border-bottom-color: var(--white); }
+.form-input::placeholder { color: var(--t4); font-weight: 400; }
+.form-input:focus { border-color: var(--white); background: rgba(0,0,0,0.8); }
 select.form-input option { background-color: #010103; color: var(--white); }
-textarea.form-input { height: 100px; resize: none; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); padding: 16px; border-radius: 12px; }
-textarea.form-input:focus { border-color: var(--white); }
-.btn-submit { width: 100%; padding: 20px; margin-top: 2rem; background: var(--white); color: var(--black); font-size: 13px; letter-spacing: 0.1em; }
+textarea.form-input { height: 120px; resize: none; }
+.btn-submit { width: 100%; padding: 20px; margin-top: 1rem; border: none; }
 
 /* ═══ FOOTER ═══ */
-footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 8rem; }
-.f-copy { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
+footer { padding: 4rem 4vw; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 8rem; display: flex; justify-content: space-between; align-items: center; }
+.f-logo { font-size: 20px; font-weight: 900; color: var(--white); letter-spacing: -1px; }
+.f-copy { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; }
 
-/* ═══ ELITE ANIMATIONS ═══ */
-.reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.active { opacity: 1; transform: translateY(0); }
+/* ═══ SCROLL ANIMATIONS ═══ */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.in { opacity: 1; transform: translateY(0); }
 .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width: 1024px) {
-  .section-inner { padding: 8rem 2rem; }
-  .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 4rem; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .stat-bar { grid-template-columns: repeat(2, 1fr); padding: 0 2rem; gap: 3rem; margin-top: 0; }
-  .stat-item { border-left: none; padding-left: 0; text-align: center; }
-  nav { padding: 0 2rem; }
-  .nav-links { display: none; }
+  .section-inner { padding: 8rem 4vw; }
+  .bento-grid, .profile-grid, .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
+  .bento-col-2, .bento-col-3, .bento-row-2 { grid-column: span 1; grid-row: span 1; }
+  .hero-metrics { flex-direction: column; gap: 2rem; }
+  nav .nav-links { display: none; }
 }
 @media(max-width: 640px) {
-  .h-title { font-size: 3.5rem; letter-spacing: -1px; }
-  .sub-title { font-size: 2.5rem; }
+  .h-mega { font-size: 4rem; letter-spacing: -1px; }
+  .h-section { font-size: 2.5rem; }
   .form-grid { grid-template-columns: 1fr; }
-  .btn-group { flex-direction: column; width: 100%; }
-  .btn-mag { width: 100%; }
+  .btn-row { flex-direction: column; }
+  .btn { width: 100%; text-align: center; }
+  footer { flex-direction: column; gap: 2rem; text-align: center; }
 }
 </style>
 </head>
 <body>
 
 <div class="noise-overlay"></div>
+<div class="vignette"></div>
 
-<div id="webgl-container"></div>
+<canvas id="webgl-canvas"></canvas>
 <div class="ambient-glow"></div>
 
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 
 <nav>
-  <a href="#hero" class="nav-brand magnetic-hover">
+  <a href="#hero" class="nav-brand hover-trigger">
     <div class="nav-mark">IQ</div>
     <div class="nav-name">InterceptIQ</div>
   </a>
   <ul class="nav-links">
-    <li><a href="#expertise" class="magnetic-hover">Architecture</a></li>
-    <li><a href="#operations" class="magnetic-hover">Operations</a></li>
-    <li><a href="#profile" class="magnetic-hover">Telemetry</a></li>
+    <li><a href="#architecture" class="hover-trigger">Architecture</a></li>
+    <li><a href="#operations" class="hover-trigger">Operations</a></li>
+    <li><a href="#telemetry" class="hover-trigger">Telemetry</a></li>
   </ul>
   <div class="nav-right">
-    <a href="#contact" class="nav-cta magnetic-hover">Initiate Handshake</a>
+    <a href="#contact" class="nav-cta btn btn-primary hover-trigger" style="padding: 10px 24px; font-size: 10px;">Initiate Protocol</a>
   </div>
 </nav>
 
 <main>
 
-<div class="section-inner" id="hero" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
-  <div class="sys-status reveal">Clearance L3 Verified</div>
-  <h1 class="h-title reveal d1">
+<div class="section-inner" id="hero" style="min-height: 100vh; padding-top: 15vh;">
+  <div class="sys-label reveal">L3 Clearance Verified</div>
+  <h1 class="h-mega reveal d1">
     Rutvik Chavda
-    <span>Endpoint Security</span>
+    <span class="glitch-text gradient" data-text="Endpoint Security">Endpoint Security</span>
   </h1>
   
-  <div class="terminal-box reveal d2">
-    <div class="term-line"><span>></span> TARGET: <span class="term-keyword">ZERO_TRUST_ARCHITECTURE</span></div>
-    <div class="term-line"><span>></span> STACK: <span class="term-keyword">EDR/XDR</span> <span class="term-keyword">Sophos Intercept X</span> <span class="term-keyword">CrowdStrike</span> <span class="term-keyword">Palo Alto</span></div>
-    <div class="term-line"><span>></span> PROTOCOL: <span class="term-keyword">DFIR</span> <span class="term-keyword">Threat Hunting</span> <span class="term-keyword">Splunk SIEM</span> <span class="term-keyword">MITRE ATT&CK</span></div>
-  </div>
-  
-  <p class="p-text reveal d3">
-    Defending global architectures through advanced telemetry analysis and behavioral detection engineering. As an L3 escalation authority with <strong>3+ years at Sophos</strong>, I dismantle attacks before execution.
+  <p class="p-lead reveal d2">
+    Elite endpoint security consulting and incident response architecture. With <strong>3+ years analyzing telemetry at Sophos</strong>, I design resilient EDR/XDR ecosystems and dismantle advanced persistent threats before execution.
   </p>
   
-  <div class="btn-group reveal d3" style="margin-top: 3rem;">
-    <a href="#contact" class="btn-mag btn-primary magnetic-hover">Deploy InterceptIQ</a>
-    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn-mag btn-secondary magnetic-hover">Access Profile</a>
+  <div class="hero-metrics reveal d3">
+    <div class="metric-item">
+      <div class="metric-val">3+</div>
+      <div class="metric-lbl">Years Enterprise Ops</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-val" style="color: var(--purple);">Top10</div>
+      <div class="metric-lbl">Sophos Global Rank</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-val">L3</div>
+      <div class="metric-lbl">Escalation Authority</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-val" style="color: #34d399;">&lt;5m</div>
+      <div class="metric-lbl">Avg Triage MTTR</div>
+    </div>
+  </div>
+
+  <div class="btn-row reveal d3">
+    <a href="#contact" class="btn btn-primary hover-trigger">Deploy InterceptIQ</a>
+    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn btn-secondary hover-trigger">Access LinkedIn Profile</a>
   </div>
 </div>
 
-<div class="stat-bar reveal d3">
-  <div class="stat-item">
-    <div class="stat-val">3+</div>
-    <div class="stat-lbl">Years Enterprise Ops</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-val" style="color: var(--purple2);">Top10</div>
-    <div class="stat-lbl">Sophos Global Rank</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-val">L3</div>
-    <div class="stat-lbl">Escalation Authority</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-val" style="color: #34d399;">&lt;5m</div>
-    <div class="stat-lbl">Avg Triage MTTR</div>
-  </div>
-</div>
-
-<div class="section-inner" id="expertise">
-  <div class="section-header" style="text-align: left;">
-    <div class="sys-status reveal">Module 01</div>
-    <h2 class="sub-title reveal d1">Tactical <span>Capabilities</span></h2>
-    <p class="p-text reveal d2">Engineered for zero-trust environments. Comprehensive defense from perimeter to kernel level.</p>
-  </div>
+<div class="section-inner" id="architecture">
+  <div class="sys-label reveal">Tactical Capabilities</div>
+  <h2 class="h-section reveal d1">Zero-Trust Enterprise <br>Defense Architecture.</h2>
   
-  <div class="grid-3">
-    <div class="glass-panel reveal d1 magnetic-hover">
-      <h3 class="card-title">EDR/XDR Architecture</h3>
-      <p class="card-desc">End-to-end deployment, policy tuning, and sensor management for massive enterprise fleets. Eliminating blind spots across Windows, macOS, and Linux infrastructures.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">Sophos Central</span>
-        <span class="tech-tag">CrowdStrike Falcon</span>
+  <div class="bento-grid">
+    <div class="glass-panel bento-col-2 bento-row-2 reveal d1 hover-trigger">
+      <div>
+        <div class="panel-icon">🛡️</div>
+        <h3 class="panel-title">EDR/XDR Architecture</h3>
+        <p class="panel-desc">End-to-end deployment, policy tuning, and sensor management for massive enterprise fleets. I engineer resilient security postures that eliminate blind spots across Windows, macOS, and Linux infrastructures while maintaining operational performance.</p>
+      </div>
+      <div class="tag-list">
+        <span class="tag">Sophos Central</span>
+        <span class="tag">CrowdStrike Falcon</span>
+        <span class="tag">Microsoft Defender</span>
       </div>
     </div>
 
-    <div class="glass-panel reveal d2 magnetic-hover">
-      <h3 class="card-title">DFIR & Containment</h3>
-      <p class="card-desc">Rapid containment of active ransomware and APT campaigns. Root-cause analysis (RCA), memory forensics, and kill-chain reconstruction using advanced telemetry.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">Incident Response</span>
-        <span class="tech-tag">Malware Reversing</span>
+    <div class="glass-panel reveal d2 hover-trigger">
+      <div>
+        <div class="panel-icon">🔬</div>
+        <h3 class="panel-title">DFIR</h3>
+        <p class="panel-desc">Rapid containment of active ransomware and APTs. Root-cause analysis, memory forensics, and kill-chain reconstruction.</p>
       </div>
+      <div class="tag-list"><span class="tag">Incident Response</span><span class="tag">Malware Reversing</span></div>
     </div>
 
-    <div class="glass-panel reveal d3 magnetic-hover">
-      <h3 class="card-title">Advanced Threat Hunting</h3>
-      <p class="card-desc">Executing L3 proactive sweeps across XDR Data Lakes to identify dormant footholds. Mapping adversary behavior directly to the MITRE ATT&CK framework.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">Live Discover SQL</span>
-        <span class="tech-tag">MITRE ATT&CK</span>
+    <div class="glass-panel reveal d3 hover-trigger">
+      <div>
+        <div class="panel-icon">🎯</div>
+        <h3 class="panel-title">Threat Hunting</h3>
+        <p class="card-desc">Proactive sweeps across XDR Data Lakes to identify dormant footholds, mapped to the MITRE ATT&CK framework.</p>
       </div>
+      <div class="tag-list"><span class="tag">Live Discover SQL</span><span class="tag">MITRE ATT&CK</span></div>
     </div>
 
-    <div class="glass-panel reveal d1 magnetic-hover">
-      <h3 class="card-title">SIEM & Detection Engineering</h3>
-      <p class="card-desc">Engineering high-fidelity behavioral detections to eliminate SOC alert fatigue. Aggregating Windows Event Logs and network telemetry for correlated visibility.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">Splunk SIEM</span>
-        <span class="tech-tag">KQL / LogQL</span>
+    <div class="glass-panel bento-col-2 reveal d2 hover-trigger">
+      <div>
+        <div class="panel-icon" style="margin-bottom: 1rem; width: 48px; height: 48px; font-size: 18px;">⚡</div>
+        <h3 class="panel-title">Security Automation & SIEM</h3>
+        <p class="panel-desc">Engineering high-fidelity behavioral detections to eliminate SOC alert fatigue. Developing custom Python and PowerShell scripts to automate forensic data acquisition and complex REST API integrations, reducing manual analyst overhead by 60%.</p>
       </div>
-    </div>
-
-    <div class="glass-panel reveal d2 magnetic-hover">
-      <h3 class="card-title">Security Automation (SOAR)</h3>
-      <p class="card-desc">Developing custom scripts to automate forensic data acquisition, threat containment, and complex API integrations, reducing manual analyst overhead by 60%.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">PowerShell</span>
-        <span class="tech-tag">Python API</span>
-      </div>
-    </div>
-
-    <div class="glass-panel reveal d3 magnetic-hover">
-      <h3 class="card-title">Cloud & Zero Trust</h3>
-      <p class="card-desc">Securing the perimeter alongside the endpoint. Expertise in secure web gateways (SWG), zero-trust network access (ZTNA), and AWS cloud infrastructure.</p>
-      <div class="tech-stack">
-        <span class="tech-tag">Zscaler</span>
-        <span class="tech-tag">AWS Security</span>
+      <div class="tag-list">
+        <span class="tag">Splunk SIEM</span>
+        <span class="tag">Python</span>
+        <span class="tag">PowerShell</span>
+        <span class="tag">Sysmon</span>
       </div>
     </div>
   </div>
 </div>
 
 <div class="section-inner" id="operations">
-  <div class="section-header" style="text-align: left;">
-    <div class="sys-status reveal">Module 02</div>
-    <h2 class="sub-title reveal d1">Operational <span>Intelligence</span></h2>
-  </div>
+  <div class="sys-label reveal">Operational Intelligence</div>
+  <h2 class="h-section reveal d1">Threat Neutralization <br>Case Studies.</h2>
 
-  <div class="grid-2">
-    <div class="glass-panel reveal d1 magnetic-hover" style="display: flex; flex-direction: column;">
-      <div class="badge-row">
-        <span class="badge b-ind">Manufacturing Enterprise</span>
-        <span class="badge b-ok">Threat Neutralized</span>
-      </div>
-      <h3 class="card-title">Ransomware Containment</h3>
-      <p class="card-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioral triggers. Deployed honeypot tripwires and Live Response kill scripts to isolate affected hosts before payload execution.</p>
-      <div class="metric-row">
-        <div class="metric-box"><h4>&lt;3m</h4><p>Containment</p></div>
-        <div class="metric-box"><h4>400+</h4><p>Secured Nodes</p></div>
-        <div class="metric-box"><h4 style="color:var(--white);">0</h4><p>Files Encrypted</p></div>
+  <div class="bento-grid">
+    <div class="glass-panel bento-col-2 reveal d1 hover-trigger">
+      <span class="case-badge">Manufacturing Enterprise</span>
+      <h3 class="panel-title">Ransomware Contained Before Encryption</h3>
+      <p class="panel-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioral triggers. Deployed honeypot tripwires and Live Response kill scripts to isolate affected hosts before payload execution.</p>
+      <div class="case-stats">
+        <div class="c-stat"><h4>&lt;3m</h4><p>Containment</p></div>
+        <div class="c-stat"><h4>400+</h4><p>Secured Nodes</p></div>
+        <div class="c-stat"><h4 style="color: var(--t4);">0</h4><p>Files Encrypted</p></div>
       </div>
     </div>
 
-    <div class="glass-panel reveal d2 magnetic-hover" style="display: flex; flex-direction: column;">
-      <div class="badge-row">
-        <span class="badge b-ind">Global Financial Services</span>
-        <span class="badge b-ok">Kill Chain Mapped</span>
-      </div>
-      <h3 class="card-title">LSASS Campaign RCA via XDR</h3>
-      <p class="card-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Utilized Sophos XDR Live Discover SQL to trace T1003.001 lateral movement across infrastructure.</p>
-      <div class="metric-row">
-        <div class="metric-box"><h4>4hr</h4><p>Full RCA</p></div>
-        <div class="metric-box"><h4>6</h4><p>Servers Audited</p></div>
-        <div class="metric-box"><h4 style="color:var(--white);">100%</h4><p>TTPs Mapped</p></div>
+    <div class="glass-panel bento-col-2 reveal d2 hover-trigger">
+      <span class="case-badge" style="border-color: rgba(124,58,237,0.3); color: #a78bfa; background: rgba(124,58,237,0.05);">Global Financial Services</span>
+      <h3 class="panel-title">LSASS Campaign RCA via XDR</h3>
+      <p class="panel-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Utilized Sophos XDR Live Discover SQL to trace T1003.001 lateral movement across infrastructure.</p>
+      <div class="case-stats">
+        <div class="c-stat"><h4>4hr</h4><p>Full RCA</p></div>
+        <div class="c-stat"><h4>6</h4><p>Servers Audited</p></div>
+        <div class="c-stat"><h4 style="color: var(--white);">100%</h4><p>TTPs Mapped</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section-inner" id="profile">
-  <div class="about-grid">
+<div class="section-inner" id="telemetry">
+  <div class="profile-grid">
     <div>
-      <div class="sys-status reveal">Module 03</div>
-      <h2 class="sub-title reveal d1">Operator <span>Log</span></h2>
-      <p class="p-text reveal d2" style="margin-bottom: 3rem;">
-        Operating out of Ahmedabad, India, I specialize in bridging the gap between deep technical forensic analysis and enterprise-wide security posture. As an L3 authority, I am the final line of defense against undocumented payloads and advanced persistent threats (APTs). Open to global deployments.
+      <div class="sys-label reveal">Operator Profile</div>
+      <h2 class="h-section reveal d1" style="font-size: 3rem;">3+ Years of Raw <br>Telemetry Analysis.</h2>
+      <p class="p-lead reveal d2" style="margin-bottom: 3rem;">
+        Operating out of Ahmedabad, India, I specialize in bridging the gap between deep technical forensic analysis and enterprise-wide security posture. As an L3 authority, I am the final line of defense against undocumented payloads. Open to global deployments.
       </p>
       
-      <div class="timeline reveal d3">
+      <div class="timeline-container reveal d3">
         <div class="tl-node">
           <div class="tl-date">JULY 2023 — PRESENT</div>
           <div class="tl-title">Technical Support Engineer L2/L3</div>
@@ -402,34 +385,34 @@ footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,2
     </div>
     
     <div style="display: flex; flex-direction: column; gap: 2rem;">
-      <div class="glass-panel reveal d2 magnetic-hover">
-        <h3 class="card-title" style="margin-bottom: 2rem;">Certifications</h3>
+      <div class="glass-panel reveal d2 hover-trigger" style="padding: 2.5rem;">
+        <h3 class="panel-title" style="font-size: 20px; margin-bottom: 2rem;">Verified Certifications</h3>
         <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <div class="cred-card">
-            <div class="cred-n">Sophos Central Engineer (SCE)</div>
-            <div class="cred-s">Active</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:1rem;">
+            <div><div style="color:var(--white); font-weight:700; margin-bottom:4px;">Sophos Central Engineer</div><div style="font-size:12px; color:var(--t4);">ACTIVE · SOPHOS</div></div>
+            <div style="font-family:var(--mono); font-size:10px; color:var(--red); border:1px solid rgba(225,29,72,0.3); padding:4px 8px; border-radius:4px;">SCE</div>
           </div>
-          <div class="cred-card">
-            <div class="cred-n">Splunk SIEM Implementation</div>
-            <div class="cred-s">Completed</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:1rem;">
+            <div><div style="color:var(--white); font-weight:700; margin-bottom:4px;">SIEM Implementation</div><div style="font-size:12px; color:var(--t4);">COMPLETED · SPLUNK</div></div>
+            <div style="font-family:var(--mono); font-size:10px; color:var(--purple); border:1px solid rgba(124,58,237,0.3); padding:4px 8px; border-radius:4px;">SPL</div>
           </div>
-          <div class="cred-card">
-            <div class="cred-n">AWS Cloud Technical Essentials</div>
-            <div class="cred-s">Completed</div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div><div style="color:var(--white); font-weight:700; margin-bottom:4px;">Cloud Technical Essentials</div><div style="font-size:12px; color:var(--t4);">COMPLETED · AWS</div></div>
+            <div style="font-family:var(--mono); font-size:10px; color:#06b6d4; border:1px solid rgba(6,182,212,0.3); padding:4px 8px; border-radius:4px;">AWS</div>
           </div>
         </div>
       </div>
 
-      <div class="glass-panel reveal d3 magnetic-hover">
-        <h3 class="card-title" style="margin-bottom: 2rem;">Recognition</h3>
+      <div class="glass-panel reveal d3 hover-trigger" style="padding: 2.5rem;">
+        <h3 class="panel-title" style="font-size: 20px; margin-bottom: 2rem;">Industry Recognition</h3>
         <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <div class="cred-card">
-            <div class="cred-n">Top 10 Global Support Engineer</div>
-            <div class="cred-s">SOPHOS FY25</div>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="font-size:24px;">🏆</div>
+            <div><div style="color:var(--white); font-weight:700;">Top 10 Global Support Engineer</div><div style="font-size:12px; color:var(--t4); margin-top:2px;">SOPHOS FY25</div></div>
           </div>
-          <div class="cred-card">
-            <div class="cred-n">Top Staff Contributor</div>
-            <div class="cred-s">SOPHOS COMMUNITY CY25</div>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="font-size:24px;">⭐</div>
+            <div><div style="color:var(--white); font-weight:700;">Top Staff Contributor</div><div style="font-size:12px; color:var(--t4); margin-top:2px;">SOPHOS COMMUNITY CY25</div></div>
           </div>
         </div>
       </div>
@@ -438,47 +421,46 @@ footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,2
 </div>
 
 <div class="section-inner" id="contact">
-  <div class="contact-wrapper">
+  <div class="contact-grid">
     
     <div>
-      <div class="sys-status reveal">Module 04</div>
-      <h2 class="sub-title reveal d1">Secure <span>Comms</span></h2>
-      <p class="p-text reveal d2">Ready to harden your infrastructure or expand your security engineering team? Transmit an encrypted payload below. Standard SLA for reply is under 12 hours.</p>
+      <div class="sys-label reveal">Secure Comms</div>
+      <h2 class="h-section reveal d1" style="font-size: 3rem;">Initiate <br>Handshake.</h2>
+      <p class="p-lead reveal d2">Ready to harden your infrastructure or expand your security engineering team? Transmit an encrypted payload below. Standard SLA for reply is under 12 hours.</p>
       
-      <div class="contact-info-list reveal d3">
-        <a href="mailto:chavdarutvik1849@gmail.com" class="info-link magnetic-hover">
-          <div><span>Direct Email</span><strong>chavdarutvik1849@gmail.com</strong></div>
+      <div class="comms-list reveal d3">
+        <a href="mailto:chavdarutvik1849@gmail.com" class="comm-item hover-trigger">
+          <i class="comm-icon">📧</i>
+          <div class="comm-data"><span>Direct Channel</span><strong>chavdarutvik1849@gmail.com</strong></div>
         </a>
-        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="info-link magnetic-hover">
-          <div><span>Professional Network</span><strong>linkedin.com/in/rutvik-chavda</strong></div>
+        <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="comm-item hover-trigger">
+          <i class="comm-icon">💼</i>
+          <div class="comm-data"><span>Professional Network</span><strong>linkedin.com/in/rutvik-chavda</strong></div>
         </a>
-        <div class="info-link">
-          <div><span>Base of Operations</span><strong>Ahmedabad, India (Open to Relocation)</strong></div>
-        </div>
       </div>
     </div>
 
-    <form id="contact-form" class="glass-panel reveal d2" action="https://api.web3forms.com/submit" method="POST">
+    <form id="contact-form" class="glass-panel reveal d2 hover-trigger" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="9f72abfd-a57b-4428-96e0-0f935d46f6b1">
-      <h3 class="card-title" style="margin-bottom: 2rem;">Transmission Protocol</h3>
+      <h3 class="panel-title" style="margin-bottom: 2.5rem;">Transmission Protocol</h3>
       
       <div class="form-grid">
-        <div class="input-group">
+        <div class="input-wrapper">
           <label>Operator Name</label>
           <input type="text" name="name" class="form-input" placeholder="John Doe" required>
         </div>
-        <div class="input-group">
+        <div class="input-wrapper">
           <label>Organization</label>
           <input type="text" name="company" class="form-input" placeholder="Cyber Corp">
         </div>
       </div>
       
-      <div class="input-group" style="margin-bottom: 1.5rem;">
+      <div class="input-wrapper" style="margin-bottom: 1.5rem;">
         <label>Return Address (Email)</label>
         <input type="email" name="email" class="form-input" placeholder="john@cybercorp.com" required>
       </div>
       
-      <div class="input-group" style="margin-bottom: 1.5rem;">
+      <div class="input-wrapper" style="margin-bottom: 1.5rem;">
         <label>Classification</label>
         <select name="enquiry_type" class="form-input" required>
           <option value="" disabled selected>Select routing...</option>
@@ -489,13 +471,13 @@ footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,2
         </select>
       </div>
       
-      <div class="input-group">
+      <div class="input-wrapper">
         <label>Encrypted Payload</label>
         <textarea name="message" class="form-input" placeholder="Define the operational parameters..." required></textarea>
       </div>
       
-      <button type="submit" class="btn-mag btn-submit magnetic-hover" id="submit-btn">Transmit Payload →</button>
-      <div id="result" style="margin-top:15px; text-align:center; font-family: var(--mono); font-size: 11px; text-transform: uppercase;"></div>
+      <button type="submit" class="btn btn-primary btn-submit hover-trigger" id="submit-btn">Transmit Payload →</button>
+      <div id="result" style="margin-top:20px; text-align:center; font-family: var(--mono); font-size: 11px; text-transform: uppercase; font-weight: 700;"></div>
     </form>
     
   </div>
@@ -504,13 +486,14 @@ footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,2
 </main>
 
 <footer>
-  <div class="f-copy">© 2026 INTERCEPTIQ. ENGINEERED BY RUTVIK CHAVDA. ZERO TRUST. ZERO COMPROMISE.</div>
+  <div class="f-logo">Intercept<span style="color: var(--red);">IQ</span></div>
+  <div class="f-copy">© 2026 INTERCEPTIQ. ENGINEERED BY RUTVIK CHAVDA. <br>ZERO TRUST. ZERO COMPROMISE.</div>
 </footer>
 
 <script>
 'use strict';
 
-/* ═══ MAGNETIC CURSOR PHYSICS ═══ */
+/* ═══ KINETIC CURSOR & HOVER PHYSICS ═══ */
 if (window.matchMedia("(pointer: fine)").matches) {
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
@@ -528,39 +511,27 @@ if (window.matchMedia("(pointer: fine)").matches) {
   }
   animRing();
 
-  document.querySelectorAll('.magnetic-hover, a, button').forEach(el => {
-    el.addEventListener('mousemove', function(e) {
-      const pos = this.getBoundingClientRect();
-      const x = e.clientX - pos.left - pos.width / 2;
-      const y = e.clientY - pos.top - pos.height / 2;
-      if(this.classList.contains('btn-mag')) {
-          this.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-      }
-    });
-    el.addEventListener('mouseenter', () => { document.body.classList.add('magnetic-hover'); });
-    el.addEventListener('mouseleave', function() { 
-        document.body.classList.remove('magnetic-hover'); 
-        if(this.classList.contains('btn-mag')) this.style.transform = `translate(0px, 0px)`;
-    });
+  document.querySelectorAll('.hover-trigger').forEach(el => {
+    el.addEventListener('mouseenter', () => { document.body.classList.add('hover-active'); });
+    el.addEventListener('mouseleave', () => { document.body.classList.remove('hover-active'); });
   });
 }
 
-/* ═══ THE CINEMATIC "AEGIS CORE" 3D ENGINE ═══ */
+/* ═══ PROCEDURAL 3D ENGINE (THE SENTINEL EYE) ═══ */
 (function(){
-  const container = document.getElementById('webgl-container');
-  if(!container) return;
+  const canvas = document.getElementById('webgl-canvas');
+  if(!canvas) return;
 
-  // Setup
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  container.appendChild(renderer.domElement);
   
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x010103, 0.03); 
+  // Deep atmospheric fog to blend the 3D objects perfectly with the background
+  scene.fog = new THREE.FogExp2(0x010103, 0.02);
 
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 15);
+  camera.position.set(0, 0, 20);
 
   window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -568,62 +539,82 @@ if (window.matchMedia("(pointer: fine)").matches) {
     camera.updateProjectionMatrix();
   });
 
-  // 1. THE AEGIS CORE (Central Monolithic Object)
-  const aegisGroup = new THREE.Group();
-  scene.add(aegisGroup);
+  /* --- 1. THE SENTINEL CORE (Hero Object) --- */
+  const coreGroup = new THREE.Group();
+  scene.add(coreGroup);
 
-  // Position based on screen
-  let basePosition = { x: 3.5, y: 0, z: 0 };
-  function updatePosition() {
-      if(window.innerWidth > 1024) { basePosition = { x: 4, y: 0, z: 0 }; } 
-      else { basePosition = { x: 0, y: 0, z: -5 }; }
-      aegisGroup.position.set(basePosition.x, basePosition.y, basePosition.z);
+  // Responsive Positioning
+  function updateCorePos() {
+      if(window.innerWidth > 1024) { coreGroup.position.set(4, 0, 0); } 
+      else { coreGroup.position.set(0, 0, -5); }
   }
-  updatePosition();
-  window.addEventListener('resize', updatePosition);
+  updateCorePos();
+  window.addEventListener('resize', updateCorePos);
 
-  // Solid Inner Sphere (The "Endpoint")
-  const coreMat = new THREE.MeshStandardMaterial({ 
-      color: 0x050508, 
-      roughness: 0.1, 
-      metalness: 0.8 
-  });
-  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(2, 4), coreMat);
-  aegisGroup.add(core);
+  // Inner Dark Matter Core
+  const solidCore = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(2.2, 3), 
+      new THREE.MeshStandardMaterial({ color: 0x050508, roughness: 0.2, metalness: 0.8, wireframe: false })
+  );
+  coreGroup.add(solidCore);
 
-  // Middle Wireframe Layer (Encryption Matrix)
-  const wireMat1 = new THREE.MeshBasicMaterial({ color: 0x7c3aed, wireframe: true, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
-  const shell1 = new THREE.Mesh(new THREE.IcosahedronGeometry(2.4, 2), wireMat1);
-  aegisGroup.add(shell1);
+  // Outer Neural Mesh (Purple)
+  const neuralMesh = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(2.6, 2),
+      new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending })
+  );
+  coreGroup.add(neuralMesh);
 
-  // Outer Wireframe Layer (EDR Sensor Perimeter)
-  const wireMat2 = new THREE.MeshBasicMaterial({ color: 0xe11d48, wireframe: true, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending });
-  const shell2 = new THREE.Mesh(new THREE.IcosahedronGeometry(2.8, 1), wireMat2);
-  aegisGroup.add(shell2);
+  // Orbital Threat Rings (Red)
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.2, 0.02, 16, 100), new THREE.MeshBasicMaterial({color: 0xf43f5e, transparent: true, opacity: 0.3}));
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.4, 0.01, 16, 100), new THREE.MeshBasicMaterial({color: 0xf43f5e, transparent: true, opacity: 0.1}));
+  ring1.rotation.x = Math.PI / 2; ring2.rotation.y = Math.PI / 2;
+  coreGroup.add(ring1, ring2);
 
-  // 2. AMBIENT DATA DUST (Subtle background particles)
-  const pCount = 1000;
-  const pGeo = new THREE.BufferGeometry();
-  const pPos = new Float32Array(pCount * 3);
-  for(let i=0; i<pCount*3; i+=3) {
-      pPos[i] = (Math.random() - 0.5) * 50;
-      pPos[i+1] = (Math.random() - 0.5) * 50;
-      pPos[i+2] = (Math.random() - 0.5) * 50;
+  /* --- 2. THE INFINITE DATA TUNNEL (Background/Scroll) --- */
+  // This is a massive cylinder we fly through
+  const tunnelGroup = new THREE.Group();
+  scene.add(tunnelGroup);
+
+  const tunnelGeo = new THREE.CylinderGeometry(15, 15, 200, 32, 32, true);
+  const tunnelMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.05, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending });
+  
+  // Use points instead of lines for a "Data Starfield" effect inside the tunnel
+  const tunnelPts = new THREE.Points(tunnelGeo, tunnelMat);
+  tunnelPts.rotation.x = Math.PI / 2;
+  tunnelPts.position.z = -50;
+  tunnelGroup.add(tunnelPts);
+
+  // Colored light streaks inside the tunnel
+  const streakGeo = new THREE.BufferGeometry();
+  const sCount = 500;
+  const sPos = new Float32Array(sCount * 3);
+  const sCol = new Float32Array(sCount * 3);
+  for(let i=0; i<sCount*3; i+=3) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 14 + Math.random() * 2;
+      sPos[i] = Math.cos(angle) * radius;
+      sPos[i+1] = Math.sin(angle) * radius;
+      sPos[i+2] = 20 - Math.random() * 200; // Deep Z
+      
+      const isRed = Math.random() > 0.5;
+      sCol[i] = isRed ? 0.95 : 0.54; // R
+      sCol[i+1] = isRed ? 0.24 : 0.36; // G
+      sCol[i+2] = isRed ? 0.36 : 0.96; // B
   }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  const dust = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.02, transparent: true, opacity: 0.3 }));
-  scene.add(dust);
+  streakGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  streakGeo.setAttribute('color', new THREE.BufferAttribute(sCol, 3));
+  const streaks = new THREE.Points(streakGeo, new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending }));
+  scene.add(streaks);
 
-  // 3. LIGHTING
+
+  /* --- 3. LIGHTING --- */
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  const light1 = new THREE.PointLight(0xe11d48, 5, 20);
-  light1.position.set(5, 5, 5);
-  scene.add(light1);
-  const light2 = new THREE.PointLight(0x7c3aed, 5, 20);
-  light2.position.set(-5, -5, 5);
-  scene.add(light2);
+  const pLight1 = new THREE.PointLight(0xf43f5e, 5, 30); pLight1.position.set(5, 5, 5); scene.add(pLight1);
+  const pLight2 = new THREE.PointLight(0x8b5cf6, 5, 30); pLight2.position.set(-5, -5, 5); scene.add(pLight2);
 
-  // 4. SCROLL & MOUSE PARALLAX (The Cinematic Flight)
+
+  /* --- 4. CINEMATIC CAMERA FLIGHT (Tethered to Scroll) --- */
   let scrollPercent = 0;
   window.addEventListener('scroll', () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -642,58 +633,83 @@ if (window.matchMedia("(pointer: fine)").matches) {
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Core Rotations
-      core.rotation.y = time * 0.05;
-      shell1.rotation.y = time * 0.1;
-      shell1.rotation.x = time * 0.05;
-      shell2.rotation.y = -time * 0.08;
-      shell2.rotation.z = time * 0.05;
-
-      // Dust slow rotation
-      dust.rotation.y = time * 0.02;
-
-      // --- THE SCROLL FLIGHT SEQUENCE ---
-      // We calculate a target camera position based on scroll percentage.
-      // This makes the camera orbit around and fly through the Aegis Core as you read the site.
+      // 1. Animate Core
+      solidCore.rotation.y = time * 0.1;
+      solidCore.rotation.z = Math.sin(time * 0.5) * 0.1; // Gentle breathing
+      neuralMesh.rotation.y = -time * 0.05;
+      neuralMesh.rotation.x = time * 0.08;
       
-      // Angle goes from 0 to PI over the course of the scroll (half orbit)
-      const orbitAngle = scrollPercent * Math.PI * 1.5; 
-      const radius = 15 - (scrollPercent * 8); // Zoom in as we scroll
+      ring1.rotation.y = time * 0.5;
+      ring1.rotation.z = time * 0.2;
+      ring2.rotation.x = time * 0.3;
 
-      const targetCamX = Math.sin(orbitAngle) * radius;
-      const targetCamZ = Math.cos(orbitAngle) * radius;
-      const targetCamY = -(scrollPercent * 10); // Dive down
+      // 2. Animate Data Streaks (Flying towards camera)
+      const positions = streaks.geometry.attributes.position.array;
+      for(let i=2; i<sCount*3; i+=3) {
+          positions[i] += 0.5; 
+          if(positions[i] > camera.position.z + 10) {
+              positions[i] = camera.position.z - 150; // Loop back
+          }
+      }
+      streaks.geometry.attributes.position.needsUpdate = true;
 
-      // Smoothly interpolate camera to target position
-      camera.position.x += (targetCamX - camera.position.x) * 0.05;
-      camera.position.y += (targetCamY - camera.position.y) * 0.05;
+      // 3. CINEMATIC CAMERA PATH
+      // Starts at Z=20. As you scroll, dives into the tunnel to Z=-80
+      const targetCamZ = 20 - (scrollPercent * 100); 
+      // As it dives, it rotates slightly to create a corkscrew effect
+      const targetRotZ = scrollPercent * Math.PI * 0.5;
+
       camera.position.z += (targetCamZ - camera.position.z) * 0.05;
+      camera.rotation.z += (targetRotZ - camera.rotation.z) * 0.05;
 
-      // Add slight mouse sway on top of the cinematic path
-      camera.position.x += (mouseX * 0.5);
-      camera.position.y += (mouseY * 0.5);
-
-      // Camera always looks at the center of the Aegis Core
-      camera.lookAt(aegisGroup.position);
+      // Mouse Parallax (Looking around inside the tunnel)
+      camera.position.x += ((mouseX * 2) - camera.position.x) * 0.05;
+      camera.position.y += ((mouseY * 2) - camera.position.y) * 0.05;
+      
+      // Keep camera looking straight ahead down the tunnel
+      camera.lookAt(camera.position.x * 0.5, camera.position.y * 0.5, camera.position.z - 20);
 
       renderer.render(scene, camera);
   }
   animate();
 })();
 
-/* ═══ SCROLL REVEAL ═══ */
+/* ═══ TEXT SCRAMBLE / GLITCH REVEAL ═══ */
+const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?';
+function scramble(el,final,dur){
+  if(!el||!final) return;
+  let f=0,total=Math.floor(dur/16);
+  const iv=setInterval(()=>{
+    const p=++f/total;
+    el.textContent=final.split('').map((c,i)=>{
+      if(c===' ') return ' ';
+      return i/final.length<p?c:CH[Math.floor(Math.random()*CH.length)];
+    }).join('');
+    if(f>=total){el.textContent=final;clearInterval(iv);}
+  },16);
+}
+
+/* ═══ SCROLL OBSERVER ═══ */
 const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting) { e.target.classList.add('active'); revObs.unobserve(e.target); }
+    if(e.isIntersecting) { 
+      e.target.classList.add('in'); 
+      // Trigger scramble on headers
+      if(e.target.tagName === 'H2' || e.target.tagName === 'H3') {
+        const orig = e.target.innerText;
+        setTimeout(()=>scramble(e.target, orig, 600), 100);
+      }
+      revObs.unobserve(e.target); 
+    }
   });
-},{threshold: 0.1});
+},{threshold: 0.15});
 document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
 window.addEventListener('load', ()=>{
-  document.querySelectorAll('#hero .reveal, .stat-bar.reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('active'), i*150));
+  document.querySelectorAll('#hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), i*150));
 });
 
-/* ═══ SECURE FORM TRANSMISSION ═══ */
+/* ═══ SECURE FORM TRANSMISSION (DARK MODE FIXED) ═══ */
 const form = document.getElementById('contact-form');
 const result = document.getElementById('result');
 const btn = document.getElementById('submit-btn');
@@ -701,7 +717,7 @@ const btn = document.getElementById('submit-btn');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   const originalText = btn.textContent;
-  btn.textContent = "Transmitting Payload...";
+  btn.textContent = "Transmitting...";
   btn.disabled = true;
   
   const formData = new FormData(form);
@@ -716,17 +732,17 @@ form.addEventListener('submit', function(e) {
   .then(async (response) => {
     let json = await response.json();
     if (response.status == 200) {
-      result.innerHTML = "Transmission successful. Awaiting reply.";
+      result.innerHTML = "Transmission Successful. Secure Comms Established.";
       result.style.color = "#34d399";
       form.reset();
     } else {
       result.innerHTML = "Error: " + json.message;
-      result.style.color = "#e11d48";
+      result.style.color = "#f43f5e";
     }
   })
   .catch(error => {
-    result.innerHTML = "Connection failed. Please retry.";
-    result.style.color = "#e11d48";
+    result.innerHTML = "Signal lost. Please try again.";
+    result.style.color = "#f43f5e";
   })
   .then(function() {
     btn.textContent = originalText;
