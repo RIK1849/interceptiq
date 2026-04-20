@@ -13,24 +13,25 @@
 
 <style>
 /* ═══════════════════════════════════════════════
-   INTERCEPTIQ — HOLOGRAPHIC NEURAL CORE EDITION
-   Elite 3D Procedural Engine & Magnetic UI UX
+   INTERCEPTIQ — AEGIS CORE (ELITE AGENCY EDITION)
+   Cinematic Scroll-Linked 3D & Noise Textures
 ═══════════════════════════════════════════════ */
 
+/* Lock UI to dark mode */
 html, body { color-scheme: dark; scroll-behavior: smooth; }
 
 :root {
-  --bg-color: #030305;
-  --red: #e11d48; --red-glow: rgba(225, 29, 72, 0.6);
-  --purple: #7c3aed; --purple-glow: rgba(124, 58, 237, 0.6);
-  --cyan: #06b6d4; --cyan-glow: rgba(6, 182, 212, 0.4);
+  --bg-color: #010103;
+  --red: #e11d48; --red-glow: rgba(225, 29, 72, 0.4);
+  --purple: #7c3aed; --purple-glow: rgba(124, 58, 237, 0.4);
   --white: #ffffff; --t2: #e2e8f0; --t3: #94a3b8; --t4: #475569;
   --sans: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
   
-  /* Elite Glass Variables */
-  --glass-bg: rgba(10, 10, 15, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: blur(20px);
+  /* Elite Ultra-Deep Glass */
+  --glass-bg: rgba(5, 5, 8, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.04);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(28px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,171 +40,172 @@ body {
   overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg-color); }
-::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--red), var(--purple)); }
+::-webkit-scrollbar { width: 0px; } /* Invisible scrollbar for cinematic feel */
+
+/* ═══ ELITE NOISE OVERLAY ═══ */
+.noise-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9996; pointer-events: none;
+  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+}
 
 /* ═══ 3D ENGINE LAYER ═══ */
 #webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-.ambient-glow { position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; transform: translate(-50%, -50%); background: radial-gradient(circle at center, rgba(124,58,237,0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
+.ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at 70% 30%, rgba(225,29,72,0.06) 0%, transparent 50%), radial-gradient(circle at 30% 70%, rgba(124,58,237,0.06) 0%, transparent 50%); z-index: -1; pointer-events: none; }
 
 /* ═══ CUSTOM MAGNETIC CURSOR ═══ */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }
   #cursor-dot { position: fixed; z-index: 99999; pointer-events: none; width: 4px; height: 4px; border-radius: 50%; background: var(--white); transform: translate(-50%,-50%); transition: opacity 0.2s; }
-  #cursor-ring { position: fixed; z-index: 99998; pointer-events: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s; box-sizing: border-box; }
-  .magnetic-hover #cursor-ring { width: 60px; height: 60px; border-color: transparent; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
+  #cursor-ring { position: fixed; z-index: 99998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s; box-sizing: border-box; }
+  .magnetic-hover #cursor-ring { width: 56px; height: 56px; border-color: transparent; background: rgba(255,255,255,0.08); backdrop-filter: blur(2px); }
   .magnetic-hover #cursor-dot { opacity: 0; }
 }
 
 /* ═══ ELITE NAVBAR ═══ */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; background: linear-gradient(to bottom, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%); backdrop-filter: blur(10px); mask-image: linear-gradient(to bottom, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; background: linear-gradient(to bottom, rgba(1,1,3,0.8) 0%, rgba(1,1,3,0) 100%); backdrop-filter: blur(8px); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
 .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-mark { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, var(--red), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; font-weight: 800; color: #fff; box-shadow: 0 0 20px var(--red-glow); }
-.nav-name { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.2px; text-transform: uppercase; }
+.nav-mark { width: 32px; height: 32px; border-radius: 6px; background: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 800; color: var(--black); }
+.nav-name { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: 0.1em; text-transform: uppercase; }
 .nav-links { display: flex; gap: 3rem; list-style: none; }
-.nav-links a { font-size: 12px; font-weight: 600; color: var(--t3); text-decoration: none; transition: color 0.3s; text-transform: uppercase; letter-spacing: 0.15em; position: relative; }
+.nav-links a { font-size: 11px; font-weight: 600; color: var(--t4); text-decoration: none; transition: color 0.3s; text-transform: uppercase; letter-spacing: 0.2em; position: relative; }
 .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background: var(--white); transition: width 0.3s ease; }
 .nav-links a:hover { color: var(--white); }
 .nav-links a:hover::after { width: 100%; }
 
 /* ═══ TYPOGRAPHY & LAYOUT ═══ */
 main { position: relative; z-index: 10; width: 100%; display: flex; flex-direction: column; align-items: center; }
-.section-inner { width: 100%; max-width: 1300px; padding: 10rem 2rem; position: relative; }
+.section-inner { width: 100%; max-width: 1400px; padding: 12rem 4rem; position: relative; }
 
-.sys-status { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 12px; padding: 6px 16px; border: 1px solid var(--cyan-glow); border-radius: 100px; background: rgba(6, 182, 212, 0.05); }
-.sys-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
+.sys-status { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 12px; }
+.sys-status::before { content: ''; width: 30px; height: 1px; background: var(--t4); }
 
-.h-title { font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 900; line-height: 1; letter-spacing: -3px; color: var(--white); margin-bottom: 1.5rem; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-.h-title span { display: block; background: linear-gradient(to right, var(--white), var(--t4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.h-title .gradient-text { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-title { font-size: clamp(4rem, 8vw, 7.5rem); font-weight: 900; line-height: 0.95; letter-spacing: -3px; color: var(--white); margin-bottom: 2rem; }
+.h-title span { display: block; color: var(--t4); font-weight: 700; letter-spacing: -2px; }
 
-.sub-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: var(--white); letter-spacing: -2px; line-height: 1.1; margin-bottom: 1.5rem; }
-.sub-title span { color: var(--purple); }
+.sub-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1.5rem; }
+.sub-title span { background: linear-gradient(135deg, var(--red), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-.p-text { font-size: 1.2rem; color: var(--t2); line-height: 1.8; max-width: 750px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-.p-text strong { color: var(--white); font-weight: 700; }
+.p-text { font-size: 1.1rem; color: var(--t3); line-height: 1.9; max-width: 600px; font-weight: 300; }
+.p-text strong { color: var(--white); font-weight: 500; }
 
 /* ═══ ATS KEYWORD TERMINAL ═══ */
-.terminal-box { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1.5rem; font-family: var(--mono); font-size: 12px; color: var(--t3); line-height: 1.8; margin: 2.5rem 0; position: relative; overflow: hidden; max-width: 850px; }
-.terminal-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--red), var(--purple)); }
-.term-line span { color: var(--purple2); font-weight: 700; }
-.term-keyword { color: var(--t1); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; margin: 0 4px; border: 1px solid rgba(255,255,255,0.05); }
+.terminal-box { background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem 2rem; font-family: var(--mono); font-size: 11px; color: var(--t3); line-height: 2; margin: 2rem 0 3rem; max-width: 600px; border-left: 2px solid var(--red); }
+.term-line span { color: var(--red); font-weight: 700; margin-right: 8px; }
+.term-keyword { color: var(--t1); background: rgba(255,255,255,0.03); padding: 2px 6px; border-radius: 4px; margin: 0 4px; border: 1px solid rgba(255,255,255,0.05); }
 
 /* ═══ MAGNETIC BUTTONS ═══ */
-.btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
-.btn-mag { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 18px 40px; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border-radius: 12px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; transform-style: preserve-3d; }
-.btn-primary { color: #fff; background: linear-gradient(135deg, var(--red), var(--purple)); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 30px var(--red-glow); }
-.btn-secondary { color: var(--white); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+.btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.btn-mag { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 16px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; }
+.btn-primary { color: #fff; background: var(--white); color: var(--black); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+.btn-secondary { color: var(--white); background: transparent; border: 1px solid rgba(255,255,255,0.2); }
 
-/* ═══ ANIMATED GLOW CARDS ═══ */
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-
-.glow-card {
-  position: relative;
+/* ═══ GLASS PANELS (Elite Minimalist) ═══ */
+.glass-panel {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  overflow: hidden;
-  z-index: 1;
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-highlight);
+  border-radius: 24px;
+  padding: 3rem;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-/* The animated border gradient */
-.glow-card::before {
-  content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 2px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0), rgba(255,255,255,0.05));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; transition: all 0.5s ease;
+.glass-panel:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(15, 15, 20, 0.5);
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
 }
-.glow-card:hover::before { background: linear-gradient(135deg, var(--red), var(--purple), var(--cyan)); animation: borderRotate 3s linear infinite; }
-@keyframes borderRotate { 100% { filter: hue-rotate(360deg); } }
-
-.glow-card:hover { background: rgba(20, 15, 30, 0.6); transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.1); }
-
-.card-icon { font-size: 28px; margin-bottom: 2rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; box-shadow: inset 0 0 20px rgba(255,255,255,0.05); }
-.card-title { font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
-.card-desc { font-size: 15px; color: var(--t3); line-height: 1.8; margin-bottom: 2rem; }
-
-.tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
-.tech-tag { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 6px; color: var(--t2); background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.05em; transition: all 0.3s; }
-.glow-card:hover .tech-tag { border-color: var(--purple-glow); color: var(--white); }
 
 /* ═══ STATS BAR ═══ */
-.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: -4rem; position: relative; z-index: 20; padding: 0 2rem; }
-.stat-item { text-align: center; }
-.stat-val { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -2px; }
-.stat-val.red { background: linear-gradient(to bottom, var(--red), #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.stat-val.purp { background: linear-gradient(to bottom, var(--purple2), #d8b4fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.stat-val.wht { color: var(--white); }
-.stat-lbl { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--t3); letter-spacing: 0.15em; text-transform: uppercase; }
+.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; width: 100%; max-width: 1400px; padding: 0 4rem; margin-top: -5rem; position: relative; z-index: 20; }
+.stat-item { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem; }
+.stat-val { font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -2px; color: var(--white); }
+.stat-lbl { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* ═══ SERVICES & CASES GRIDS ═══ */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+.card-title { font-size: 24px; font-weight: 700; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
+.card-desc { font-size: 15px; color: var(--t3); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+
+.tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.tech-tag { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 6px 12px; border-radius: 100px; color: var(--t2); border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.05em; transition: all 0.3s; }
+.glass-panel:hover .tech-tag { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+/* Case Specifics */
+.badge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+.badge { font-family: var(--mono); font-size: 10px; padding: 6px 12px; border-radius: 100px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.b-ind { border: 1px solid rgba(255,255,255,0.2); color: var(--t2); }
+.b-ok { border: 1px solid rgba(16,185,129,0.3); color: #10b981; background: rgba(16,185,129,0.05); }
+.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+.metric-box h4 { font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 5px; }
+.metric-box p { font-family: var(--mono); font-size: 9px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
 
 /* ═══ TIMELINE & PROFILE ═══ */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--red), var(--purple), transparent); }
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8rem; align-items: center; }
+.timeline { position: relative; padding-left: 2rem; margin-top: 3rem; }
+.timeline::before { content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: rgba(255,255,255,0.1); }
 .tl-node { position: relative; padding-bottom: 3rem; }
-.tl-node::before { content: ''; position: absolute; left: -37px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-color); border: 2px solid var(--red); box-shadow: 0 0 15px var(--red-glow); }
-.tl-date { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--red3); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-.tl-title { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 0.25rem; }
-.tl-comp { font-size: 14px; color: var(--t3); font-weight: 500; }
-
-/* ═══ METRICS CARDS ═══ */
-.metric-row { display: flex; gap: 3rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
-.metric-box h4 { font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 5px; }
-.metric-box p { font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; }
+.tl-node::before { content: ''; position: absolute; left: -34px; top: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--white); box-shadow: 0 0 10px var(--white); }
+.tl-date { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+.tl-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.tl-comp { font-size: 13px; color: var(--t3); }
 
 /* ═══ CONTACT TERMINAL ═══ */
-.contact-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
-.contact-info-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
-.info-link { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; transition: all 0.3s; }
-.info-link:hover { background: rgba(255,255,255,0.03); border-color: var(--red-glow); transform: translateX(10px); }
-.info-link i { font-size: 24px; font-style: normal; }
-.info-link div span { display: block; font-family: var(--mono); font-size: 11px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-.info-link div strong { font-size: 16px; color: var(--white); font-weight: 600; }
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8rem; align-items: start; }
+.info-link { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
+.info-link:hover { transform: translateX(10px); border-bottom-color: rgba(255,255,255,0.3); }
+.info-link div span { display: block; font-family: var(--mono); font-size: 10px; color: var(--t4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 600; }
+.info-link div strong { font-size: 16px; color: var(--white); font-weight: 500; }
 
-/* Perfected Form */
+/* Perfected Dark Form */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-.input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--t2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.input-group label { display: block; font-size: 11px; font-weight: 600; color: var(--t4); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
 .form-input {
-  width: 100%; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
-  padding: 16px; color: var(--white); font-family: var(--sans); font-size: 15px; outline: none;
-  transition: all 0.3s; color-scheme: dark; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+  width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 0; color: var(--white); font-family: var(--sans); font-size: 16px; outline: none;
+  transition: all 0.3s; color-scheme: dark; border-radius: 0;
 }
-.form-input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px var(--purple-glow), inset 0 2px 10px rgba(0,0,0,0.5); background: #000; }
-select.form-input option { background-color: #05040a; color: var(--white); }
-textarea.form-input { height: 150px; resize: none; }
-.btn-submit { width: 100%; padding: 20px; margin-top: 1rem; font-size: 16px; }
+.form-input::placeholder { color: var(--t4); font-weight: 300; }
+.form-input:focus { border-bottom-color: var(--white); }
+select.form-input option { background-color: #010103; color: var(--white); }
+textarea.form-input { height: 100px; resize: none; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); padding: 16px; border-radius: 12px; }
+textarea.form-input:focus { border-color: var(--white); }
+.btn-submit { width: 100%; padding: 20px; margin-top: 2rem; background: var(--white); color: var(--black); font-size: 13px; letter-spacing: 0.1em; }
 
 /* ═══ FOOTER ═══ */
-footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 6rem; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
-.f-copy { font-family: var(--mono); font-size: 11px; color: var(--t4); letter-spacing: 0.1em; text-transform: uppercase; }
+footer { padding: 4rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 8rem; }
+.f-copy { font-family: var(--mono); font-size: 10px; color: var(--t4); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
 
 /* ═══ ELITE ANIMATIONS ═══ */
-.reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal.active { opacity: 1; transform: translateY(0); }
 .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width: 1024px) {
+  .section-inner { padding: 8rem 2rem; }
   .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 4rem; }
-  .grid-3, .stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .stat-bar { grid-template-columns: repeat(2, 1fr); padding: 0 2rem; gap: 3rem; margin-top: 0; }
+  .stat-item { border-left: none; padding-left: 0; text-align: center; }
   nav { padding: 0 2rem; }
   .nav-links { display: none; }
-  .section-inner { padding: 6rem 2rem; }
 }
 @media(max-width: 640px) {
-  .h-title { font-size: 3rem; letter-spacing: -1px; }
-  .sub-title { font-size: 2.2rem; }
-  .grid-3, .grid-2, .form-grid, .stat-wrapper { grid-template-columns: 1fr; }
-  .stat-wrapper { margin-top: 2rem; }
-  .hero-cta { flex-direction: column; width: 100%; }
+  .h-title { font-size: 3.5rem; letter-spacing: -1px; }
+  .sub-title { font-size: 2.5rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .btn-group { flex-direction: column; width: 100%; }
   .btn-mag { width: 100%; }
 }
 </style>
 </head>
 <body>
+
+<div class="noise-overlay"></div>
 
 <div id="webgl-container"></div>
 <div class="ambient-glow"></div>
@@ -214,7 +216,7 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
 <nav>
   <a href="#hero" class="nav-brand magnetic-hover">
     <div class="nav-mark">IQ</div>
-    <div class="nav-name">Intercept<span class="accent">IQ</span></div>
+    <div class="nav-name">InterceptIQ</div>
   </a>
   <ul class="nav-links">
     <li><a href="#expertise" class="magnetic-hover">Architecture</a></li>
@@ -222,164 +224,150 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
     <li><a href="#profile" class="magnetic-hover">Telemetry</a></li>
   </ul>
   <div class="nav-right">
-    <div class="nav-badge">L3 Clearance Active</div>
+    <a href="#contact" class="nav-cta magnetic-hover">Initiate Handshake</a>
   </div>
 </nav>
 
 <main>
 
-<div class="section-inner" id="hero" style="min-height: 100vh; padding-top: 120px;">
-  <div class="sys-status reveal">System Status: Monitoring Endpoint Telemetry</div>
+<div class="section-inner" id="hero" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+  <div class="sys-status reveal">Clearance L3 Verified</div>
   <h1 class="h-title reveal d1">
     Rutvik Chavda
-    <span class="gradient-text">Endpoint Security</span>
+    <span>Endpoint Security</span>
   </h1>
   
   <div class="terminal-box reveal d2">
-    <div class="term-line"><span>></span> INITIALIZING OPERATOR PROFILE...</div>
-    <div class="term-line"><span>></span> CORE_STACK: <span class="term-keyword">EDR/XDR</span> <span class="term-keyword">Sophos Intercept X</span> <span class="term-keyword">CrowdStrike</span> <span class="term-keyword">Palo Alto</span></div>
-    <div class="term-line"><span>></span> CAPABILITIES: <span class="term-keyword">DFIR</span> <span class="term-keyword">Threat Hunting</span> <span class="term-keyword">Memory Forensics</span> <span class="term-keyword">Zero Trust</span></div>
-    <div class="term-line"><span>></span> INTELLIGENCE: <span class="term-keyword">Splunk SIEM</span> <span class="term-keyword">MITRE ATT&CK</span> <span class="term-keyword">Python/PowerShell Automation</span></div>
-    <div class="term-line"><span>></span> STATUS: READY FOR MNC DEPLOYMENT.</div>
+    <div class="term-line"><span>></span> TARGET: <span class="term-keyword">ZERO_TRUST_ARCHITECTURE</span></div>
+    <div class="term-line"><span>></span> STACK: <span class="term-keyword">EDR/XDR</span> <span class="term-keyword">Sophos Intercept X</span> <span class="term-keyword">CrowdStrike</span> <span class="term-keyword">Palo Alto</span></div>
+    <div class="term-line"><span>></span> PROTOCOL: <span class="term-keyword">DFIR</span> <span class="term-keyword">Threat Hunting</span> <span class="term-keyword">Splunk SIEM</span> <span class="term-keyword">MITRE ATT&CK</span></div>
   </div>
   
   <p class="p-text reveal d3">
-    Defending enterprise architectures through advanced EDR/XDR telemetry analysis, behavioral detection engineering, and rapid incident containment. As an L3 escalation authority with <strong>3+ years at Sophos</strong>, I dismantle attacks before execution.
+    Defending global architectures through advanced telemetry analysis and behavioral detection engineering. As an L3 escalation authority with <strong>3+ years at Sophos</strong>, I dismantle attacks before execution.
   </p>
   
-  <div class="btn-group reveal d3">
-    <a href="#contact" class="btn-mag btn-primary magnetic-hover">Initiate Secure Protocol</a>
-    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn-mag btn-secondary magnetic-hover">Access LinkedIn Record</a>
+  <div class="btn-group reveal d3" style="margin-top: 3rem;">
+    <a href="#contact" class="btn-mag btn-primary magnetic-hover">Deploy InterceptIQ</a>
+    <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="btn-mag btn-secondary magnetic-hover">Access Profile</a>
   </div>
 </div>
 
 <div class="stat-bar reveal d3">
   <div class="stat-item">
-    <div class="stat-val red">3+</div>
+    <div class="stat-val">3+</div>
     <div class="stat-lbl">Years Enterprise Ops</div>
   </div>
   <div class="stat-item">
-    <div class="stat-val purp">Top10</div>
+    <div class="stat-val" style="color: var(--purple2);">Top10</div>
     <div class="stat-lbl">Sophos Global Rank</div>
   </div>
   <div class="stat-item">
-    <div class="stat-val wht">L3</div>
+    <div class="stat-val">L3</div>
     <div class="stat-lbl">Escalation Authority</div>
   </div>
   <div class="stat-item">
-    <div class="stat-val wht">&lt;5m</div>
+    <div class="stat-val" style="color: #34d399;">&lt;5m</div>
     <div class="stat-lbl">Avg Triage MTTR</div>
   </div>
 </div>
 
 <div class="section-inner" id="expertise">
-  <div class="section-header">
+  <div class="section-header" style="text-align: left;">
     <div class="sys-status reveal">Module 01</div>
     <h2 class="sub-title reveal d1">Tactical <span>Capabilities</span></h2>
-    <p class="p-text reveal d2" style="margin: 0 auto; text-align: center;">Engineered for zero-trust environments. Comprehensive defense from perimeter to kernel.</p>
+    <p class="p-text reveal d2">Engineered for zero-trust environments. Comprehensive defense from perimeter to kernel level.</p>
   </div>
   
   <div class="grid-3">
-    <div class="glow-card reveal d1 magnetic-hover">
-      <div class="card-icon">🛡️</div>
+    <div class="glass-panel reveal d1 magnetic-hover">
       <h3 class="card-title">EDR/XDR Architecture</h3>
       <p class="card-desc">End-to-end deployment, policy tuning, and sensor management for massive enterprise fleets. Eliminating blind spots across Windows, macOS, and Linux infrastructures.</p>
       <div class="tech-stack">
         <span class="tech-tag">Sophos Central</span>
         <span class="tech-tag">CrowdStrike Falcon</span>
-        <span class="tech-tag">MDE</span>
       </div>
     </div>
 
-    <div class="glow-card reveal d2 magnetic-hover">
-      <div class="card-icon">🔬</div>
+    <div class="glass-panel reveal d2 magnetic-hover">
       <h3 class="card-title">DFIR & Containment</h3>
-      <p class="card-desc">Rapid containment of active ransomware and APT campaigns. Root-cause analysis (RCA), memory forensics, and kill-chain reconstruction using advanced behavioral telemetry.</p>
+      <p class="card-desc">Rapid containment of active ransomware and APT campaigns. Root-cause analysis (RCA), memory forensics, and kill-chain reconstruction using advanced telemetry.</p>
       <div class="tech-stack">
         <span class="tech-tag">Incident Response</span>
         <span class="tech-tag">Malware Reversing</span>
-        <span class="tech-tag">Sysmon</span>
       </div>
     </div>
 
-    <div class="glow-card reveal d3 magnetic-hover">
-      <div class="card-icon">🎯</div>
+    <div class="glass-panel reveal d3 magnetic-hover">
       <h3 class="card-title">Advanced Threat Hunting</h3>
       <p class="card-desc">Executing L3 proactive sweeps across XDR Data Lakes to identify dormant footholds. Mapping adversary behavior directly to the MITRE ATT&CK framework.</p>
       <div class="tech-stack">
         <span class="tech-tag">Live Discover SQL</span>
         <span class="tech-tag">MITRE ATT&CK</span>
-        <span class="tech-tag">YARA</span>
       </div>
     </div>
 
-    <div class="glow-card reveal d1 magnetic-hover">
-      <div class="card-icon">📊</div>
+    <div class="glass-panel reveal d1 magnetic-hover">
       <h3 class="card-title">SIEM & Detection Engineering</h3>
       <p class="card-desc">Engineering high-fidelity behavioral detections to eliminate SOC alert fatigue. Aggregating Windows Event Logs and network telemetry for correlated visibility.</p>
       <div class="tech-stack">
         <span class="tech-tag">Splunk SIEM</span>
-        <span class="tech-tag">Windows Internals</span>
         <span class="tech-tag">KQL / LogQL</span>
       </div>
     </div>
 
-    <div class="glow-card reveal d2 magnetic-hover">
-      <div class="card-icon">⚡</div>
+    <div class="glass-panel reveal d2 magnetic-hover">
       <h3 class="card-title">Security Automation (SOAR)</h3>
       <p class="card-desc">Developing custom scripts to automate forensic data acquisition, threat containment, and complex API integrations, reducing manual analyst overhead by 60%.</p>
       <div class="tech-stack">
         <span class="tech-tag">PowerShell</span>
-        <span class="tech-tag">Python</span>
-        <span class="tech-tag">REST APIs</span>
+        <span class="tech-tag">Python API</span>
       </div>
     </div>
 
-    <div class="glow-card reveal d3 magnetic-hover">
-      <div class="card-icon">🌐</div>
+    <div class="glass-panel reveal d3 magnetic-hover">
       <h3 class="card-title">Cloud & Zero Trust</h3>
       <p class="card-desc">Securing the perimeter alongside the endpoint. Expertise in secure web gateways (SWG), zero-trust network access (ZTNA), and AWS cloud infrastructure.</p>
       <div class="tech-stack">
         <span class="tech-tag">Zscaler</span>
-        <span class="tech-tag">Palo Alto Cortex</span>
-        <span class="tech-tag">AWS</span>
+        <span class="tech-tag">AWS Security</span>
       </div>
     </div>
   </div>
 </div>
 
 <div class="section-inner" id="operations">
-  <div class="section-header">
+  <div class="section-header" style="text-align: left;">
     <div class="sys-status reveal">Module 02</div>
     <h2 class="sub-title reveal d1">Operational <span>Intelligence</span></h2>
   </div>
 
   <div class="grid-2">
-    <div class="glow-card reveal d1 magnetic-hover">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
-        <span class="badge-ind">Enterprise Manufacturing</span>
-        <span class="badge-ok">THREAT NEUTRALIZED</span>
+    <div class="glass-panel reveal d1 magnetic-hover" style="display: flex; flex-direction: column;">
+      <div class="badge-row">
+        <span class="badge b-ind">Manufacturing Enterprise</span>
+        <span class="badge b-ok">Threat Neutralized</span>
       </div>
-      <h3 class="card-title">Ransomware Containment & Remediation</h3>
-      <p class="card-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioral triggers. Deployed honeypot tripwires and Live Response kill scripts to isolate 400+ affected hosts in under 3 minutes.</p>
+      <h3 class="card-title">Ransomware Containment</h3>
+      <p class="card-desc">Detected LockBit pre-encryption via Sophos Intercept X behavioral triggers. Deployed honeypot tripwires and Live Response kill scripts to isolate affected hosts before payload execution.</p>
       <div class="metric-row">
-        <div class="metric-box"><h4>&lt;3m</h4><p>Containment Time</p></div>
+        <div class="metric-box"><h4>&lt;3m</h4><p>Containment</p></div>
         <div class="metric-box"><h4>400+</h4><p>Secured Nodes</p></div>
-        <div class="metric-box"><h4 style="color:var(--red2);">0</h4><p>Files Encrypted</p></div>
+        <div class="metric-box"><h4 style="color:var(--white);">0</h4><p>Files Encrypted</p></div>
       </div>
     </div>
 
-    <div class="glow-card reveal d2 magnetic-hover">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
-        <span class="badge-ind">Global Financial Services</span>
-        <span class="badge-ok">KILL CHAIN MAPPED</span>
+    <div class="glass-panel reveal d2 magnetic-hover" style="display: flex; flex-direction: column;">
+      <div class="badge-row">
+        <span class="badge b-ind">Global Financial Services</span>
+        <span class="badge b-ok">Kill Chain Mapped</span>
       </div>
       <h3 class="card-title">LSASS Campaign RCA via XDR</h3>
-      <p class="card-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Utilized Sophos XDR Live Discover SQL to trace T1003.001 lateral movement across 6 critical servers.</p>
+      <p class="card-desc">Investigated sophisticated credential harvesting targeting domain admin accounts. Utilized Sophos XDR Live Discover SQL to trace T1003.001 lateral movement across infrastructure.</p>
       <div class="metric-row">
-        <div class="metric-box"><h4>4hr</h4><p>Full RCA Delivered</p></div>
+        <div class="metric-box"><h4>4hr</h4><p>Full RCA</p></div>
         <div class="metric-box"><h4>6</h4><p>Servers Audited</p></div>
-        <div class="metric-box"><h4 style="color:var(--purple2);">100%</h4><p>TTPs Mapped</p></div>
+        <div class="metric-box"><h4 style="color:var(--white);">100%</h4><p>TTPs Mapped</p></div>
       </div>
     </div>
   </div>
@@ -389,8 +377,8 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
   <div class="about-grid">
     <div>
       <div class="sys-status reveal">Module 03</div>
-      <h2 class="sub-title reveal d1">Operator <span>Timeline</span></h2>
-      <p class="p-text reveal d2" style="margin-bottom: 2rem;">
+      <h2 class="sub-title reveal d1">Operator <span>Log</span></h2>
+      <p class="p-text reveal d2" style="margin-bottom: 3rem;">
         Operating out of Ahmedabad, India, I specialize in bridging the gap between deep technical forensic analysis and enterprise-wide security posture. As an L3 authority, I am the final line of defense against undocumented payloads and advanced persistent threats (APTs). Open to global deployments.
       </p>
       
@@ -413,31 +401,37 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
       </div>
     </div>
     
-    <div>
-      <div class="glow-card reveal d2">
-        <h3 class="card-title" style="margin-bottom: 2rem;">Verified Certifications</h3>
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div class="glass-panel reveal d2 magnetic-hover">
+        <h3 class="card-title" style="margin-bottom: 2rem;">Certifications</h3>
         <div style="display:flex; flex-direction:column; gap:1.5rem;">
           <div class="cred-card">
-            <div class="cred-badge" style="background:rgba(220,38,38,.2);color:#fca5a5;">SCE</div>
-            <div><div class="cred-n">Sophos Central Engineer</div><div class="cred-s">Active · Sophos</div></div>
+            <div class="cred-n">Sophos Central Engineer (SCE)</div>
+            <div class="cred-s">Active</div>
           </div>
           <div class="cred-card">
-            <div class="cred-badge" style="background:rgba(139,92,246,.2);color:#c4b5fd;">SPL</div>
-            <div><div class="cred-n">SIEM Implementation</div><div class="cred-s">Completed · Splunk</div></div>
+            <div class="cred-n">Splunk SIEM Implementation</div>
+            <div class="cred-s">Completed</div>
           </div>
           <div class="cred-card">
-            <div class="cred-badge" style="background:rgba(6,182,212,.2);color:#67e8f9;">AWS</div>
-            <div><div class="cred-n">Cloud Technical Essentials</div><div class="cred-s">Completed · Amazon</div></div>
-          </div>
-          <div class="cred-card">
-            <div class="cred-badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;">PS1</div>
-            <div><div class="cred-n">Practical PowerShell Scripting</div><div class="cred-s">Completed</div></div>
+            <div class="cred-n">AWS Cloud Technical Essentials</div>
+            <div class="cred-s">Completed</div>
           </div>
         </div>
-        
-        <h3 class="card-title" style="margin-top: 3rem; margin-bottom: 1.5rem;">Awards & Recognition</h3>
-        <div class="aw-pill"><span class="aw-ico">🏆</span><div><div class="aw-text">Top 10 Global Support Engineer</div><div class="aw-sub">SOPHOS FY25</div></div></div>
-        <div class="aw-pill" style="margin-top: 1rem;"><span class="aw-ico">⭐</span><div><div class="aw-text">Top Staff Contributor</div><div class="aw-sub">SOPHOS COMMUNITY CY25</div></div></div>
+      </div>
+
+      <div class="glass-panel reveal d3 magnetic-hover">
+        <h3 class="card-title" style="margin-bottom: 2rem;">Recognition</h3>
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          <div class="cred-card">
+            <div class="cred-n">Top 10 Global Support Engineer</div>
+            <div class="cred-s">SOPHOS FY25</div>
+          </div>
+          <div class="cred-card">
+            <div class="cred-n">Top Staff Contributor</div>
+            <div class="cred-s">SOPHOS COMMUNITY CY25</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -453,23 +447,20 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
       
       <div class="contact-info-list reveal d3">
         <a href="mailto:chavdarutvik1849@gmail.com" class="info-link magnetic-hover">
-          <i>📧</i>
           <div><span>Direct Email</span><strong>chavdarutvik1849@gmail.com</strong></div>
         </a>
         <a href="https://www.linkedin.com/in/rutvik-chavda-584b37197/" target="_blank" class="info-link magnetic-hover">
-          <i>💼</i>
           <div><span>Professional Network</span><strong>linkedin.com/in/rutvik-chavda</strong></div>
         </a>
         <div class="info-link">
-          <i>📍</i>
           <div><span>Base of Operations</span><strong>Ahmedabad, India (Open to Relocation)</strong></div>
         </div>
       </div>
     </div>
 
-    <form id="contact-form" class="glow-card reveal d2" action="https://api.web3forms.com/submit" method="POST">
+    <form id="contact-form" class="glass-panel reveal d2" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="9f72abfd-a57b-4428-96e0-0f935d46f6b1">
-      <h3 class="cform-title">Transmission Protocol</h3>
+      <h3 class="card-title" style="margin-bottom: 2rem;">Transmission Protocol</h3>
       
       <div class="form-grid">
         <div class="input-group">
@@ -503,8 +494,8 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
         <textarea name="message" class="form-input" placeholder="Define the operational parameters..." required></textarea>
       </div>
       
-      <button type="submit" class="btn-mag btn-primary btn-submit magnetic-hover" id="submit-btn">Transmit Payload →</button>
-      <div id="result" style="margin-top:15px; text-align:center; font-size: 14px; font-weight: 600;"></div>
+      <button type="submit" class="btn-mag btn-submit magnetic-hover" id="submit-btn">Transmit Payload →</button>
+      <div id="result" style="margin-top:15px; text-align:center; font-family: var(--mono); font-size: 11px; text-transform: uppercase;"></div>
     </form>
     
   </div>
@@ -519,7 +510,7 @@ footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(255,
 <script>
 'use strict';
 
-/* ═══ MAGNETIC CURSOR & BUTTON PHYSICS ═══ */
+/* ═══ MAGNETIC CURSOR PHYSICS ═══ */
 if (window.matchMedia("(pointer: fine)").matches) {
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
@@ -537,45 +528,39 @@ if (window.matchMedia("(pointer: fine)").matches) {
   }
   animRing();
 
-  // Magnetic hover effect for buttons and cards
-  document.querySelectorAll('.magnetic-hover').forEach(el => {
+  document.querySelectorAll('.magnetic-hover, a, button').forEach(el => {
     el.addEventListener('mousemove', function(e) {
       const pos = this.getBoundingClientRect();
       const x = e.clientX - pos.left - pos.width / 2;
       const y = e.clientY - pos.top - pos.height / 2;
-      
-      // Pull the button towards cursor
       if(this.classList.contains('btn-mag')) {
           this.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
       }
     });
-    
     el.addEventListener('mouseenter', () => { document.body.classList.add('magnetic-hover'); });
-    
     el.addEventListener('mouseleave', function() { 
         document.body.classList.remove('magnetic-hover'); 
-        if(this.classList.contains('btn-mag')) {
-            this.style.transform = `translate(0px, 0px)`;
-        }
+        if(this.classList.contains('btn-mag')) this.style.transform = `translate(0px, 0px)`;
     });
   });
 }
 
-/* ═══ PROCEDURAL 3D NEURAL MESH (WEBGL) ═══ */
+/* ═══ THE CINEMATIC "AEGIS CORE" 3D ENGINE ═══ */
 (function(){
   const container = document.getElementById('webgl-container');
   if(!container) return;
 
+  // Setup
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
   
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x030305, 0.012); // Deep fog integration
+  scene.fog = new THREE.FogExp2(0x010103, 0.03); 
 
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 30);
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 15);
 
   window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -583,61 +568,62 @@ if (window.matchMedia("(pointer: fine)").matches) {
     camera.updateProjectionMatrix();
   });
 
-  /* 1. THE NEURAL CORE (Central morphing geometry) */
-  const coreGroup = new THREE.Group();
-  scene.add(coreGroup);
+  // 1. THE AEGIS CORE (Central Monolithic Object)
+  const aegisGroup = new THREE.Group();
+  scene.add(aegisGroup);
 
-  // We use a TorusKnot to simulate a complex, twisting neural network
-  const geometry = new THREE.TorusKnotGeometry(12, 4, 300, 30, 3, 5);
-  
-  // Custom wireframe material that glows
-  const material = new THREE.LineBasicMaterial({
-      color: 0x7c3aed,
-      transparent: true,
-      opacity: 0.15,
-      blending: THREE.AdditiveBlending
+  // Position based on screen
+  let basePosition = { x: 3.5, y: 0, z: 0 };
+  function updatePosition() {
+      if(window.innerWidth > 1024) { basePosition = { x: 4, y: 0, z: 0 }; } 
+      else { basePosition = { x: 0, y: 0, z: -5 }; }
+      aegisGroup.position.set(basePosition.x, basePosition.y, basePosition.z);
+  }
+  updatePosition();
+  window.addEventListener('resize', updatePosition);
+
+  // Solid Inner Sphere (The "Endpoint")
+  const coreMat = new THREE.MeshStandardMaterial({ 
+      color: 0x050508, 
+      roughness: 0.1, 
+      metalness: 0.8 
   });
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(2, 4), coreMat);
+  aegisGroup.add(core);
 
-  // Convert geometry to wireframe lines
-  const wireframe = new THREE.WireframeGeometry(geometry);
-  const neuralCore = new THREE.LineSegments(wireframe, material);
-  coreGroup.add(neuralCore);
+  // Middle Wireframe Layer (Encryption Matrix)
+  const wireMat1 = new THREE.MeshBasicMaterial({ color: 0x7c3aed, wireframe: true, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
+  const shell1 = new THREE.Mesh(new THREE.IcosahedronGeometry(2.4, 2), wireMat1);
+  aegisGroup.add(shell1);
 
-  /* 2. THE THREAT PARTICLES (Red anomalies flowing through the network) */
-  const pCount = 3000;
+  // Outer Wireframe Layer (EDR Sensor Perimeter)
+  const wireMat2 = new THREE.MeshBasicMaterial({ color: 0xe11d48, wireframe: true, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending });
+  const shell2 = new THREE.Mesh(new THREE.IcosahedronGeometry(2.8, 1), wireMat2);
+  aegisGroup.add(shell2);
+
+  // 2. AMBIENT DATA DUST (Subtle background particles)
+  const pCount = 1000;
   const pGeo = new THREE.BufferGeometry();
   const pPos = new Float32Array(pCount * 3);
-  const pCol = new Float32Array(pCount * 3);
-  const pSpeed = new Float32Array(pCount);
-  
-  for(let i=0; i<pCount; i++) {
-      // Scatter particles wildly around the core
-      pPos[i*3] = (Math.random() - 0.5) * 80;
-      pPos[i*3+1] = (Math.random() - 0.5) * 80;
-      pPos[i*3+2] = (Math.random() - 0.5) * 80;
-      
-      pSpeed[i] = 0.02 + Math.random() * 0.05;
-
-      const isThreat = Math.random() > 0.8; // 20% are red "threats"
-      pCol[i*3] = isThreat ? 0.88 : 0.48; // R
-      pCol[i*3+1] = isThreat ? 0.11 : 0.22; // G
-      pCol[i*3+2] = isThreat ? 0.28 : 0.92; // B
+  for(let i=0; i<pCount*3; i+=3) {
+      pPos[i] = (Math.random() - 0.5) * 50;
+      pPos[i+1] = (Math.random() - 0.5) * 50;
+      pPos[i+2] = (Math.random() - 0.5) * 50;
   }
   pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
-  
-  const particleMat = new THREE.PointsMaterial({
-      size: 0.15,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending
-  });
+  const dust = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.02, transparent: true, opacity: 0.3 }));
+  scene.add(dust);
 
-  const particles = new THREE.Points(pGeo, particleMat);
-  scene.add(particles);
+  // 3. LIGHTING
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const light1 = new THREE.PointLight(0xe11d48, 5, 20);
+  light1.position.set(5, 5, 5);
+  scene.add(light1);
+  const light2 = new THREE.PointLight(0x7c3aed, 5, 20);
+  light2.position.set(-5, -5, 5);
+  scene.add(light2);
 
-  /* 3. INTERACTIONS (Scroll & Mouse Parallax) */
+  // 4. SCROLL & MOUSE PARALLAX (The Cinematic Flight)
   let scrollPercent = 0;
   window.addEventListener('scroll', () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -656,52 +642,46 @@ if (window.matchMedia("(pointer: fine)").matches) {
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // --- ANIMATE NEURAL CORE ---
-      // The core continuously twists and turns
-      neuralCore.rotation.x = time * 0.1;
-      neuralCore.rotation.y = time * 0.15;
-      
-      // Create a "breathing" effect by scaling the core
-      const scale = 1 + Math.sin(time * 0.5) * 0.05;
-      neuralCore.scale.set(scale, scale, scale);
+      // Core Rotations
+      core.rotation.y = time * 0.05;
+      shell1.rotation.y = time * 0.1;
+      shell1.rotation.x = time * 0.05;
+      shell2.rotation.y = -time * 0.08;
+      shell2.rotation.z = time * 0.05;
 
-      // --- ANIMATE PARTICLES (Data Flow) ---
-      const positions = particles.geometry.attributes.position.array;
-      for(let i=0; i<pCount; i++) {
-          // Particles rotate around the center creating a vortex
-          const x = positions[i*3];
-          const z = positions[i*3+2];
-          
-          // Basic vortex math
-          positions[i*3] = x * Math.cos(pSpeed[i]) - z * Math.sin(pSpeed[i]);
-          positions[i*3+2] = z * Math.cos(pSpeed[i]) + x * Math.sin(pSpeed[i]);
-          
-          // Slowly move up
-          positions[i*3+1] += pSpeed[i];
-          if(positions[i*3+1] > 40) positions[i*3+1] = -40; // Reset
-      }
-      particles.geometry.attributes.position.needsUpdate = true;
+      // Dust slow rotation
+      dust.rotation.y = time * 0.02;
 
-      // --- CINEMATIC CAMERA FLIGHT ---
-      // As user scrolls, the camera pushes DEEP into the core
-      const targetCamZ = 30 - (scrollPercent * 25); 
-      // Camera tilts slightly down
-      const targetCamY = -(scrollPercent * 10);
+      // --- THE SCROLL FLIGHT SEQUENCE ---
+      // We calculate a target camera position based on scroll percentage.
+      // This makes the camera orbit around and fly through the Aegis Core as you read the site.
       
-      camera.position.z += (targetCamZ - camera.position.z) * 0.05;
+      // Angle goes from 0 to PI over the course of the scroll (half orbit)
+      const orbitAngle = scrollPercent * Math.PI * 1.5; 
+      const radius = 15 - (scrollPercent * 8); // Zoom in as we scroll
+
+      const targetCamX = Math.sin(orbitAngle) * radius;
+      const targetCamZ = Math.cos(orbitAngle) * radius;
+      const targetCamY = -(scrollPercent * 10); // Dive down
+
+      // Smoothly interpolate camera to target position
+      camera.position.x += (targetCamX - camera.position.x) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
-      
-      // Mouse Parallax (Environment shifts when user looks around)
-      camera.position.x += ((mouseX * 5) - camera.position.x) * 0.05;
-      
-      camera.lookAt(0, 0, 0); // Always focus on the Neural Core
+      camera.position.z += (targetCamZ - camera.position.z) * 0.05;
+
+      // Add slight mouse sway on top of the cinematic path
+      camera.position.x += (mouseX * 0.5);
+      camera.position.y += (mouseY * 0.5);
+
+      // Camera always looks at the center of the Aegis Core
+      camera.lookAt(aegisGroup.position);
 
       renderer.render(scene, camera);
   }
   animate();
 })();
 
-/* ═══ SCROLL REVEAL LOGIC ═══ */
+/* ═══ SCROLL REVEAL ═══ */
 const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting) { e.target.classList.add('active'); revObs.unobserve(e.target); }
@@ -709,7 +689,11 @@ const revObs=new IntersectionObserver(entries=>{
 },{threshold: 0.1});
 document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
-/* ═══ SECURE FORM TRANSMISSION (WEB3FORMS) ═══ */
+window.addEventListener('load', ()=>{
+  document.querySelectorAll('#hero .reveal, .stat-bar.reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('active'), i*150));
+});
+
+/* ═══ SECURE FORM TRANSMISSION ═══ */
 const form = document.getElementById('contact-form');
 const result = document.getElementById('result');
 const btn = document.getElementById('submit-btn');
@@ -736,13 +720,13 @@ form.addEventListener('submit', function(e) {
       result.style.color = "#34d399";
       form.reset();
     } else {
-      result.innerHTML = json.message;
-      result.style.color = "#ef4444";
+      result.innerHTML = "Error: " + json.message;
+      result.style.color = "#e11d48";
     }
   })
   .catch(error => {
     result.innerHTML = "Connection failed. Please retry.";
-    result.style.color = "#ef4444";
+    result.style.color = "#e11d48";
   })
   .then(function() {
     btn.textContent = originalText;
